@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginAPI", "LoginAPI\LoginAPI.csproj", "{149863A7-DC8B-4502-81D3-4C3D619E5AB2}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PromotionsSG.db", "PromotionsSG.db\PromotionsSG.db.sqlproj", "{28BF8528-A7E2-41BB-93A8-315D372051D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{F662CB20-571A-4E30-8692-C063355B2201}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,16 @@ Global
 		{149863A7-DC8B-4502-81D3-4C3D619E5AB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{149863A7-DC8B-4502-81D3-4C3D619E5AB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{149863A7-DC8B-4502-81D3-4C3D619E5AB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28BF8528-A7E2-41BB-93A8-315D372051D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28BF8528-A7E2-41BB-93A8-315D372051D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28BF8528-A7E2-41BB-93A8-315D372051D4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{28BF8528-A7E2-41BB-93A8-315D372051D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28BF8528-A7E2-41BB-93A8-315D372051D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28BF8528-A7E2-41BB-93A8-315D372051D4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F662CB20-571A-4E30-8692-C063355B2201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F662CB20-571A-4E30-8692-C063355B2201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F662CB20-571A-4E30-8692-C063355B2201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F662CB20-571A-4E30-8692-C063355B2201}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
