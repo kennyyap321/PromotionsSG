@@ -13,5 +13,6 @@ namespace Common.DBTableModels
         }
 
         public DbSet<UserLogin> UserLogin { get; set; }
+        public DbSet<CustomerProfile> CustomerProfile { get; set; }
     }
 }
