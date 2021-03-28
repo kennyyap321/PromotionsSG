@@ -26,7 +26,7 @@ namespace LoginAPI.Controller
         }
 
         [HttpPost]
-        [Route("createUser")]
+        [Route("login/insert")]
         public async Task<int> CreateUser()
         {
             UserLogin newUserLogin = new UserLogin
@@ -41,7 +41,7 @@ namespace LoginAPI.Controller
         }
 
         [HttpPost]
-        [Route("updateUser")]
+        [Route("login/update")]
         public async Task<int> UpdateUser()
         {
             var toUpdateUserData = await _repository.Login("PeterTanAbc", "abc");
@@ -59,7 +59,7 @@ namespace LoginAPI.Controller
         }
 
         [HttpGet]
-        [Route("login")]
+        [Route("login/retrieve")]
         public async Task<UserLogin> Login([FromQuery] string userLoginId, string password)
         {
             var userData = await _repository.Login(userLoginId, password);
