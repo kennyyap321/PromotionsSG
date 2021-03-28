@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Common.DBTableModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PromotionsSG.Presentation.WebPortal.Models;
 using System;
@@ -9,13 +10,21 @@ using System.Threading.Tasks;
 
 namespace PromotionsSG.Presentation.WebPortal.Controllers
 {
-    public class HomeController : Controller
+    public class LoginViewController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<LoginViewController> _logger;
+        private readonly ILoginService _loginService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public LoginViewController(ILogger<LoginViewController> logger, ILoginService loginService)
         {
             _logger = logger;
+            _loginService = loginService;
+        }
+
+        public async Task<IActionResult> UserLogin(LoginViewModel loginViewModel)
+        {
+            UserLogin resultSet = await _loginService.Login(loginViewModel.userName, loginViewModel.password);
+            return View("SuccessLogin", resultSet);
         }
 
         public IActionResult Index()

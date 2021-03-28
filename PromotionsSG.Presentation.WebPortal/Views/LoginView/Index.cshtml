@@ -1,0 +1,20 @@
+﻿@model PromotionsSG.Presentation.WebPortal.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+@using (Html.BeginForm("UserLogin", "LoginView", FormMethod.Post, new { @id = "commonLoginForm", @class = "_page-wrapper stepping" }))
+{
+<div>
+    @Html.Label("UserName: ")
+    @Html.TextBoxFor(model => model.userName)
+    @Html.Label("Password: ")
+    @Html.TextBoxFor(model => model.password)
+    <button type="submit" id="loginButton">Login</button>
+</div>
+}
+
+<script>
+
+</script>

@@ -1,0 +1,14 @@
+﻿@model Common.DBTableModels.UserLogin
+
+@{
+    ViewData["Title"] = "Login";
+    var name = Model.UserName;
+}
+
+<div>
+    Welcome @Html.DisplayFor(model => model.UserName)
+</div>
+
+<script>
+
+</script>
