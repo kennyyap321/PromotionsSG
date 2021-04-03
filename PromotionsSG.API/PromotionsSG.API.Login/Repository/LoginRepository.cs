@@ -1,5 +1,4 @@
 ﻿using Common.DBTableModels;
-using PromotionsSG.API.Login.RepositoryInterface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,25 +16,34 @@ namespace PromotionsSG.API.Login.Repository
         {
             _context = context;
         }
-        public async Task<int> CreateUser(UserLogin userLogin)
+
+        #region UserLogin
+        public async Task<User> LoginAsync(string userName, string password, int userType)
         {
-            _context.Add(userLogin);
-            await _context.SaveChangesAsync();
-            return 1;
+            var result = await _context.Users.FirstOrDefaultAsync(u => u.UserName == userName && u.Password == password && u.UserType == userType);
+
+            return result;
         }
 
-        public async Task<int> UpdateUser(UserLogin userLogin)
+        public async Task<int> CreateUserAsync(User user)
         {
-            _context.Update(userLogin);
-            await _context.SaveChangesAsync();
-            return 1;
+            _context.Users.Add(user);
+            var result = await _context.SaveChangesAsync();
+
+            var createdUserId = (await _context.Users.FirstAsync(u => u.UserName == user.UserName && u.UserType == user.UserType)).UserId;
+
+            return createdUserId;
         }
 
-        public async Task<UserLogin> Login(string userLoginId, string password)
+        public async Task<int> UpdateUserAsync(User user)
         {
-            //use .where for multiple records
-            var userData = await _context.UserLogin.FirstOrDefaultAsync(x => x.UserLoginId == userLoginId && x.Password == password);
-            return userData;
+            _context.Users.Update(user);
+            var result = await _context.SaveChangesAsync();
+
+            var updatedUserId = user.UserId;
+
+            return updatedUserId;
         }
+        #endregion
     }
 }

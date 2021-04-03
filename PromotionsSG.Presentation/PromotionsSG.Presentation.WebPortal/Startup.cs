@@ -27,6 +27,7 @@ namespace PromotionsSG.Presentation.WebPortal
             services.Configure<APIUrls>(Configuration.GetSection("APIUrls"));
             services.AddControllersWithViews();
             services.AddHttpClient<ILoginService, LoginService>();
+            services.AddHttpClient<IShopProfileService, ShopProfileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +51,7 @@ namespace PromotionsSG.Presentation.WebPortal
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=LoginView}/{action=Index}");
+                    pattern: "{controller=LoginView}/{action=Login}");
             });
         }
     }

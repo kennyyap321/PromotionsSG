@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PromotionsSG.API.ShopProfile
+namespace PromotionsSG.API.ShopProfileAPI
 {
     public class Program
     {

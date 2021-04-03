@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromotionsSG.API.Recommenda
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromotionsSG.API.Search", "PromotionsSG.API\PromotionsSG.API.Search\PromotionsSG.API.Search.csproj", "{0D61A467-0C64-4D19-8B73-63339A3EBB87}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromotionsSG.API.ShopProfile", "PromotionsSG.API\PromotionsSG.API.ShopProfile\PromotionsSG.API.ShopProfile.csproj", "{F4698C8F-9D4D-4CD8-AF58-5B7C3DE7A564}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromotionsSG.API.ShopProfileAPI", "PromotionsSG.API\PromotionsSG.API.ShopProfile\PromotionsSG.API.ShopProfileAPI.csproj", "{F4698C8F-9D4D-4CD8-AF58-5B7C3DE7A564}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PromotionsSG.DB.Claim", "PromotionsSG.DB\PromotionsSG.DB.Claim\PromotionsSG.DB.Claim.sqlproj", "{EB81DBE2-3105-4791-BAF8-109AD217C5EC}"
 EndProject

@@ -6,13 +6,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PromotionsSG.API.Login.Repository;
-using PromotionsSG.API.Login.RepositoryInterface;
 
 namespace PromotionsSG.API.Login
 {
     public class Startup
     {
         private IWebHostEnvironment _webHostEnvironment;
+        public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
@@ -20,10 +20,6 @@ namespace PromotionsSG.API.Login
             _webHostEnvironment = webHostEnvironment;
         }
 
-
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("PromotionsSGdb");
@@ -38,7 +34,6 @@ namespace PromotionsSG.API.Login
             services.AddTransient<ILoginRepository, LoginRepository>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

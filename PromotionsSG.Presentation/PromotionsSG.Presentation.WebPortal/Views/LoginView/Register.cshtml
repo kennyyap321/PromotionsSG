@@ -1,0 +1,29 @@
+﻿@model PromotionsSG.Presentation.WebPortal.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+@using (Html.BeginForm("Register", "LoginView", FormMethod.Post, new { @id = "registerForm", @class = "_page-wrapper stepping" }))
+{
+    <div>
+        @Html.Label("Register As: ")
+        @Html.RadioButtonFor(model => model.userDto.UserType, 1) Customer
+        @Html.RadioButtonFor(model => model.userDto.UserType, 2) Shop
+
+        <br />
+        @Html.Label("UserName: ")
+        @Html.TextBoxFor(model => model.userDto.UserName)
+
+        <br />
+        @Html.Label("Password: ")
+        @Html.TextBoxFor(model => model.userDto.Password)
+
+        <br />
+        <button type="submit" id="registerButton">Register</button>
+    </div>
+}
+
+<script>
+
+</script>

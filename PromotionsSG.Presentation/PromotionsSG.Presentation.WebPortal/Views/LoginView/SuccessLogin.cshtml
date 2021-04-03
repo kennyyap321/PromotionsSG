@@ -1,12 +1,11 @@
-﻿@model Common.DBTableModels.UserLogin
+﻿@model PromotionsSG.Presentation.WebPortal.Models.LoginViewModel
 
 @{
-    ViewData["Title"] = "Login";
-    var name = Model.UserName;
+    ViewData["Title"] = "Success Login";
 }
 
 <div>
-    Welcome @Html.DisplayFor(model => model.UserName)
+    Welcome @Html.DisplayFor(model => model.userDto.UserName)
 </div>
 
 <script>

@@ -12,7 +12,16 @@ namespace Common.DBTableModels
         {
         }
 
-        public DbSet<UserLogin> UserLogin { get; set; }
+        #region Login module
+        public DbSet<User> Users { get; set; }
+        #endregion
+
+        #region CustomerProfile module
         public DbSet<CustomerProfile> CustomerProfile { get; set; }
+        #endregion
+
+        #region ShopProfile module
+        public DbSet<ShopProfile> ShopProfiles { get; set; }
+        #endregion
     }
 }

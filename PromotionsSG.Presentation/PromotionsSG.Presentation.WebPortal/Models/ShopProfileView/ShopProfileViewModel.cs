@@ -3,8 +3,8 @@ using System;
 
 namespace PromotionsSG.Presentation.WebPortal.Models
 {
-    public class LoginViewModel
+    public class ShopProfileViewModel
     {
-        public User userDto { get; set; }
+        public ShopProfile shopProfileDto { get; set; }
     }
 }
