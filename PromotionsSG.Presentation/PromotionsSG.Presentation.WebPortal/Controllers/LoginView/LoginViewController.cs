@@ -37,6 +37,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
             var user = loginViewModel.userDto;
+
             var result = await _loginService.LoginAsync(user.UserName, user.Password, user.UserType);
 
             if (result == null)

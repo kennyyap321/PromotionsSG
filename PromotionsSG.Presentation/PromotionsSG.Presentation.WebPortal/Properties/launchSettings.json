@@ -19,7 +19,7 @@
     "PromotionsSG.Presentation.WebPortal": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:5000",
+      "launchUrl": "http://localhost:5000/login",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
