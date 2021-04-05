@@ -28,6 +28,7 @@ namespace PromotionsSG.Presentation.WebPortal
             services.AddControllersWithViews();
             services.AddHttpClient<ILoginService, LoginService>();
             services.AddHttpClient<IShopProfileService, ShopProfileService>();
+            services.AddHttpClient<IPromotionService, PromotionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

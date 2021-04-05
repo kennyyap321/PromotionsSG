@@ -32,5 +32,15 @@ namespace Common.AppSettings
             public static string InsertShopProfileAPI(string api) => $"{BaseURI}/{api}";
             public static string UpdateShopProfileAPI(string api) => $"{BaseURI}/{api}";
         }
+
+        public static class Promotion
+        {
+            public static string BaseURI { get; set; }
+
+            public static string RetrievePromotionByShopIdAPI(string api) => $"{BaseURI}/{api}";
+            public static string RetrievePromotionAPI(string api) => $"{BaseURI}/{api}";
+            public static string InsertPromotionAPI(string api) => $"{BaseURI}/{api}";
+            public static string UpdatePromotionAPI(string api) => $"{BaseURI}/{api}";
+        }
     }
 }

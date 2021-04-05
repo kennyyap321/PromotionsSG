@@ -16,7 +16,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         private readonly ILogger<LoginViewController> _logger;
         private readonly ILoginService _loginService;
 
-        public LoginViewController(ILogger<LoginViewController> logger, ILoginService loginService, IShopProfileService shopProfileService)
+        public LoginViewController(ILogger<LoginViewController> logger, ILoginService loginService, IShopProfileService shopProfileService, IPromotionService promotionService)
         {
             _logger = logger;
             _loginService = loginService;

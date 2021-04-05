@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Common.DBTableModels;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Common.DBTableModels
 {
@@ -22,6 +18,10 @@ namespace Common.DBTableModels
 
         #region ShopProfile module
         public DbSet<ShopProfile> ShopProfiles { get; set; }
+        #endregion
+
+        #region Promotion module
+        public DbSet<Promotion> Promotions { get; set; }
         #endregion
     }
 }
