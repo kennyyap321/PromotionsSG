@@ -28,12 +28,15 @@ namespace PromotionsSG.Presentation.WebPortal
             services.AddControllersWithViews();
             services.AddHttpClient<ILoginService, LoginService>();
             services.AddHttpClient<IShopProfileService, ShopProfileService>();
+            services.AddHttpClient<ICustomerProfileService, CustomerProfileService>();
+            services.AddSession();
             services.AddHttpClient<IPromotionService, PromotionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSession();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -53,6 +56,10 @@ namespace PromotionsSG.Presentation.WebPortal
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=LoginView}/{action=Login}");
+
+                endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=CustomerProfileView}/{action=Index}/{id?}");
             });
         }
     }

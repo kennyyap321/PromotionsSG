@@ -1,4 +1,5 @@
 ﻿using Common.DBTableModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PromotionsSG.Presentation.WebPortal.Models;
@@ -42,6 +43,8 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
 
             if (result == null)
                 return View("UnsuccessLogin");
+
+            HttpContext.Session.SetString("username", user.UserName);
 
             return View("SuccessLogin", new LoginViewModel { userDto = result });
         }

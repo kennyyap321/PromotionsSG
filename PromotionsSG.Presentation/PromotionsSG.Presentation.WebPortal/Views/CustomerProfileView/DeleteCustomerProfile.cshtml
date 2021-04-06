@@ -1,0 +1,21 @@
+﻿@model PromotionsSG.Presentation.WebPortal.Models.CustomerProfileViewModel
+
+@{
+    ViewData["Title"] = "View Customer Profile";
+}
+
+@using (Html.BeginForm("SuccessfulCustomerClick", "CustomerProfileView", FormMethod.Post, new { @id = "commonCustomerProfileForm", @class = "_page-wrapper stepping" }))
+{
+    <div>
+        @Html.Label("Customer Full Name: ")
+        @Html.TextBoxFor(model => model.customerFullName)
+        @Html.Label("Customer Email: ")
+        @Html.TextBoxFor(model => model.customerEmail)
+
+        <button type="submit" id="customerProfileButton">Test Customer</button>
+    </div>
+}
+
+<script>
+
+</script>

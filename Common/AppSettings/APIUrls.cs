@@ -17,7 +17,7 @@ namespace Common.AppSettings
 
         #region CustomerProfileAPI
         public string CustomerProfileAPI_Base { get; set; }
-
+        public string CustomerProfileAPI_RetrieveAll { get; set; }
         public string CustomerProfileAPI_Retrieve { get; set; }
         public string CustomerProfileAPI_Insert { get; set; }
         public string CustomerProfileAPI_Update { get; set; }

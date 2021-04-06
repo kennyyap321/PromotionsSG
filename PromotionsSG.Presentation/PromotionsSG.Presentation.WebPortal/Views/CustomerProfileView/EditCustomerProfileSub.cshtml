@@ -1,0 +1,73 @@
+﻿@model Common.DBTableModels.CustomerProfiles
+
+@{
+    ViewData["Title"] = "Update Profile";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditCustomerProfileSub" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CustomerProfileId" />
+            <input type="hidden" asp-for="CustomerType" />
+            <input type="hidden" asp-for="CustomerActive" />
+            <input type="hidden" asp-for="CreatedBy" />
+            <input type="hidden" asp-for="CreatedTime" />
+            <input type="hidden" asp-for="LastUpdatedBy" />
+            <input type="hidden" asp-for="LastUpdatedTime" />
+            <input type="hidden" asp-for="VersionNo" />
+            <input type="hidden" asp-for="IsDeleted" />
+            <input type="hidden" asp-for="CustomerEmail" />
+
+            <div class="form-group">
+                <label class="control-label">Full Name: </label>
+                <input asp-for="CustomerFullName" class="form-control" />
+                <span asp-validation-for="CustomerFullName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Date of Birth: </label>
+                <input asp-for="CustomerDOB" asp-format="{0:yyyy-MM-dd}" class="form-control" />
+                <span asp-validation-for="CustomerDOB" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Gender: </label>
+                <input asp-for="CustomerGender" value="Male" type="radio" id="myFirstId" />Male
+                <input asp-for="CustomerGender" value="Female" type="radio" id="mySecondId" />Female
+                <span asp-validation-for="CustomerGender" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Email: </label>
+                <input asp-for="CustomerEmail" disabled class="form-control" />
+                <span asp-validation-for="CustomerEmail" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Address: </label>
+                <input asp-for="CustomerAddress" class="form-control" />
+                <span asp-validation-for="CustomerAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Phone: </label>
+                <input asp-for="CustomerPhone" class="form-control" />
+                <span asp-validation-for="CustomerPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="LoginView" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

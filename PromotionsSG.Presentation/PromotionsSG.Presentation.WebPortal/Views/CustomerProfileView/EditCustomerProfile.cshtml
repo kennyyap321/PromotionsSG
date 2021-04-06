@@ -1,0 +1,64 @@
+﻿@model Common.DBTableModels.CustomerProfiles
+
+@{
+    ViewData["Title"] = "Edit Profile";
+    var name = Model.CustomerFullName;
+}
+
+
+@using (Html.BeginForm("EditCustomerProfile", "CustomerProfileView", FormMethod.Post, new { @id = "commonCustomerProfileForm", @class = "_page-wrapper stepping" }))
+{
+    <h1>Edit Profile</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Full Name
+                </th>
+                <th>
+                    Gender
+                </th>
+                <th>
+                    Date of Birth
+                </th>
+                <th>
+                    Phone
+                </th>
+                <th>
+                    Address
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.CustomerFullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CustomerGender)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CustomerDOB)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CustomerPhone)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CustomerEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.CustomerAddress)
+                </td>
+                <td>
+            <a asp-action="EditCustomerProfileSub" asp-route-id="@Model.CustomerEmail">Update Profile</a>
+            @*<a asp-action="ViewCustomerProfile" asp-route-id="@item.CustomerEmail">Delete</a>*@
+        </td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+<script>
+
+</script>

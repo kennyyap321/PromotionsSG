@@ -13,7 +13,7 @@ namespace Common.DBTableModels
         #endregion
 
         #region CustomerProfile module
-        public DbSet<CustomerProfile> CustomerProfile { get; set; }
+        public DbSet<CustomerProfiles> CustomerProfile { get; set; }
         #endregion
 
         #region ShopProfile module
