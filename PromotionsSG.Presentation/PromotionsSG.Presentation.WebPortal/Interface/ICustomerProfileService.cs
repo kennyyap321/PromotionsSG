@@ -9,10 +9,9 @@ namespace PromotionsSG.Presentation.WebPortal
     public interface ICustomerProfileService
     {
         Task<CustomerProfiles> CustomerProfile(string customerEmail);
-        //Task EditCustomerProfile(CustomerProfiles customerProfiles);
-        //Task<CustomerProfiles> AllCustomerProfiles(string customerEmail, string customerFullName);
-        Task<CustomerProfiles> UpdateCustomerProfile(string customerEmail, CustomerProfiles customerProfile);
-        Task<List<CustomerProfiles>> GetCustomerProfiles(); //Ienumerable
+        Task<List<CustomerProfiles>> GetCustomerProfiles();
+        Task<string> CreateCustomer(CustomerProfiles customer);
+        Task<string> UpdateCustomer(CustomerProfiles customer);
 
     }
 }

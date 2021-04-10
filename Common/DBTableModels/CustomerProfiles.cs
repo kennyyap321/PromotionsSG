@@ -6,7 +6,7 @@ namespace Common.DBTableModels
     public class CustomerProfiles
     {
         [Key]
-        public string CustomerProfileId { get; set; }
+        public int CustomerProfileId { get; set; }
         [Required]
         public string CustomerFullName { get; set; }
         [Required]

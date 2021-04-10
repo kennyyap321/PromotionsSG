@@ -29,39 +29,20 @@ namespace PromotionsSG.API.CustomerProfile.Controllers
 
         [HttpPost]
         [Route("customerprofile/insert")]
-        public async Task<int> CreateCustomerProfile()
+        public async Task<string> CreateCustomerProfile([FromBody] CustomerProfiles customerProfiles)
         {
-            CustomerProfiles newCustomer = new CustomerProfiles
-            {
-                CustomerProfileId = "123",
-                CustomerEmail = "john@mail.com",
-                CustomerFullName = "John Holmes"
-            };
-            var result = await _repository.CreateCustomerProfile(newCustomer);
+            var result = await _repository.CreateCustomerProfile(customerProfiles);
+
             return result;
         }
 
-        [HttpPut]
-        [Route("customerprofile/update/{id}")]
-        public async Task<ActionResult<CustomerProfiles>> UpdateCustomerProfile(string id, [FromForm] CustomerProfiles customerProfiles) //[FromBody]
+        [HttpPost]
+        [Route("customerprofile/updateCustomer")]
+        public async Task<string> UpdateCustomer([FromBody] CustomerProfiles customerProfiles)
         {
-            try
-            {
-                if (id != customerProfiles.CustomerEmail)
-                    return BadRequest("Customer ID mismatch");
+            var result = await _repository.UpdateCustomer(customerProfiles);
 
-                var customerToUpdate = await _repository.Customer(id);
-
-                if (customerProfiles == null)
-                    return NotFound($"Customer with email = {id} not found");
-
-                return await _repository.UpdateCustomerProfile(customerProfiles);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error updating data");
-            }
+            return result;
         }
 
         [HttpGet]

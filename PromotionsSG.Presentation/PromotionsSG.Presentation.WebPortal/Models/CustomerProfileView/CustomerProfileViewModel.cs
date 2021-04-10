@@ -8,7 +8,7 @@ namespace PromotionsSG.Presentation.WebPortal.Models
     {
         public class Customer
         {
-            public string customerProfileID { get; set; }
+            public int customerProfileID { get; set; }
             public string customerFullName { get; set; }
             public string customerAddress { get; set; }
             public string customerEmail { get; set; }
@@ -26,7 +26,7 @@ namespace PromotionsSG.Presentation.WebPortal.Models
         }
 
         public CustomerProfiles customerDto { get; set; }
-        public string customerProfileID { get; set; }
+        public int customerProfileID { get; set; }
         public string customerFullName { get; set; }
         public string customerAddress { get; set; }
         public string customerEmail { get; set; }

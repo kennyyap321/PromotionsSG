@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[CustomerProfile](
-	[CustomerProfileId] [varchar](50) NOT NULL,
+	[CustomerProfileId] int IDENTITY(1,1),
 	[CustomerFullName] [varchar](250) NULL,
 	[CustomerAddress] [varchar](500) NULL,
 	[CustomerEmail] [varchar](500) NULL,

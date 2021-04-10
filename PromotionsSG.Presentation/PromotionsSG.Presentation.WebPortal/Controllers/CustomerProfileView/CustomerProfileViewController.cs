@@ -32,6 +32,30 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             _logger = logger;
             _customerProfileService = customerProfileService;
         }
+        [Route("InsertCustomerProfile")]
+        public IActionResult InsertCustomerProfile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("InsertCustomerProfile")]
+        public async Task<IActionResult> InsertCustomerProfile(CustomerProfileViewModel customerProfileViewModel)
+        {
+            CustomerProfiles customer = customerProfileViewModel.customerDto;
+            //customer.CustomerProfileId = "987";
+            customer.CustomerType = "Normal";
+            customer.CustomerActive = true;
+            customer.CreatedBy = "System";
+            customer.CreatedTime = DateTime.Now;
+            customer.LastUpdatedBy = "System";
+            customer.LastUpdatedTime = DateTime.Now;
+            customer.VersionNo = 1;
+            customer.IsDeleted = false;
+            string result = await _customerProfileService.CreateCustomer(customer);
+
+            return View("SuccessCustomerClick", customerProfileViewModel);
+        }
 
         public async Task<IActionResult> SuccessfulCustomerClick(CustomerProfileViewModel customerProfileViewModel)
         {
@@ -45,48 +69,28 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             return View(await _customerProfileService.CustomerProfile(username));
         }
 
-        public async Task<IActionResult> EditCustomerProfile(string id)
+
+        [HttpGet]
+        [Route("UpdateCustomer")]
+        public async Task<IActionResult> UpdateCustomerProfile([FromQuery] string email)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var entity = await _customerProfileService.CustomerProfile(id);
-            if (entity == null)
-            {
-                return NotFound();
-            }
-            return View("EditCustomerProfileSub", entity);
+            email = HttpContext.Session.GetString("username");
+            CustomerProfiles customerProfiles = await _customerProfileService.CustomerProfile(email);
+            CustomerProfileViewModel customerProfileViewModel = new CustomerProfileViewModel { customerDto = customerProfiles };
+
+            return View("UpdateCustomerProfile", customerProfileViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditCustomerProfileSub([Bind("customerProfileID,customerFullName,customerAddress,customerEmail,customerPhone,customerType,customerGender,customerActive,customerDOB,CreatedBy,CreatedTime,LastUpdatedBy,LastUpdatedTime,VersionNo,IsDeleted")] CustomerProfileViewModel customer)
+        [Route("UpdateCustomer")]
+        public async Task<IActionResult> UpdateCustomerProfile(CustomerProfileViewModel customerProfileViewModel)
         {
-            using (var httpClient = new HttpClient())
-            {
-                var content = new MultipartFormDataContent();
-                content.Add(new StringContent(customer.customerProfileID), "CustomerProfileId");
-                content.Add(new StringContent(customer.customerFullName), "CustomerFullName");
-                content.Add(new StringContent(customer.customerAddress), "CustomerAddress");
-                content.Add(new StringContent(customer.customerEmail), "CustomerEmail");
-                content.Add(new StringContent(customer.customerPhone), "CustomerPhone");
-                content.Add(new StringContent(customer.customerType), "CustomerType");
-                content.Add(new StringContent(customer.customerGender), "CustomerGender");
-                content.Add(new StringContent(customer.customerActive.ToString()), "CustomerActive");
-                content.Add(new StringContent(customer.customerDOB.ToString()), "CustomerDOB");
-                content.Add(new StringContent(customer.CreatedBy), "CreatedBy");
-                content.Add(new StringContent(customer.CreatedTime.ToString()), "CreatedTime");
-                content.Add(new StringContent(customer.LastUpdatedBy), "LastUpdatedBy");
-                content.Add(new StringContent(customer.LastUpdatedTime.ToString()), "LastUpdatedTime");
-                content.Add(new StringContent(customer.VersionNo.ToString()), "VersionNo");
-                content.Add(new StringContent(customer.IsDeleted.ToString()), "IsDeleted");
-                using (var response = await httpClient.PutAsync($"http://localhost:9990/customerprofile/update/{customer.customerEmail}", content))
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                }
-            }
-            return View("SuccessCustomerClick");
+            CustomerProfiles customer = customerProfileViewModel.customerDto;
+            string result = await _customerProfileService.UpdateCustomer(customer);
+
+            return View("SuccessCustomerClick", customerProfileViewModel);
         }
+
         public IActionResult Privacy()
         {
             return View();

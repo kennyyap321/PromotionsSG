@@ -17,43 +17,13 @@ namespace PromotionsSG.API.CustomerProfile.Repository
         {
             _context = context;
         }
-        public async Task<int> CreateCustomerProfile(CustomerProfiles customerProfile)
+        public async Task<string> CreateCustomerProfile(CustomerProfiles customerProfile)
         {
             _context.Add(customerProfile);
-            await _context.SaveChangesAsync();
-            return 1;
-        }
+            var result = await _context.SaveChangesAsync();
 
-        public async Task<CustomerProfiles> UpdateCustomerProfile(CustomerProfiles customerProfile)
-        {
-            var result = 
-            await _context.CustomerProfile
-            .FirstOrDefaultAsync(e => e.CustomerEmail == customerProfile.CustomerEmail);
-
-            if (result != null)
-            {
-                result.CustomerProfileId = customerProfile.CustomerProfileId;
-                result.CustomerFullName = customerProfile.CustomerFullName;
-                result.CustomerAddress = customerProfile.CustomerAddress;
-                result.CustomerEmail = customerProfile.CustomerEmail;
-                result.CustomerPhone = customerProfile.CustomerPhone;
-                result.CustomerType = customerProfile.CustomerType;
-                result.CustomerGender = customerProfile.CustomerGender;
-                result.CustomerActive = customerProfile.CustomerActive;
-                result.CustomerDOB = customerProfile.CustomerDOB;
-                result.CreatedBy = customerProfile.CreatedBy;
-                result.CreatedTime = customerProfile.CreatedTime;
-                result.LastUpdatedBy = customerProfile.LastUpdatedBy;
-                result.LastUpdatedTime = customerProfile.LastUpdatedTime;
-                result.VersionNo = customerProfile.VersionNo;
-                result.IsDeleted = customerProfile.IsDeleted;
-
-                await _context.SaveChangesAsync();
-
-                return result;
-            }
-
-            return null;
+            var createdCustomerEmail = (await _context.CustomerProfile.FirstAsync(s => s.CustomerEmail == customerProfile.CustomerEmail)).CustomerEmail;
+            return createdCustomerEmail;
         }
 
         public async Task<CustomerProfiles> Customer(string customerEmail)
@@ -67,6 +37,16 @@ namespace PromotionsSG.API.CustomerProfile.Repository
         {
             var customerProfileData = await _context.CustomerProfile.Where(x => x.CustomerActive == true).ToListAsync();
             return customerProfileData;
+        }
+
+        public async Task<string> UpdateCustomer(CustomerProfiles customerProfiles)
+        {
+            _context.CustomerProfile.Update(customerProfiles);
+            var result = await _context.SaveChangesAsync();
+
+            var updatedCustomerEmail = customerProfiles.CustomerEmail;
+
+            return updatedCustomerEmail;
         }
     }
 }

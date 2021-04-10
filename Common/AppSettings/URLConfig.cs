@@ -23,6 +23,7 @@ namespace Common.AppSettings
             public static string RetrieveAllCustomersProfileAPI(string api) => $"{BaseURI}/{api}";
             public static string InsertCustomerProfileAPI(string api) => $"{BaseURI}/{api}";
             public static string UpdateCustomerProfileAPI(string api) => $"{BaseURI}/{api}";
+            public static string UpdateCustomerAPI(string api) => $"{BaseURI}/{api}";
         }
 
         public static class ShopProfile

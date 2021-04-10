@@ -36,40 +36,6 @@ namespace PromotionsSG.Presentation.WebPortal.Service
             return data;
         }
 
-        public async Task<CustomerProfiles> UpdateCustomerProfile(string customerEmail, CustomerProfiles customerProfile)
-        {
-            string apiURL = URLConfig.CustomerProfile.RetrieveCustomerProfileAPI(_apiUrls.CustomerProfileAPI_Update);
-            apiURL += customerEmail;
-
-            var result = await _context.CustomerProfile.FirstOrDefaultAsync(e => e.CustomerEmail == customerProfile.CustomerEmail);
-
-            if (result != null)
-            {
-                result.CustomerProfileId = customerProfile.CustomerProfileId;
-                result.CustomerFullName = customerProfile.CustomerFullName;
-                result.CustomerAddress = customerProfile.CustomerAddress;
-                result.CustomerEmail = customerProfile.CustomerEmail;
-                result.CustomerPhone = customerProfile.CustomerPhone;
-                result.CustomerType = customerProfile.CustomerType;
-                result.CustomerGender = customerProfile.CustomerGender;
-                result.CustomerActive = customerProfile.CustomerActive;
-                result.CustomerDOB = customerProfile.CustomerDOB;
-                result.CreatedBy = customerProfile.CreatedBy;
-                result.CreatedTime = customerProfile.CreatedTime;
-                result.LastUpdatedBy = customerProfile.LastUpdatedBy;
-                result.LastUpdatedTime = customerProfile.LastUpdatedTime;
-                result.VersionNo = customerProfile.VersionNo;
-                result.IsDeleted = customerProfile.IsDeleted;
-
-                await _context.SaveChangesAsync();
-
-                return result;
-            }
-
-            return null;
-
-        }
-
         async Task<List<CustomerProfiles>> ICustomerProfileService.GetCustomerProfiles()
         {
             string apiURL = URLConfig.CustomerProfile.RetrieveCustomerProfileAPI(_apiUrls.CustomerProfileAPI_RetrieveAll);
@@ -79,6 +45,36 @@ namespace PromotionsSG.Presentation.WebPortal.Service
             var data = !string.IsNullOrEmpty(response) ? JsonConvert.DeserializeObject<List<CustomerProfiles>>(response) : null;
 
             return data;
+        }
+
+        public async Task<string> CreateCustomer(CustomerProfiles customer)
+        {
+            string apiURL = URLConfig.CustomerProfile.InsertCustomerProfileAPI(_apiUrls.CustomerProfileAPI_Insert);
+
+            var payLoad = new StringContent(JsonConvert.SerializeObject(customer), Encoding.UTF8, "application/json");
+            var response = await _apiClient.PostAsync(apiURL, payLoad);
+
+            if (!response.IsSuccessStatusCode)
+                return "Success";
+
+            var createdCustomerEmail = Convert.ToString(await response.Content.ReadAsStringAsync());
+
+            return createdCustomerEmail;
+        }
+
+        public async Task<string> UpdateCustomer(CustomerProfiles customerProfiles)
+        {
+            string apiURL = URLConfig.CustomerProfile.UpdateCustomerAPI(_apiUrls.CustomerProfileAPI_Update);
+
+            var payLoad = new StringContent(JsonConvert.SerializeObject(customerProfiles), Encoding.UTF8, "application/json");
+            var response = await _apiClient.PostAsync(apiURL, payLoad);
+
+            if (!response.IsSuccessStatusCode)
+                return "Success";
+
+            var updatedCustomerEmail = customerProfiles.CustomerEmail;
+
+            return updatedCustomerEmail;
         }
     }
 }
