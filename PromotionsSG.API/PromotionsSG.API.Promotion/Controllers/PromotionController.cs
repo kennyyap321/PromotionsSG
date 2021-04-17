@@ -4,6 +4,9 @@ using Microsoft.Extensions.Logging;
 using PromotionsSG.API.PromotionAPI.Repository;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PromotionsSG.API.PromotionAPI.Controllers
 {
@@ -61,6 +64,43 @@ namespace PromotionsSG.API.PromotionAPI.Controllers
             var result = await _repository.UpdatePromotionAsync(promotion);
 
             return result;
+        }
+
+        [HttpGet]
+        [Route("promotion/retrieveAll")]
+        public async Task<ActionResult> AllPromotions()
+        {
+            try
+            {
+                return Ok(await _repository.GetAllPromotions());
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
+
+        [HttpGet]
+        [Route("promotion/SearchPromotion")]
+        public async Task<ActionResult<IEnumerable<CommonDB.Promotion>>> Search([FromQuery] string searchTerm)
+        {
+            try
+            {
+                var result = await _repository.Search(searchTerm);
+
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
         }
         #endregion
     }

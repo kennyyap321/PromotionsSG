@@ -1,0 +1,64 @@
+﻿@model PromotionViewModel
+
+@{
+    ViewData["Title"] = "CustomerViewPromotions";
+}
+
+<h1>Search Promotions</h1>
+
+<form asp-controller="PromotionView" asp-action="CustomerViewPromotions" method="get">
+    <p>
+        Search Promotions: <input type="text" asp-for="SearchTerm" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
+@if (Model.Promotions != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Promotions[0].Header)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Promotions[0].Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Promotions[0].StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Promotions[0].EndDate)
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Promotions)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Header)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    <a asp-action="Promotion" asp-route-id="@item.PromotionId">View Promotion Details</a>
+                    <a asp-controller="CustomerProfileView" asp-action="SuccessCustomerClick" asp-route-id="@item.PromotionId">Claim Promotion</a> @*to change to claim*@
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    
+}

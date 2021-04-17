@@ -38,11 +38,22 @@ namespace Common.AppSettings
         public static class Promotion
         {
             public static string BaseURI { get; set; }
-
+            public static string RetrieveAllPromotionsAPI(string api) => $"{BaseURI}/{api}";
             public static string RetrievePromotionByShopIdAPI(string api) => $"{BaseURI}/{api}";
             public static string RetrievePromotionAPI(string api) => $"{BaseURI}/{api}";
             public static string InsertPromotionAPI(string api) => $"{BaseURI}/{api}";
             public static string UpdatePromotionAPI(string api) => $"{BaseURI}/{api}";
+            public static string SearchPromotionsAPI(string api) => $"{BaseURI}/{api}";
+        }
+
+        public static class Feedback
+        {
+            public static string BaseURI { get; set; }
+
+            public static string RetrieveFeedbackAPI(string api) => $"{BaseURI}/{api}";
+            public static string RetrieveAllFeedbackAPI(string api) => $"{BaseURI}/{api}";
+            public static string InsertFeedbackAPI(string api) => $"{BaseURI}/{api}";
+            public static string UpdateFeedbackAPI(string api) => $"{BaseURI}/{api}";
         }
     }
 }

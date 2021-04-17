@@ -6,31 +6,118 @@
     <title>@ViewData["Title"] - PromotionsSG.Presentation.WebPortal</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+
+        .mynav_navbar {
+            overflow: hidden;
+            background-color: #333;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+
+
+            .mynav_navbar a {
+                float: left;
+                font-size: 16px;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+
+
+        .mynav_dropdown {
+            float: left;
+            overflow: hidden;
+        }
+
+
+
+            .mynav_dropdown .mynav_dropbtn {
+                font-size: 16px;
+                outline: none;
+                color: white;
+                padding: 14px 16px;
+                background-color: black;
+                font-family: inherit;
+                margin: 0;
+                border-color: white;
+                border-width: 2px;
+            }
+
+
+
+            .mynav_navbar a:hover, .mynav_dropdown:hover .mynav_dropbtn {
+                background-color: red;
+            }
+
+
+
+        .mynav_dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+
+
+            .mynav_dropdown-content a {
+                float: none;
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                text-align: left;
+            }
+
+
+
+                .mynav_dropdown-content a:hover {
+                    background-color: #ddd;
+                }
+
+
+
+        .mynav_dropdown:hover .mynav_dropdown-content {
+            display: block;
+        }
+    </style>
 </head>
 <body>
+    @using Microsoft.AspNetCore.Http;
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PromotionsSG.Presentation.WebPortal</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        @*<li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </li>*@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ShopProfileView" asp-action="ShopProfile">Shop Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="CustomerProfileView" asp-action="ViewCustomerProfile">Customer Profile</a>
-                        </li>
-                    </ul>
+                <div class="navbar-header">
+                    <a asp-area="" asp-controller="LoginView" asp-action="Login" class="navbar-brand">PromotionsSG</a>
+                </div>
+                <div class="mynav_navbar">
+                    @if (@Context.Session.GetString("username") != null)
+                    {
+                        <a asp-area="" asp-controller="LoginView" asp-action="Logout">Logout</a>
+                        <a asp-area="" asp-controller="CustomerProfileView" asp-action="ViewCustomerProfile">Customer Profile</a>
+                    }
+                    else
+                    {
+                        <a hidden asp-area="" asp-controller="CustomerProfileView" asp-action="ViewCustomerProfile">Customer Profile</a>
+                    }
+                    <div class="mynav_dropdown">
+                        <button class="mynav_dropbtn">
+                            Promotions
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="mynav_dropdown-content">
+                            <a asp-area="" asp-controller="PromotionView" asp-action="CustomerViewPromotions">View Promotions</a>
+                            <a asp-area="" asp-controller="ShopProfileView" asp-action="ShopProfile">Shop Profile</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>

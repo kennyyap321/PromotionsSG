@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using PromotionsSG.Presentation.WebPortal.Models;
 using PromotionsSG.Presentation.WebPortal.Service;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -73,6 +74,23 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             int result = await _promotionService.UpdatePromotionAsync(promotion);
 
             return View("Index", promotionViewModel);
+        }
+
+        //[Route("GetAllActivePromotions")]
+        //public async Task<IActionResult> CustomerViewPromotions()
+        //{
+        //    List<Promotion> promotion = await _promotionService.GetAllPromotions();
+        //    PromotionViewModel promotionViewModel = new PromotionViewModel { Promotions = promotion };
+        //    return View(promotionViewModel);
+        //}
+
+        [Route("SearchPromotions")]
+        public async Task<IActionResult> CustomerViewPromotions([Bind("SearchTerm")] PromotionViewModel promotionModel)
+        {
+            List<Promotion> promotion = await _promotionService.Search(promotionModel.SearchTerm);
+            PromotionViewModel promotionViewModel = new PromotionViewModel { Promotions = promotion };
+
+            return View(promotionViewModel);
         }
         #endregion
 

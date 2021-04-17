@@ -77,6 +77,26 @@ namespace PromotionsSG.Presentation.WebPortal.Service
 
             return updatedPromotionId;
         }
+
+        public async Task<List<Promotion>> GetAllPromotions()
+        {
+            string apiURL = URLConfig.Promotion.RetrieveAllPromotionsAPI(_apiUrls.PromotionAPI_RetrieveAll);
+
+            var response = await _httpClient.GetStringAsync(apiURL);
+            var data = !string.IsNullOrEmpty(response) ? JsonConvert.DeserializeObject<List<Promotion>>(response) : null;
+
+            return data;
+        }
+
+        public async Task<List<Promotion>> Search(string searchTerm)
+        {
+            string apiURL = URLConfig.Promotion.SearchPromotionsAPI(_apiUrls.PromotionAPI_Search);
+            apiURL += "?searchTerm=" + searchTerm;
+            var response = await _httpClient.GetStringAsync(apiURL);
+            var data = !string.IsNullOrEmpty(response) ? JsonConvert.DeserializeObject<List<Promotion>>(response) : null;
+
+            return data;
+        }
         #endregion
     }
 }

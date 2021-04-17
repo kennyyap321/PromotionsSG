@@ -78,6 +78,12 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
 
             return View("SuccessLogin", new LoginViewModel { userDto = result2 });
         }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return View("Index");
+        }
         #endregion
 
 

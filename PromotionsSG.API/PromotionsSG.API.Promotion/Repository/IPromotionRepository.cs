@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CommonDB = Common.DBTableModels;
 
 namespace PromotionsSG.API.PromotionAPI.Repository
@@ -10,6 +11,8 @@ namespace PromotionsSG.API.PromotionAPI.Repository
         Task<CommonDB.Promotion> RetrievePromotionByShopIdAsync(int shopId);
         Task<int> CreatePromotionAsync(CommonDB.Promotion promotion);
         Task<int> UpdatePromotionAsync(CommonDB.Promotion promotion);
+        Task<IEnumerable<CommonDB.Promotion>> GetAllPromotions();
+        Task<IEnumerable<CommonDB.Promotion>> Search(string searchTerm);
         #endregion
     }
 }

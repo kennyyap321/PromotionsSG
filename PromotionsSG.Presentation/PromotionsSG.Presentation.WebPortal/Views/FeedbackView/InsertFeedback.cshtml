@@ -1,0 +1,34 @@
+﻿@model PromotionsSG.Presentation.WebPortal.Models.FeedbackViewModel
+
+@{
+    ViewData["Title"] = "Add Feedback";
+}
+
+@using (Html.BeginForm("InsertFeedback", "FeedbackView", FormMethod.Post, new { @id = "feedbackAddForm", @class = "_page-wrapper stepping" }))
+{
+    <div>
+        @Html.Label("Title: ")
+        @Html.TextBoxFor(model => model.feedbackDto.Title)
+
+        <br />
+        @Html.Label("Decscription: ")
+        @Html.TextBoxFor(model => model.feedbackDto.Description)
+
+        <br />
+        <div class="form-group">
+            <label class="control-label">Rating: </label>
+            <input asp-for="feedbackDto.Rating" value="Good" type="radio" id="myFirstId" />Good
+            <input asp-for="feedbackDto.Rating" value="Bad" type="radio" id="mySecondId" />Bad
+            <span asp-validation-for="feedbackDto.Rating" class="text-danger"></span>
+        </div>
+
+        <button type="submit" id="addFeedbackButton">Create Feedback</button>
+    </div>
+}
+
+<script>
+    var today = new Date();
+    var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+    //document.getElementById("CreatedTime").value = date;
+    //document.getElementById("LastUpdatedTime").value = date;
+</script>

@@ -1,6 +1,9 @@
 ﻿using CommonDB = Common.DBTableModels;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace PromotionsSG.API.PromotionAPI.Repository
 {
@@ -46,6 +49,34 @@ namespace PromotionsSG.API.PromotionAPI.Repository
             var updatedPromotionId = promotion.PromotionId;
 
             return updatedPromotionId;
+        }
+
+        public async Task<IEnumerable<CommonDB.Promotion>> GetAllPromotions()
+        {
+            var promotionsData = await _context.Promotions.Where(x => x.IsActive == true).ToListAsync();
+            return promotionsData;
+        }
+
+        public async Task<IEnumerable<CommonDB.Promotion>> Search(string searchTerm)
+        {
+            //var query = from m in _context.Promotions
+            //             select m;
+
+            //return await query.ToListAsync();
+
+            IQueryable<CommonDB.Promotion> query = _context.Promotions;
+
+            //if (!string.IsNullOrEmpty(searchTerm))
+            //{
+            //    query = query.Where(s => s.Header.Contains(searchTerm));
+            //}
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(s => s.Description.Contains(searchTerm) || s.Header.Contains(searchTerm));
+            }
+           
+            return await query.ToListAsync();
         }
         #endregion
     }

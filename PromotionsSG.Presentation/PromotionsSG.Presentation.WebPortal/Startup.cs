@@ -31,6 +31,8 @@ namespace PromotionsSG.Presentation.WebPortal
             services.AddHttpClient<ICustomerProfileService, CustomerProfileService>();
             services.AddSession();
             services.AddHttpClient<IPromotionService, PromotionService>();
+            services.AddHttpClient<IFeedbackService, FeedbackService>();
+            services.AddMvc().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
