@@ -14,23 +14,27 @@ namespace PromotionsSG.Presentation.WebPortal.Service
 {
     public class LoginService : ILoginService
     {
+        #region Fields
         private readonly HttpClient _httpClient;
-        private readonly IShopProfileService _shopProfileService;
         private readonly APIUrls _apiUrls;
+        #endregion
 
+
+        #region Dependency injection
         public LoginService(HttpClient httpClient, IOptions<APIUrls> apiUrls, IShopProfileService shopProfileService)
         {
             _httpClient = httpClient;
             _apiUrls = apiUrls.Value;
             URLConfig.Login.BaseURI = _apiUrls.LoginAPI_Base;
-            _shopProfileService = shopProfileService;
         }
+        #endregion
 
-        #region User
-        public async Task<User> LoginAsync(string userName, string password, int userType)
+
+        #region CRUD
+        public async Task<User> RetrieveAsync(int userId)
         {
-            string apiURL = URLConfig.Login.RetrieveLoginAPI(_apiUrls.LoginAPI_Retrieve);
-            apiURL += "?userName=" + userName + "&password=" + password + "&userType=" + userType;
+            string apiURL = URLConfig.Login.LoginAPI(_apiUrls.LoginAPI_Retrieve);
+            apiURL += "?&userId=" + userId;
 
             var response = await _httpClient.GetStringAsync(apiURL);
             var data = !string.IsNullOrEmpty(response) ? JsonConvert.DeserializeObject<User>(response) : null;
@@ -38,43 +42,52 @@ namespace PromotionsSG.Presentation.WebPortal.Service
             return data;
         }
 
-        public async Task<int> RegisterUserAsync(User user)
+        public async Task<User> InsertAsync(User user)
         {
-            // Create user
-            string apiURL = URLConfig.Login.InsertLoginAPI(_apiUrls.LoginAPI_Insert);
+            string apiURL = URLConfig.Login.LoginAPI(_apiUrls.LoginAPI_Insert);
             var payLoad = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+
             var response = await _httpClient.PostAsync(apiURL, payLoad);
+            var data = await response.Content.ReadAsAsync<User>();
 
-            if (!response.IsSuccessStatusCode)
-                return -1;
-
-            // Get userId
-            var createdUserId = Convert.ToInt32(await response.Content.ReadAsStringAsync());
-
-            // Create shopProfile
-            apiURL = URLConfig.ShopProfile.InsertShopProfileAPI(_apiUrls.ShopProfileAPI_Insert);
-            ShopProfile shopProfile = new ShopProfile { UserId = createdUserId, ShopName = user.UserName };
-            payLoad = new StringContent(JsonConvert.SerializeObject(shopProfile), Encoding.UTF8, "application/json");
-            response = await _httpClient.PostAsync(apiURL, payLoad);
-
-            if (!response.IsSuccessStatusCode)
-                return -1;
-
-            return createdUserId;
+            return data;
         }
 
-        public async Task<int> UpdateUserAsync(User user)
+        public async Task<User> UpdateAsync(User user)
         {
-            string apiURL = URLConfig.Login.UpdateLoginAPI(_apiUrls.LoginAPI_Update);
+            string apiURL = URLConfig.Login.LoginAPI(_apiUrls.LoginAPI_Update);
             var payLoad = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+
             var response = await _httpClient.PostAsync(apiURL, payLoad);
+            var data = await response.Content.ReadAsAsync<User>();
 
-            if (!response.IsSuccessStatusCode)
-                return -1;
+            return data;
+        }
+        #endregion
 
-            var updatedUserId = user.UserId;
 
-            return updatedUserId;
+        #region Custom
+        public async Task<User> LoginAsync(int userType, string userName, string password)
+        {
+            string apiURL = URLConfig.Login.LoginAPI(_apiUrls.LoginAPI_Login);
+            var obj = new { userType, userName, password };
+            var payLoad = new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync(apiURL, payLoad);
+            var data = await response.Content.ReadAsAsync<User>();
+
+            return data;
+        }
+
+        public async Task<User> RegisterAsync(User user)
+        {
+            string apiURL = URLConfig.Login.LoginAPI(_apiUrls.LoginAPI_Insert);
+            var payLoad = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync(apiURL, payLoad);
+            var data = await response.Content.ReadAsAsync<User>();
+
+            return data;
         }
         #endregion
     }

@@ -10,39 +10,53 @@ namespace PromotionsSG.API.Login.Repository
 {
     public class LoginRepository : ILoginRepository
     {
+        #region Fields
         private readonly MyDBContext _context;
+        #endregion
 
+
+        #region Dependency injection
         public LoginRepository(MyDBContext context)
         {
             _context = context;
         }
+        #endregion
 
-        #region UserLogin
-        public async Task<User> LoginAsync(string userName, string password, int userType)
+
+        #region CRUD
+        public async Task<User> RetrieveAsync(int userId)
         {
-            var result = await _context.Users.FirstOrDefaultAsync(u => u.UserName == userName && u.Password == password && u.UserType == userType);
-
-            return result;
+            return await _context.Users.FindAsync(userId);
         }
 
-        public async Task<int> CreateUserAsync(User user)
+        public async Task<User> InsertAsync(User user)
         {
-            _context.Users.Add(user);
-            var result = await _context.SaveChangesAsync();
+            if (_context.Users.FirstOrDefault(u => u.UserName == user.UserName) == null)
+            {
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
 
-            var createdUserId = (await _context.Users.FirstAsync(u => u.UserName == user.UserName && u.UserType == user.UserType)).UserId;
+                return user;
+            }
 
-            return createdUserId;
+            return null;
         }
 
-        public async Task<int> UpdateUserAsync(User user)
+        public async Task<User> UpdateAsync(User userChanged)
         {
-            _context.Users.Update(user);
-            var result = await _context.SaveChangesAsync();
+            var user = _context.Users.Attach(userChanged);
+            user.State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
-            var updatedUserId = user.UserId;
+            return userChanged;
+        }
+        #endregion
 
-            return updatedUserId;
+
+        #region Custom
+        public async Task<User> LoginAsync(User user)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.UserType == user.UserType && u.UserName == user.UserName && u.Password == user.Password);
         }
         #endregion
     }

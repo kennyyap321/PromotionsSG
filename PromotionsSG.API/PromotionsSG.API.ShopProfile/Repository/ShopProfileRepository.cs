@@ -11,39 +11,53 @@ namespace PromotionsSG.API.ShopProfileAPI.Repository
 {
     public class ShopProfileRepository : IShopProfileRepository
     {
+        #region Fields
         private readonly MyDBContext _context;
+        #endregion
 
+
+        #region Dependency injection
         public ShopProfileRepository(MyDBContext context)
         {
             _context = context;
         }
+        #endregion
 
-        #region ShopProfile
-        public async Task<ShopProfile> RetrieveShopProfileByIdAsync(int shopProfileId)
+
+        #region CRUD
+        public async Task<ShopProfile> RetrieveAsync(int shopProfileId)
         {
-            var result = await _context.ShopProfiles.FirstOrDefaultAsync(s => s.ShopProfileId == shopProfileId);
-
-            return result;
+            return await _context.ShopProfiles.FindAsync(shopProfileId);
         }
 
-        public async Task<int> CreateShopProfileAsync(ShopProfile shopProfile)
+        public async Task<ShopProfile> InsertAsync(ShopProfile shopProfile)
         {
-            _context.ShopProfiles.Add(shopProfile);
-            var result = await _context.SaveChangesAsync();
+            if (_context.ShopProfiles.FirstOrDefault(p => p.UserId == shopProfile.UserId) == null)
+            {
+                _context.ShopProfiles.Add(shopProfile);
+                await _context.SaveChangesAsync();
 
-            var createdShopProfileId = (await _context.ShopProfiles.FirstAsync(s => s.UserId == shopProfile.UserId)).ShopProfileId;
+                return shopProfile;
+            }
 
-            return createdShopProfileId;
+            return null;
         }
 
-        public async Task<int> UpdateShopProfileAsync(ShopProfile shopProfile)
+        public async Task<ShopProfile> UpdateAsync(ShopProfile shopProfileChanged)
         {
-            _context.ShopProfiles.Update(shopProfile);
-            var result = await _context.SaveChangesAsync();
+            var shopProfile = _context.ShopProfiles.Attach(shopProfileChanged);
+            shopProfile.State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
-            var updatedShopProfileId = shopProfile.ShopProfileId;
+            return shopProfileChanged;
+        }
+        #endregion
 
-            return updatedShopProfileId;
+
+        #region Custom
+        public async Task<ShopProfile> RetrieveShopProfileByUserIdAsync(int userId)
+        {
+            return await _context.ShopProfiles.FirstOrDefaultAsync(p => p.UserId == userId);
         }
         #endregion
     }

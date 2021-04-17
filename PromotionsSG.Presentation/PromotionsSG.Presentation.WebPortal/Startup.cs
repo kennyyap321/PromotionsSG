@@ -1,6 +1,7 @@
 using Common.AppSettings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,10 +27,11 @@ namespace PromotionsSG.Presentation.WebPortal
         {
             services.Configure<APIUrls>(Configuration.GetSection("APIUrls"));
             services.AddControllersWithViews();
-            services.AddHttpClient<ILoginService, LoginService>();
-            services.AddHttpClient<IShopProfileService, ShopProfileService>();
-            services.AddHttpClient<ICustomerProfileService, CustomerProfileService>();
             services.AddSession();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddHttpClient<ILoginService, LoginService>();
+            services.AddHttpClient<ICustomerProfileService, CustomerProfileService>();
+            services.AddHttpClient<IShopProfileService, ShopProfileService>();
             services.AddHttpClient<IPromotionService, PromotionService>();
             services.AddHttpClient<IFeedbackService, FeedbackService>();
             services.AddMvc().AddRazorRuntimeCompilation();
@@ -57,7 +59,7 @@ namespace PromotionsSG.Presentation.WebPortal
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=LoginView}/{action=Login}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(
                 name: "default",

@@ -12,6 +12,8 @@ namespace Common.AppSettings
         public string LoginAPI_Retrieve { get; set; }
         public string LoginAPI_Insert { get; set; }
         public string LoginAPI_Update { get; set; }
+
+        public string LoginAPI_Login { get; set; }
         #endregion
 
 
@@ -30,7 +32,10 @@ namespace Common.AppSettings
         public string ShopProfileAPI_Retrieve { get; set; }
         public string ShopProfileAPI_Insert { get; set; }
         public string ShopProfileAPI_Update { get; set; }
+
+        public string ShopProfileAPI_RetrieveShopProfileByUserId { get; set; }
         #endregion
+
 
         #region PromotionAPI
         public string PromotionAPI_Base { get; set; }

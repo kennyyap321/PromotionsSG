@@ -55,7 +55,7 @@ namespace PromotionsSG.API.ShopProfileAPI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=ShopProfile}/{action=Health}");
+                    pattern: "{controller=ShopProfile}/{action=Health}/{id?}");
             });
         }
     }

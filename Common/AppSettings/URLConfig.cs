@@ -10,9 +10,10 @@ namespace Common.AppSettings
         {
             public static string BaseURI { get; set; }
 
-            public static string RetrieveLoginAPI(string api) => $"{BaseURI}/{api}";
-            public static string InsertLoginAPI(string api) => $"{BaseURI}/{api}";
-            public static string UpdateLoginAPI(string api) => $"{BaseURI}/{api}";
+            public static string LoginAPI(string api) => $"{BaseURI}/{api}";
+            //public static string RetrieveLoginAPI(string api) => $"{BaseURI}/{api}";
+            //public static string InsertLoginAPI(string api) => $"{BaseURI}/{api}";
+            //public static string UpdateLoginAPI(string api) => $"{BaseURI}/{api}";
         }
 
         public static class CustomerProfile
@@ -30,9 +31,10 @@ namespace Common.AppSettings
         {
             public static string BaseURI { get; set; }
 
-            public static string RetrieveShopProfileAPI(string api) => $"{BaseURI}/{api}";
-            public static string InsertShopProfileAPI(string api) => $"{BaseURI}/{api}";
-            public static string UpdateShopProfileAPI(string api) => $"{BaseURI}/{api}";
+            public static string ShopProfileAPI(string api) => $"{BaseURI}/{api}";
+            //public static string RetrieveShopProfileAPI(string api) => $"{BaseURI}/{api}";
+            //public static string InsertShopProfileAPI(string api) => $"{BaseURI}/{api}";
+            //public static string UpdateShopProfileAPI(string api) => $"{BaseURI}/{api}";
         }
 
         public static class Promotion

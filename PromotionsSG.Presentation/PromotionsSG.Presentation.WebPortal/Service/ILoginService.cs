@@ -8,10 +8,15 @@ namespace PromotionsSG.Presentation.WebPortal.Service
 {
     public interface ILoginService
     {
-        #region User
-        Task<User> LoginAsync(string userName, string password, int userType);
-        Task<int> RegisterUserAsync(User user);
-        Task<int> UpdateUserAsync(User user);
+        #region Custom
+        Task<User> LoginAsync(int userType, string userName, string password);
+        Task<User> RegisterAsync(User user);
+        #endregion
+
+
+        #region CRUD
+        Task<User> RetrieveAsync(int userId);
+        Task<User> UpdateAsync(User user);
         #endregion
     }
 }

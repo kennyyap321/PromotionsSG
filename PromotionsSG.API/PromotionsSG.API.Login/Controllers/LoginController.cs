@@ -12,14 +12,20 @@ namespace PromotionsSG.API.Login.Controllers
 {
     public class LoginController : ControllerBase
     {
+        #region Fields
         private readonly ILogger<LoginController> _logger;
         private readonly ILoginRepository _repository;
+        #endregion
 
+
+        #region Dependency injection
         public LoginController(ILogger<LoginController> logger, ILoginRepository repository)
         {
             _logger = logger;
             _repository = repository;
         }
+        #endregion
+
 
         #region Health
         public IActionResult Health()
@@ -29,30 +35,39 @@ namespace PromotionsSG.API.Login.Controllers
         #endregion
 
 
-        #region User
+        #region CRUD
         [HttpGet]
-        [Route("login/retrieve")]
-        public async Task<User> Login([FromQuery] string userName, string password, int userType)
+        public async Task<User> Retrieve(int userId)
         {
-            var result = await _repository.LoginAsync(userName, password, userType);
+            var result = await _repository.RetrieveAsync(userId);
 
             return result;
         }
 
         [HttpPost]
-        [Route("login/insert")]
-        public async Task<int> CreateUser([FromBody] User userLogin)
+        public async Task<User> Insert([FromBody] User user)
         {
-            var result = await _repository.CreateUserAsync(userLogin);
+            var result = await _repository.InsertAsync(user);
 
             return result;
         }
 
         [HttpPost]
-        [Route("login/update")]
-        public async Task<int> UpdateUserAsync([FromBody] User userLogin)
+        public async Task<User> Update([FromBody] User user)
         {
-            var result = await _repository.UpdateUserAsync(userLogin);
+            var result = await _repository.UpdateAsync(user);
+
+            return result;
+        }
+        #endregion
+
+
+        #region Custom
+        [HttpPost]
+        [Route("login/login")]
+        public async Task<User> Login([FromBody] User user)
+        {
+            var result = await _repository.LoginAsync(user);
 
             return result;
         }

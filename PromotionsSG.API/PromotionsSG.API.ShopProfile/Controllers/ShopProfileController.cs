@@ -12,14 +12,20 @@ namespace PromotionsSG.API.ShopProfileAPI.Controllers
 {
     public class ShopProfileController : ControllerBase
     {
+        #region Fields
         private readonly ILogger<ShopProfileController> _logger;
         private readonly IShopProfileRepository _repository;
+        #endregion
 
+
+        #region Dependency injection
         public ShopProfileController(ILogger<ShopProfileController> logger, IShopProfileRepository repository)
         {
             _logger = logger;
             _repository = repository;
         }
+        #endregion
+
 
         #region Health
         public IActionResult Health()
@@ -29,30 +35,39 @@ namespace PromotionsSG.API.ShopProfileAPI.Controllers
         #endregion
 
 
-        #region ShopProfile
+        #region CRUD
         [HttpGet]
-        [Route("shopProfile/retrieve")]
-        public async Task<ShopProfile> RetrieveShopProfileById([FromQuery] int shopProfileId)
+        public async Task<ShopProfile> Retrieve([FromQuery] int shopProfileId)
         {
-            var result = await _repository.RetrieveShopProfileByIdAsync(shopProfileId);
+            var result = await _repository.RetrieveAsync(shopProfileId);
 
             return result;
         }
 
         [HttpPost]
-        [Route("shopProfile/insert")]
-        public async Task<int> CreateShopProfile([FromBody] ShopProfile shopProfile)
+        public async Task<ShopProfile> Insert([FromBody] ShopProfile shopProfile)
         {
-            var result = await _repository.CreateShopProfileAsync(shopProfile);
+            var result = await _repository.InsertAsync(shopProfile);
 
             return result;
         }
 
         [HttpPost]
-        [Route("shopProfile/update")]
-        public async Task<int> UpdateShopProfileLogin([FromBody] ShopProfile shopProfile)
+        public async Task<ShopProfile> Update([FromBody] ShopProfile shopProfile)
         {
-            var result = await _repository.UpdateShopProfileAsync(shopProfile);
+            var result = await _repository.UpdateAsync(shopProfile);
+
+            return result;
+        }
+        #endregion
+
+
+        #region Custom
+        [HttpGet]
+        [Route("shopProfile/retrieveShopProfileByUserId")]
+        public async Task<ShopProfile> RetrieveShopProfileByUserId([FromQuery] int userId)
+        {
+            var result = await _repository.RetrieveShopProfileByUserIdAsync(userId);
 
             return result;
         }

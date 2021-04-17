@@ -8,10 +8,15 @@ namespace PromotionsSG.Presentation.WebPortal.Service
 {
     public interface IShopProfileService
     {
-        #region ShopProfile
-        Task<ShopProfile> RetrieveShopProfileAsync(int shopProfileId);
-        Task<int> CreateShopProfileAsync(ShopProfile shopProfile);
-        Task<int> UpdateShopProfileAsync(ShopProfile shopProfile);
+        #region CRUD
+        Task<ShopProfile> RetrieveAsync(int shopProfileId);
+        Task<ShopProfile> InsertAsync(ShopProfile shopProfile);
+        Task<ShopProfile> UpdateAsync(ShopProfile shopProfile);
+        #endregion
+
+
+        #region Custom
+        Task<ShopProfile> RetrieveShopProfileByUserIdAsync(int userId);
         #endregion
     }
 }

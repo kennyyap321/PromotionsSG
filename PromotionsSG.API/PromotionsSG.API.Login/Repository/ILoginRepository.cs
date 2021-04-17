@@ -8,10 +8,14 @@ namespace PromotionsSG.API.Login.Repository
 {
     public interface ILoginRepository
     {
-        #region User
-        Task<User> LoginAsync(string userName, string password, int userType);
-        Task<int> CreateUserAsync(User user);
-        Task<int> UpdateUserAsync(User user);
+        #region CRUD
+        Task<User> RetrieveAsync(int userId);
+        Task<User> InsertAsync(User user);
+        Task<User> UpdateAsync(User user);
+        #endregion
+
+        #region Custom
+        Task<User> LoginAsync(User user);
         #endregion
     }
 }
