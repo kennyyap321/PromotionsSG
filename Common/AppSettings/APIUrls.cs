@@ -8,11 +8,9 @@ namespace Common.AppSettings
     {
         #region LoginAPI
         public string LoginAPI_Base { get; set; }
-
         public string LoginAPI_Retrieve { get; set; }
         public string LoginAPI_Insert { get; set; }
         public string LoginAPI_Update { get; set; }
-
         public string LoginAPI_Login { get; set; }
         #endregion
 
@@ -28,11 +26,9 @@ namespace Common.AppSettings
 
         #region ShopProfileAPI
         public string ShopProfileAPI_Base { get; set; }
-
         public string ShopProfileAPI_Retrieve { get; set; }
         public string ShopProfileAPI_Insert { get; set; }
         public string ShopProfileAPI_Update { get; set; }
-
         public string ShopProfileAPI_RetrieveShopProfileByUserId { get; set; }
         #endregion
 
@@ -46,6 +42,16 @@ namespace Common.AppSettings
         public string PromotionAPI_Update { get; set; }
         public string PromotionAPI_Search { get; set; }
         #endregion
+
+
+        #region ClaimAPI
+        public string ClaimAPI_Base { get; set; }
+        public string ClaimAPI_Retrieve { get; set; }
+        public string ClaimAPI_RetrieveAll { get; set; }
+        public string ClaimAPI_Insert { get; set; }
+        public string ClaimAPI_Update { get; set; }
+        #endregion
+
 
         #region FeedbackAPI
         public string FeedbackAPI_Base { get; set; }

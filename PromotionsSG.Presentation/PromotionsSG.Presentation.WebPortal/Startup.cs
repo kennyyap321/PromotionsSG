@@ -33,6 +33,7 @@ namespace PromotionsSG.Presentation.WebPortal
             services.AddHttpClient<ICustomerProfileService, CustomerProfileService>();
             services.AddHttpClient<IShopProfileService, ShopProfileService>();
             services.AddHttpClient<IPromotionService, PromotionService>();
+            services.AddHttpClient<IClaimService, ClaimService>();
             services.AddHttpClient<IFeedbackService, FeedbackService>();
             services.AddMvc().AddRazorRuntimeCompilation();
         }

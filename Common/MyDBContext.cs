@@ -24,6 +24,10 @@ namespace Common.DBTableModels
         public DbSet<Promotion> Promotions { get; set; }
         #endregion
 
+        #region Claim module
+        public DbSet<Claim> Claims { get; set; }
+        #endregion
+
         #region Feedback module
         public DbSet<Feedbacks> Feedback { get; set; }
         #endregion

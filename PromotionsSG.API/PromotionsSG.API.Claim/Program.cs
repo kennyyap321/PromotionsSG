@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PromotionsSG.API.Claim
+namespace PromotionsSG.API.ClaimAPI
 {
     public class Program
     {

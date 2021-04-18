@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PromotionsSG.API", "Promoti
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PromotionsSG.DB", "PromotionsSG.DB", "{5FE1680B-D0EB-47B2-8305-61A52254EE6A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromotionsSG.API.Claim", "PromotionsSG.API\PromotionsSG.API.Claim\PromotionsSG.API.Claim.csproj", "{86D57CF9-D833-4504-8A5C-C657CC02D4D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromotionsSG.API.ClaimAPI", "PromotionsSG.API\PromotionsSG.API.Claim\PromotionsSG.API.ClaimAPI.csproj", "{86D57CF9-D833-4504-8A5C-C657CC02D4D9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromotionsSG.API.CustomerProfile", "PromotionsSG.API\PromotionsSG.API.CustomerProfile\PromotionsSG.API.CustomerProfile.csproj", "{92700EA3-7D28-4B75-BC6E-FE960DACA68B}"
 EndProject

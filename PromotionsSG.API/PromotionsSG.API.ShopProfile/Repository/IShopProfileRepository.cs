@@ -11,11 +11,11 @@ namespace PromotionsSG.API.ShopProfileAPI.Repository
         #region CRUD
         Task<ShopProfile> RetrieveAsync(int shopProfileId);
         Task<ShopProfile> InsertAsync(ShopProfile shopProfile);
-        Task<ShopProfile> UpdateAsync(ShopProfile shopProfile);
+        Task<ShopProfile> UpdateAsync(ShopProfile shopProfileChanged);
         #endregion
 
 
-        #region ShopProfile
+        #region Custom
         Task<ShopProfile> RetrieveShopProfileByUserIdAsync(int userId);
         #endregion
     }

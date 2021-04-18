@@ -60,4 +60,10 @@
     <Folder Include="dbo\Tables" />
     <Folder Include="Snapshots" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Claims.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Snapshots\PromotionsSG.DB.Claim_20210418_03-06-13.dacpac" />
+  </ItemGroup>
 </Project>

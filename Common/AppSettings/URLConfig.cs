@@ -30,7 +30,6 @@ namespace Common.AppSettings
         public static class ShopProfile
         {
             public static string BaseURI { get; set; }
-
             public static string ShopProfileAPI(string api) => $"{BaseURI}/{api}";
             //public static string RetrieveShopProfileAPI(string api) => $"{BaseURI}/{api}";
             //public static string InsertShopProfileAPI(string api) => $"{BaseURI}/{api}";
@@ -46,6 +45,12 @@ namespace Common.AppSettings
             public static string InsertPromotionAPI(string api) => $"{BaseURI}/{api}";
             public static string UpdatePromotionAPI(string api) => $"{BaseURI}/{api}";
             public static string SearchPromotionsAPI(string api) => $"{BaseURI}/{api}";
+        }
+
+        public static class Claim
+        {
+            public static string BaseURI { get; set; }
+            public static string ClaimAPI(string api) => $"{BaseURI}/{api}";
         }
 
         public static class Feedback
