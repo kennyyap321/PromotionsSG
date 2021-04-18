@@ -12,5 +12,10 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers.Home
         {
             return View();
         }
+
+        public IActionResult Privacy()
+        {
+            return View("Privacy");
+        }
     }
 }
