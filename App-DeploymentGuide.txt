@@ -1,4 +1,5 @@
-1) Run the command "aws ecr get-login --no-include-email --region ap-southeast-1" in cmd
-2) Run the command generated in step #1 in cmd
-3) Run manualdeployment.bat
-4) Restart ECS services
+1) Copy "D:\Kenny\Kenny\Projects\PromotionsSG\PromotionsSG\Credentials\AWS" and place it in your "C:\Users\$user\" folder
+2) Run the command "aws ecr get-login --no-include-email --region ap-southeast-1" in cmd
+3) Run the command generated in step #1 in cmd
+4) Run manualdeployment.bat by double clicking the file
+5) Restart ECS services (Refer to aws console login credentials in D:\Kenny\Kenny\Projects\PromotionsSG\PromotionsSG\Credentials\AWS\console and DB login credentials.txt)
