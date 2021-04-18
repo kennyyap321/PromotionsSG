@@ -1,24 +1,20 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-#Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
-#For more information, please see https://aka.ms/containercompat
-
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
-WORKDIR /app
-EXPOSE 80
-
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
-WORKDIR /src
-COPY ["PromotionsSG.API.ShopProfile/PromotionsSG.API.ShopProfile.csproj", "PromotionsSG.API.ShopProfile/"]
-RUN dotnet restore "PromotionsSG.API.ShopProfile/PromotionsSG.API.ShopProfile.csproj"
-COPY . .
-WORKDIR "/src/PromotionsSG.API.ShopProfile"
-RUN dotnet build "PromotionsSG.API.ShopProfile.csproj" -c Release -o /app/build
+WORKDIR /app 
 
-FROM build AS publish
-RUN dotnet publish "PromotionsSG.API.ShopProfile.csproj" -c Release -o /app/publish
+COPY Common/*.csproj ./
+COPY PromotionsSG.API.ShopProfile/*.csproj ./
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "PromotionsSG.API.ShopProfile.dll"]
+RUN dotnet restore PromotionsSG.API.ShopProfileAPI.csproj
+
+# copy everything else and build app
+COPY Common/. ./Common/
+COPY PromotionsSG.API.ShopProfile/. ./PromotionsSG.API.ShopProfileAPI/
+#
+WORKDIR /app/PromotionsSG.API.ShopProfileAPI
+RUN dotnet publish -c Release -o out 
+#
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
+WORKDIR /app 
+#
+COPY --from=build /app/PromotionsSG.API.ShopProfileAPI/out ./
+ENTRYPOINT ["dotnet", "PromotionsSG.API.ShopProfileAPI.dll"]

@@ -1,0 +1,4 @@
+1) Run the command "aws ecr get-login --no-include-email --region ap-southeast-1" in cmd
+2) Run the command generated in step #1 in cmd
+3) Run manualdeployment.bat
+4) Restart ECS services

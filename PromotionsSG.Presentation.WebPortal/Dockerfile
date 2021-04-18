@@ -1,22 +1,14 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /app 
 
-#COPY LoginAPI/*.csproj ./LoginAPI/
-#COPY Common/*.csproj ./Common/
-#COPY PromotionsSG.Presentation.WebPortal/*.csproj ./PromotionsSG.Presentation.WebPortal/
-
-COPY LoginAPI/*.csproj ./
 COPY Common/*.csproj ./
 COPY PromotionsSG.Presentation.WebPortal/*.csproj ./
- 
-#
+
 RUN dotnet restore PromotionsSG.Presentation.WebPortal.csproj
-#
+
 # copy everything else and build app
-COPY LoginAPI/. ./LoginAPI/
 COPY Common/. ./Common/
 COPY PromotionsSG.Presentation.WebPortal/. ./PromotionsSG.Presentation.WebPortal/
-
 #
 WORKDIR /app/PromotionsSG.Presentation.WebPortal
 RUN dotnet publish -c Release -o out 
