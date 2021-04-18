@@ -17,6 +17,7 @@ namespace PromotionsSG.API.ClaimAPI.Repository
 
 
         #region Custom
+        Task<Claim> ClaimAsync(Claim claim);
         #endregion
     }
 }

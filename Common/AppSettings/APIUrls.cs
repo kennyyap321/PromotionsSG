@@ -50,6 +50,7 @@ namespace Common.AppSettings
         public string ClaimAPI_RetrieveAll { get; set; }
         public string ClaimAPI_Insert { get; set; }
         public string ClaimAPI_Update { get; set; }
+        public string ClaimAPI_Claim { get; set; }
         #endregion
 
 

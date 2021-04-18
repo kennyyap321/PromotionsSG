@@ -16,6 +16,7 @@ namespace PromotionsSG.Presentation.WebPortal.Service
 
 
         #region Custom
+        Task<Claim> ClaimAsync(int promotionId, string userName);
         #endregion
     }
 }

@@ -1,3 +1,4 @@
+using Common.AppSettings;
 using Common.DBTableModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +28,8 @@ namespace PromotionsSG.API.ClaimAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<APIUrls>(Configuration.GetSection("APIUrls"));
+
             var connectionString = Configuration.GetConnectionString("PromotionsSGdb");
             if (!string.IsNullOrEmpty(connectionString))
             {
@@ -35,7 +38,7 @@ namespace PromotionsSG.API.ClaimAPI
                     options.UseSqlServer(connectionString);
                 });
                 services.AddControllersWithViews();
-                services.AddTransient<IClaimRepository, ClaimRepository>();
+                services.AddHttpClient<IClaimRepository, ClaimRepository>();
             }
         }
 

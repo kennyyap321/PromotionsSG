@@ -29,20 +29,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         #endregion
 
 
-        #region CRUD
-        [HttpPost]
-        public async Task<IActionResult> Update(ShopProfileViewModel shopProfileViewModel)
-        {
-            ShopProfile shopProfile = shopProfileViewModel.ShopProfileDto;
-
-            ShopProfile result = await _shopProfileService.UpdateAsync(shopProfile);
-
-            return View("Index", new ShopProfileViewModel { ShopProfileDto = result });
-        }
-        #endregion
-
-
-        #region Custom
+        #region Get
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -61,6 +48,19 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             }
 
             return View(new ShopProfileViewModel { ShopProfileDto = result });
+        }
+        #endregion
+
+
+        #region Post
+        [HttpPost]
+        public async Task<IActionResult> Update(ShopProfileViewModel shopProfileViewModel)
+        {
+            ShopProfile shopProfile = shopProfileViewModel.ShopProfileDto;
+
+            ShopProfile result = await _shopProfileService.UpdateAsync(shopProfile);
+
+            return View("Index", new ShopProfileViewModel { ShopProfileDto = result });
         }
         #endregion
     }

@@ -29,28 +29,30 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         #endregion
 
 
-        #region CRUD
-        [HttpPost]
-        public async Task<IActionResult> Update(User user)
-        {
-            User result = await _loginService.UpdateAsync(user);
-            if (result != null)
-            {
-                return new JsonResult(result);
-            }
-
-            return new JsonResult(null);
-        }
-        #endregion
-
-
-        #region Custom
+        #region Get
         [HttpGet]
         public async Task<IActionResult> Login()
         {
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Clear();
+            //HttpContext.Session.Remove("usertype");
+
+            return RedirectToAction("index", "home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Register()
+        {
+            return View();
+        }
+        #endregion
+
+        #region Post
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
@@ -74,19 +76,16 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             return View();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Logout()
+        [HttpPost]
+        public async Task<IActionResult> Update(User user)
         {
-            HttpContext.Session.Clear();
-            //HttpContext.Session.Remove("usertype");
+            User result = await _loginService.UpdateAsync(user);
+            if (result != null)
+            {
+                return new JsonResult(result);
+            }
 
-            return RedirectToAction("index", "home");
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Register()
-        {
-            return View();
+            return new JsonResult(null);
         }
 
         [HttpPost]

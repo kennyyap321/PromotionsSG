@@ -6,6 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Http;
+using Common.AppSettings;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace PromotionsSG.API.ClaimAPI.Repository
 {
@@ -13,13 +18,18 @@ namespace PromotionsSG.API.ClaimAPI.Repository
     {
         #region Fields
         private readonly MyDBContext _context;
+        private readonly HttpClient _httpClient;
+        private readonly APIUrls _apiUrls;
         #endregion
 
 
         #region Dependency injection
-        public ClaimRepository(MyDBContext context)
+        public ClaimRepository(MyDBContext context, HttpClient httpClient, IOptions<APIUrls> apiUrls)
         {
             _context = context;
+            _httpClient = httpClient;
+            _apiUrls = apiUrls.Value;
+            URLConfig.Login.BaseURI = _apiUrls.LoginAPI_Base;
         }
         #endregion
 
@@ -55,6 +65,44 @@ namespace PromotionsSG.API.ClaimAPI.Repository
 
 
         #region Custom
+        public async Task<Claim> ClaimAsync(Claim claim)
+        {
+            var promotionId = claim.PromotionId;
+            var promotion = await RetrievePromotionForClaimAsync(promotionId);
+            
+            promotion.Qty -= 1;
+            await UpdatePromotionForClaimAsync(promotion);
+
+            _context.Claims.Add(claim);
+            await _context.SaveChangesAsync();
+
+            return claim;
+        }
+        #endregion
+
+
+        #region Other api call
+        private async Task<Promotion> RetrievePromotionForClaimAsync(int promotionId)
+        {
+            string apiURL = URLConfig.Promotion.RetrievePromotionAPI(_apiUrls.PromotionAPI_Retrieve);
+            apiURL += "?&promotionId=" + promotionId;
+
+            var response = await _httpClient.GetStringAsync(apiURL);
+            var data = !string.IsNullOrEmpty(response) ? JsonConvert.DeserializeObject<Promotion>(response) : null;
+
+            return data;
+        }
+
+        private async Task<Promotion> UpdatePromotionForClaimAsync(Promotion promotion)
+        {
+            string apiURL = URLConfig.Promotion.UpdatePromotionAPI(_apiUrls.PromotionAPI_Update);
+            var payLoad = new StringContent(JsonConvert.SerializeObject(promotion), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync(apiURL, payLoad);
+            var data = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
+
+            return promotion;
+        }
         #endregion
     }
 }

@@ -45,7 +45,7 @@ namespace PromotionsSG.Presentation.WebPortal.Service
         {
             string apiURL = URLConfig.Claim.ClaimAPI(_apiUrls.ClaimAPI_Insert);
             var payLoad = new StringContent(JsonConvert.SerializeObject(claim), Encoding.UTF8, "application/json");
-            
+
             var response = await _httpClient.PostAsync(apiURL, payLoad);
             var data = await response.Content.ReadAsAsync<Claim>();
 
@@ -56,7 +56,7 @@ namespace PromotionsSG.Presentation.WebPortal.Service
         {
             string apiURL = URLConfig.Claim.ClaimAPI(_apiUrls.ClaimAPI_Update);
             var payLoad = new StringContent(JsonConvert.SerializeObject(claim), Encoding.UTF8, "application/json");
-            
+
             var response = await _httpClient.PostAsync(apiURL, payLoad);
             var data = await response.Content.ReadAsAsync<Claim>();
 
@@ -66,6 +66,25 @@ namespace PromotionsSG.Presentation.WebPortal.Service
 
 
         #region Custom
+        public async Task<Claim> ClaimAsync(int promotionId, string userName)
+        {
+            string apiURL = URLConfig.CustomerProfile.RetrieveCustomerProfileAPI(_apiUrls.CustomerProfileAPI_Retrieve);
+            apiURL += "?&customerEmail=" + userName.Replace("@","%40");
+
+            //Todo: Get customerProfileId
+            //var response = await _httpClient.GetStringAsync(apiURL);
+            //var data = !string.IsNullOrEmpty(response) ? JsonConvert.DeserializeObject<CustomerProfiles>(response) : null;
+            
+            Claim claim = new Claim { PromotionId = promotionId, CustomerProfileId = 1 };
+                        
+            var apiURL2 = URLConfig.Claim.ClaimAPI(_apiUrls.ClaimAPI_Claim);
+            var payLoad2 = new StringContent(JsonConvert.SerializeObject(claim), Encoding.UTF8, "application/json");
+
+            var response2 = await _httpClient.PostAsync(apiURL2, payLoad2);
+            var data2 = await response2.Content.ReadAsAsync<Claim>();
+
+            return data2;
+        }
         #endregion
     }
 }

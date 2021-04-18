@@ -51,14 +51,36 @@
                 </td>
                 <td>
                     <a asp-action="Promotion" asp-route-id="@item.PromotionId">View Promotion Details</a>
-                    <a asp-controller="CustomerProfileView" asp-action="SuccessCustomerClick" asp-route-id="@item.PromotionId">Claim Promotion</a> @*to change to claim*@
+                    |
+                    <a href="#" onclick="AjaxFormSubmit(@item.PromotionId)">Claim</a>
                 </td>
             </tr>
             }
         </tbody>
     </table>
 }
-else
-{
-    
-}
+
+<script>
+    function AjaxFormSubmit(promotionId) {
+        var url = '/claim/claim';
+
+        var formData = new FormData();
+        formData.append("promotionId", promotionId);
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: formData,
+            processData: false,
+            contentType: false
+        }).done(function (response) {
+            if (response == null) {
+                alert('Encountered error during claiming');
+
+            } else {
+                alert('Claimed successfully');
+                window.location.href = "/claim/details/" + response.claimId;
+            }
+        });
+    }
+</script>

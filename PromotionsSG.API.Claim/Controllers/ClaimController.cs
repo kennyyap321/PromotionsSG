@@ -71,6 +71,13 @@ namespace PromotionsSG.API.ClaimAPI.Controllers
 
 
         #region Custom
+        [HttpPost]
+        public async Task<Claim> Claim([FromBody] Claim claim)
+        {
+            var result = await _repository.ClaimAsync(claim);
+
+            return result;
+        }
         #endregion
     }
 }

@@ -6,6 +6,6 @@
 	[Header] varchar(255),
 	[Description] varchar(255),
 	[StartDate] DateTime,
-	[Qty] int not null,
 	[EndDate] DateTime,
+	[Qty] int not null,
 	[IsActive] bit)
