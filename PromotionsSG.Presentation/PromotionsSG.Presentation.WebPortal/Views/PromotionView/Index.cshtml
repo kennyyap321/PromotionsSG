@@ -1,0 +1,31 @@
+﻿@model PromotionsSG.Presentation.WebPortal.Models.PromotionViewModel
+
+@{
+    ViewData["Title"] = "Update Promotion";
+}
+
+@using (Html.BeginForm("updatePromotion", "PromotionView", FormMethod.Post, new { @id = "promotionForm", @class = "_page-wrapper stepping" }))
+{
+    @Html.HiddenFor(model => model.PromotionDto.PromotionId)
+    @Html.HiddenFor(model => model.PromotionDto.ShopProfileId)
+    @Html.HiddenFor(model => model.PromotionDto.Type)
+    @Html.HiddenFor(model => model.PromotionDto.IsActive)
+    @Html.HiddenFor(model => model.PromotionDto.StartDate)
+    @Html.HiddenFor(model => model.PromotionDto.EndDate)
+
+    <div>
+        @Html.Label("Promotion Name: ")
+        @Html.TextBoxFor(model => model.PromotionDto.Header)
+
+        <br />
+        @Html.Label("Header") @Html.TextBoxFor(model => model.PromotionDto.Header)
+        @Html.Label("Description") @Html.TextBoxFor(model => model.PromotionDto.Description)
+
+        <button type="submit" id="updateShopProfileButton">Update</button>
+    </div>
+    <a href="/AddPromotion">Add</a>
+}
+
+<script>
+
+</script>

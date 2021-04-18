@@ -1,0 +1,22 @@
+﻿@model PromotionsSG.Presentation.WebPortal.Models.PromotionViewModel
+
+@{
+    ViewData["Title"] = "Add Promotion";
+}
+
+@using (Html.BeginForm("CreatePromotion", "PromotionView", FormMethod.Post, new { @id = "promotionForm", @class = "_page-wrapper stepping" }))
+{
+    <div>
+        @Html.Label("Promotion Name: ")
+        @Html.TextBoxFor(model => model.PromotionDto.Header)
+
+        <br />
+        @Html.Label("Description") @Html.TextBoxFor(model => model.PromotionDto.Description)
+
+        <button type="submit" id="addPromotionButton">Add</button>
+    </div>
+}
+
+<script>
+
+</script>

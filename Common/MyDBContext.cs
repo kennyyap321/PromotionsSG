@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Common.DBTableModels;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Common.DBTableModels
 {
@@ -12,7 +8,28 @@ namespace Common.DBTableModels
         {
         }
 
-        public DbSet<UserLogin> UserLogin { get; set; }
-        public DbSet<CustomerProfile> CustomerProfile { get; set; }
+        #region Login module
+        public DbSet<User> Users { get; set; }
+        #endregion
+
+        #region CustomerProfile module
+        public DbSet<CustomerProfiles> CustomerProfile { get; set; }
+        #endregion
+
+        #region ShopProfile module
+        public DbSet<ShopProfile> ShopProfiles { get; set; }
+        #endregion
+
+        #region Promotion module
+        public DbSet<Promotion> Promotions { get; set; }
+        #endregion
+
+        #region Claim module
+        public DbSet<Claim> Claims { get; set; }
+        #endregion
+
+        #region Feedback module
+        public DbSet<Feedbacks> Feedback { get; set; }
+        #endregion
     }
 }
