@@ -208,24 +208,22 @@
                     <i class="fa fa-arrow-left"></i>
                 </div>
                 <ul class="list-unstyled components">
-                    <li class="active"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    @if (@Context.Session.GetString("username") != null)
+                    <li class="active"><a asp-controller="Home" asp-action="Index">PromotionsSG</a></li>
+
+                    @if (Context.Session.GetString("username") != null)
                     {
-                        <li><a asp-controller="Login" asp-action="Logout">Logout</a></li>
-                        <li><a asp-controller="CustomerProfileView" asp-action="ViewCustomerProfile">Customer Profile</a></li> 
+                        if (Context.Session.GetInt32("usertype") == 1)
+                        {
+                            <li><a asp-controller="ShopProfile" asp-action="Index">Profile</a></li>
+                        }
+                        else
+                        {
+
+                            <li><a asp-controller="CustomerProfileView" asp-action="ViewCustomerProfile">Profile</a></li>
+                        }
                     }
-                    else
-                    {
-                        <li><a hidden asp-controller="CustomerProfileView" asp-action="ViewCustomerProfile">Customer Profile</a></li>
-                    }
-                    <li><a asp-controller="ShopProfile" asp-action="Index">Shop Profile</a></li>
-                    <li><a asp-controller="CustomerProfileView" asp-action="ViewCustomerProfile">Customer Profile</a></li>
-                    <li><a asp-controller="Login" asp-action="Login">Login</a></li>
-                    <li><a asp-controller="Login" asp-action="Logout">Logout</a></li>
-                    <li><a asp-controller="Login" asp-action="Register">Register</a></li>
-                    <li><a asp-controller="PromotionView" asp-action="CustomerViewPromotions">View Promotions</a></li>
-                    <li><a asp-controller="ShopProfileView" asp-action="ShopProfile">Shop Profile</a></li>
-                    <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+
+                    <li><a asp-controller="PromotionView" asp-action="CustomerViewPromotions">Search</a></li>
                 </ul>
             </nav>
         </div>
@@ -249,27 +247,29 @@
                                 <div class="col-lg-9">
                                     <div class="right_header_info">
                                         <ul>
-                                            <li class="menu_iconb">
-                                                <a href="#"><img style="margin-right: 15px;" src="~/icon/1.png" alt="#" />7213456789</a>
-                                            </li>
-                                            <li class="menu_iconb">
-                                                <a href="#">Log in <img style="margin-right: 15px;" src="~/icon/5.png" alt="#" /> </a>
-                                            </li>
-                                            <li class="menu_iconb">
-                                                <a href="#">Signup<img style="margin-left: 15px;" src="~/icon/6.png" alt="#" /></a>
-                                            </li>
-                                            <li class="tytyu">
-                                                <a href="#"> <img style="margin-right: 15px;" src="~/icon/2.png" alt="#" /></a>
-                                            </li>
-                                            <li class="menu_iconb">
-                                                <a asp-controller="PromotionView" asp-action="CustomerViewPromotions"><img style="margin-right: 15px;" src="~/icon/3.png" alt="#" /></a>
-                                            </li>
+                                            <li class="menu_iconb"><a href="#"><img style="margin-right: 15px;" src="~/icon/1.png" alt="#" />7213456789</a></li>
 
-                                            <li>
-                                                <button type="button" id="sidebarCollapse">
-                                                    <img src="~/images/menu_icon.png" alt="#" />
-                                                </button>
-                                            </li>
+                                            @if (Context.Session.GetString("username") != null)
+                                            {
+                                                if (Context.Session.GetInt32("usertype") == 1)
+                                                {
+                                                    <li><a asp-controller="ShopProfile" asp-action="Index">@Context.Session.GetString("username")</a></li>
+                                                }
+                                                else
+                                                {
+                                                    <li><a asp-controller="CustomerProfileView" asp-action="ViewCustomerProfile">@Context.Session.GetString("username")</a></li>
+                                                }
+                                                <li class="menu_iconb"><a asp-controller="Login" asp-action="Logout">Signout<img style="margin-left: 10px;" src="~/icon/5.png" alt="#" /> </a></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="menu_iconb"><a asp-controller="Login" asp-action="Login">Signin<img style="margin-left: 10px;" src="~/icon/5.png" alt="#" /> </a></li>
+                                                <li class="menu_iconb"><a asp-controller="Login" asp-action="Register">Signup<img style="margin-left: 10px;" src="~/icon/6.png" alt="#" /></a></li>
+                                            }
+
+                                            @*<li class="tytyu"><a href="#"> <img style="margin-right: 15px;" src="~/icon/2.png" alt="#" /></a></li>*@
+                                            <li class="menu_iconb"><a asp-controller="PromotionView" asp-action="CustomerViewPromotions"><img style="margin-right: 15px;" src="~/icon/3.png" alt="#" /></a></li>
+                                            <li><button type="button" id="sidebarCollapse"><img src="~/images/menu_icon.png" alt="#" /></button></li>
                                         </ul>
                                     </div>
                                 </div>
