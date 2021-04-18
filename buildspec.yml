@@ -1,0 +1,38 @@
+version: "0.2"
+
+phases:
+  pre_build:
+    commands:
+      - echo copy first step
+      - COPY LoginAPI/*.csproj ./
+      - COPY Common/*.csproj ./
+      - COPY PromotionsSG.Presentation.WebPortal/*.csproj ./
+      
+      - echo Restore started on `date`
+      - dotnet restore PromotionsSG.Presentation.WebPortal/PromotionsSG.Presentation.WebPortal.csproj
+      
+      - echo copy second step
+      - COPY LoginAPI/. ./LoginAPI/
+      - COPY Common/. ./Common/
+      - COPY PromotionsSG.Presentation.WebPortal/. ./PromotionsSG.Presentation.WebPortal/      
+      
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+      - REPOSITORY_URI=702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/promotionssg-web
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+  build:
+    commands:
+      - echo Build started on `date`
+      - dotnet publish -c release -o ./build_output PromotionsSG.Presentation.WebPortal/PromotionsSG.Presentation.WebPortal.csproj    
+      
+      - echo Building the Docker image...
+      - docker build -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
