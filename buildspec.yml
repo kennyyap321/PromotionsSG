@@ -8,15 +8,22 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - echo Building the Docker image...          
-      - docker build -f WebPortal-Dockerfile -t webportalapi .
+      - echo Building the Docker image...
+      
+      - docker build -f PromotionsSG.API.Login.Dockerfile -t loginapi .
+      - docker build -f PromotionsSG.Presentation.WebPortal.Dockerfile -t webportalapi .
+      
+      - docker tag loginapi:latest 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/loginapi:latest
       - docker tag webportalapi:latest 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/webportalapi:latest
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
+      
+      - docker push 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/loginapi:latest
       - docker push 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/webportalapi:latest
-      - printf '[{"name":"promotionsg-container-webportal","imageUri":"%s"}]' 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/webportalapi:latest > imagedefinitions.json
+      
+      #- printf '[{"name":"promotionsg-container-webportal","imageUri":"%s"}]' 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/webportalapi:latest > imagedefinitions.json
       - aws ecs list-tasks --cluster "promotionsg-cluster" --output text | awk '{print $2}' | while read line ; do aws ecs stop-task --task "$line" --cluster "promotionsg-cluster" ; done
       
 artifacts:
