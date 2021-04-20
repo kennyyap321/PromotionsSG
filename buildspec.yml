@@ -9,7 +9,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...          
-      - docker build -t webportalapi .
+      - docker build -f WebPortal-Dockerfile -t webportalapi .
       - docker tag webportalapi:latest 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/webportalapi:latest
   post_build:
     commands:
