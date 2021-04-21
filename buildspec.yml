@@ -39,7 +39,7 @@ phases:
       - docker push 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/webportalapi:latest
       
       #- printf '[{"name":"promotionsg-container-webportal","imageUri":"%s"}]' 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/webportalapi:latest > imagedefinitions.json
-      - aws ecs list-tasks --cluster "promotionsg-cluster" --output text | awk '{print $2}' | while read line ; do aws ecs stop-task --task "$line" --cluster "promotionsg-cluster" ; done
+      #- aws ecs list-tasks --cluster "promotionsg-cluster" --output text | awk '{print $2}' | while read line ; do aws ecs stop-task --task "$line" --cluster "promotionsg-cluster" ; done
       
 artifacts:
   files:
