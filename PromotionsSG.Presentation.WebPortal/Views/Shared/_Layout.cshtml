@@ -1,4 +1,5 @@
-﻿<!--<!DOCTYPE html>
+﻿@model RegisterViewModel
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -430,9 +431,9 @@
                                     <div class="address">
                                         <h3>why choose us</h3>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna </p>
-                                        <form class="newtetter">
-                                            <input class="tetter" placeholder="Your email" type="text" name="Your email">
-                                            <button class="submit">Subscribe</button>
+                                        <form class="newtetter" asp-controller="Home" asp-action="Subscribe" method="post">
+                                            <input asp-for="Email" class="tetter" type="text" >
+                                            <button class="submit" type="submit">Subscribe</button>
                                         </form>
                                     </div>
                                 </div>
