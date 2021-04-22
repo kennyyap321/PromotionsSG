@@ -82,20 +82,26 @@ namespace PromotionsSG.Presentation.WebPortal.Service
         {
             string apiURL = URLConfig.Promotion.RetrieveAllPromotionsAPI(_apiUrls.PromotionAPI_RetrieveAll);
 
-            var response = await _httpClient.GetStringAsync(apiURL);
-            var data = !string.IsNullOrEmpty(response) ? JsonConvert.DeserializeObject<List<Promotion>>(response) : null;
+            var response = await _httpClient.GetAsync(apiURL);
+            var data = await response.Content.ReadAsStringAsync();
+            var jsonString = !string.IsNullOrEmpty(data) ? JsonConvert.DeserializeObject<List<Promotion>>(data) : null;
 
-            return data;
+            return jsonString;
         }
 
         public async Task<List<Promotion>> Search(string searchTerm)
         {
             string apiURL = URLConfig.Promotion.SearchPromotionsAPI(_apiUrls.PromotionAPI_Search);
             apiURL += "?searchTerm=" + searchTerm;
-            var response = await _httpClient.GetStringAsync(apiURL);
-            var data = !string.IsNullOrEmpty(response) ? JsonConvert.DeserializeObject<List<Promotion>>(response) : null;
+            var response = await _httpClient.GetAsync(apiURL); //getstringasync
+            if(!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+            var data = await response.Content.ReadAsStringAsync();
+            var jsonString = !string.IsNullOrEmpty(data) ? JsonConvert.DeserializeObject<List<Promotion>>(data) : null;
 
-            return data;
+            return jsonString;
         }
         #endregion
     }

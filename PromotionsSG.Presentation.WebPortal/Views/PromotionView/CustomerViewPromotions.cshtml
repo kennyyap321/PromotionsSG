@@ -12,22 +12,29 @@
         <input type="submit" value="Search" />
     </p>
 </form>
-@if (Model.Promotions != null)
+
+@if (Model == null || Model.Promotions == null)
+{
+    <br />
+    <p>@ViewBag.SearchResult</p>
+    <br />
+}
+else
 {
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Promotions[0].Header)
+                    Header
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Promotions[0].Description)
+                    Description
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Promotions[0].StartDate)
+                    Start Date
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Promotions[0].EndDate)
+                    End Date
                 </th>
                 <th></th>
                 <th></th>
@@ -36,25 +43,25 @@
         <tbody>
             @foreach (var item in Model.Promotions)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Header)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
-                <td>
-                    <a asp-action="Promotion" asp-route-id="@item.PromotionId">View Promotion Details</a>
-                    |
-                    <a href="#" onclick="AjaxFormSubmit(@item.PromotionId)">Claim</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Header)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        <a asp-action="GetPromotion" asp-route-id="@item.PromotionId">View Promotion Details</a>
+                        |
+                        <a href="#" onclick="AjaxFormSubmit(@item.PromotionId)">Claim</a>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

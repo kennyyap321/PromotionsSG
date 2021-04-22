@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace PromotionsSG.Presentation.WebPortal.Controllers
 {
@@ -36,7 +37,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         [Route("/AddPromotion")]
         public async Task<IActionResult> Register()
         {
-            PromotionViewModel promotionViewModel = new PromotionViewModel ();
+            PromotionViewModel promotionViewModel = new PromotionViewModel();
 
             return View("AddPromotion", promotionViewModel);
         }
@@ -51,7 +52,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             return View("Index", promotionViewModel);
         }
 
-       [HttpPost]
+        [HttpPost]
         [Route("/CreatePromotion")]
         public async Task<IActionResult> CreatePromotion(PromotionViewModel promotionViewModel)
         {
@@ -76,21 +77,46 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             return View("Index", promotionViewModel);
         }
 
-        //[Route("GetAllActivePromotions")]
-        //public async Task<IActionResult> CustomerViewPromotions()
-        //{
-        //    List<Promotion> promotion = await _promotionService.GetAllPromotions();
-        //    PromotionViewModel promotionViewModel = new PromotionViewModel { Promotions = promotion };
-        //    return View(promotionViewModel);
-        //}
+        [HttpGet]
+        [Route("GetPromotion")]
+        public async Task<IActionResult> GetPromotion(string id)
+        {
+            Promotion promotion = await _promotionService.RetrievePromotionAsync(Convert.ToInt32(id));
+            PromotionViewModel promotionViewModel = new PromotionViewModel { PromotionDto = promotion };
+
+            return View("Index", promotionViewModel);
+        }
 
         [Route("SearchPromotions")]
         public async Task<IActionResult> CustomerViewPromotions([Bind("SearchTerm")] PromotionViewModel promotionModel)
         {
-            List<Promotion> promotion = await _promotionService.Search(promotionModel.SearchTerm);
-            PromotionViewModel promotionViewModel = new PromotionViewModel { Promotions = promotion };
+            if (promotionModel.SearchTerm != null)
+            {
+                List<Promotion> promotion = await _promotionService.Search(promotionModel.SearchTerm);
 
-            return View(promotionViewModel);
+                if (promotion == null)
+                {
+                    ViewBag.SearchResult = "No results found";
+                    return View();
+                }
+
+                PromotionViewModel promotionViewModel = new PromotionViewModel { Promotions = promotion };
+                return View(promotionViewModel);
+            }
+
+            List<Promotion> promotions = await _promotionService.GetAllPromotions();
+            if (promotions == null || promotions.Count < 1)
+            {
+                //to return empty if no results returned
+                ViewBag.SearchResult = "No promotions available";
+                return View();
+            }
+
+            // To show all promotions upon page load for the 1st time
+            PromotionViewModel promotionsViewModel = new PromotionViewModel { Promotions = promotions };
+
+            return View(promotionsViewModel);
+
         }
         #endregion
 
