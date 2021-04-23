@@ -17,14 +17,16 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         #region Fields
         private readonly ILogger<ClaimController> _logger;
         private readonly IClaimService _claimService;
+        private readonly ICustomerProfileService _customerProfileService;
         #endregion
 
 
         #region Dependency injection
-        public ClaimController(ILogger<ClaimController> logger, IClaimService claimService)
+        public ClaimController(ILogger<ClaimController> logger, IClaimService claimService, ICustomerProfileService customerProfileService)
         {
             _logger = logger;
             _claimService = claimService;
+            _customerProfileService = customerProfileService;
         }
         #endregion
 
@@ -49,8 +51,16 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         public async Task<IActionResult> Claim(int promotionId)
         {
             string userName = HttpContext.Session.GetString("username");
+            CustomerProfiles customerProfile = await _customerProfileService.CustomerProfile(userName);
+            int customerProfileId = customerProfile.CustomerProfileId;
 
-            var result = await _claimService.ClaimAsync(promotionId, userName);
+            Claim claim = new Claim
+            {
+                PromotionId = promotionId,
+                CustomerProfileId = customerProfileId
+            };
+
+            var result = await _claimService.ClaimAsync(claim);
             if (result != null)
             {
                 return new JsonResult(result);
