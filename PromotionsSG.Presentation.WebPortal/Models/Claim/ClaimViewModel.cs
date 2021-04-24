@@ -6,8 +6,8 @@ namespace PromotionsSG.Presentation.WebPortal.Models
 {
     public class ClaimViewModel
     {
-        public ClaimWithPromotionAndShopInfo ClaimDto { get; set; }
-        public IEnumerable<ClaimWithPromotionAndShopInfo> ClaimListDto { get; set; }
+        public ClaimWithPromotionAndShopInfo ClaimExtraInfo { get; set; }
+        public IEnumerable<ClaimWithPromotionAndShopInfo> ClaimExtraInfoListDto { get; set; }
     }
 
     public class ClaimWithPromotionAndShopInfo

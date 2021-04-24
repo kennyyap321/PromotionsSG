@@ -87,7 +87,7 @@ namespace PromotionsSG.API.ClaimAPI.Repository
         #endregion
 
 
-        #region Other api call
+        #region Other api calls
         private async Task<Promotion> RetrievePromotionForClaimAsync(int promotionId)
         {
             string apiURL = URLConfig.Promotion.RetrievePromotionAPI(_apiUrls.PromotionAPI_Retrieve);

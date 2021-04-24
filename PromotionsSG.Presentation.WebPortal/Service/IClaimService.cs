@@ -19,6 +19,7 @@ namespace PromotionsSG.Presentation.WebPortal.Service
         #region Custom
         Task<Claim> ClaimAsync(Claim claim);
         Task<IEnumerable<ClaimWithPromotionAndShopInfo>> RetrieveClaimsWithPromotionAndShopInfoByCustomerProfileIdAsync(int customerProfileId);
+        Task<ClaimWithPromotionAndShopInfo> RetrieveClaimWithPromotionAndShopInfoByClaimIdAsync(int claimId);
         #endregion
     }
 }

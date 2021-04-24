@@ -112,11 +112,43 @@ namespace PromotionsSG.Presentation.WebPortal.Service
                 cwpasi.ClaimDto = c;
                 cwpasi.PromotionDto = promotions.FirstOrDefault(p => p.PromotionId == c.PromotionId);
                 cwpasi.ShopProfileDto = shopProfiles.FirstOrDefault(s => s.ShopProfileId == cwpasi.PromotionDto.ShopProfileId);
-                
+
                 return cwpasi;
             });
 
             return claimWithPromotionAndShopInfos;
+        }
+
+        public async Task<ClaimWithPromotionAndShopInfo> RetrieveClaimWithPromotionAndShopInfoByClaimIdAsync(int claimId)
+        {
+            //Get claim
+            var claim = await RetrieveAsync(claimId);
+
+
+            //Get promotion
+            string apiUrl = URLConfig.Promotion.RetrievePromotionAPI(_apiUrls.PromotionAPI_Retrieve);
+            apiUrl += "?promotionId=" + claim.PromotionId;
+
+            var response = await _httpClient.GetStringAsync(apiUrl);
+            var promotion = !string.IsNullOrEmpty(response) ? JsonConvert.DeserializeObject<Promotion>(response) : null;
+
+
+            //Get shopProfile
+            string apiUrl2 = URLConfig.ShopProfile.ShopProfileAPI(_apiUrls.ShopProfileAPI_Retrieve);
+            apiUrl2 += "?shopProfileId=" + promotion.ShopProfileId;
+
+            var response2 = await _httpClient.GetStringAsync(apiUrl2);
+            var shopProfile = !string.IsNullOrEmpty(response2) ? JsonConvert.DeserializeObject<ShopProfile>(response2) : null;
+
+            //Combine all into ClaimWithPromotionAndShopInfo
+            var claimWithPromotionAndShopInfo = new ClaimWithPromotionAndShopInfo
+            {
+                ClaimDto = claim,
+                PromotionDto = promotion,
+                ShopProfileDto = shopProfile
+            };
+
+            return claimWithPromotionAndShopInfo;
         }
         #endregion
     }

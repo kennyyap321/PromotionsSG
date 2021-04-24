@@ -1,7 +1,37 @@
-﻿@model ClaimViewModel 
+﻿@model ClaimViewModel
 
 @{
     ViewData["Title"] = "Claim Details";
 }
 
 <h4>@ViewData["Title"]</h4>
+
+<div>
+    QR Code
+</div>
+
+<div>
+    Claim Details
+    <br />Shop: @Model.ClaimExtraInfo.ShopProfileDto.ShopName
+    <br />Promotion Title: @Model.ClaimExtraInfo.PromotionDto.Header
+    <br />Promotion Description: @Model.ClaimExtraInfo.PromotionDto.Description
+    <br />Promotion Start Date: @Model.ClaimExtraInfo.PromotionDto.StartDate.ToString("yyyy-MM-dd")
+    <br />Promotion End Date: @Model.ClaimExtraInfo.PromotionDto.EndDate.ToString("yyyy-MM-dd")
+</div>
+
+@if (Model.ClaimExtraInfo.ClaimDto.Consumed == false)
+{
+    <div>
+        <form asp-controller="Claim" asp-action="Use" method="post" enctype="multipart/form-data">
+            <input hidden name="claimId" value="@Model.ClaimExtraInfo.ClaimDto.ClaimId" />
+            <button type="submit">Use</button>
+        </form>
+    </div>
+}
+else
+{
+    <div>
+        <br />Used Date: @Model.ClaimExtraInfo.ClaimDto.ConsumeDate.Value.ToString("yyyy-MM-dd")
+    </div>
+}
+

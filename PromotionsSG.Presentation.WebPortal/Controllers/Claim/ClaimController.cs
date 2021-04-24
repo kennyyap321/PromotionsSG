@@ -39,7 +39,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             int customerProfileId = (await _customerProfileService.CustomerProfile(userName)).CustomerProfileId;
 
             IEnumerable<ClaimWithPromotionAndShopInfo> cwpasis = await _claimService.RetrieveClaimsWithPromotionAndShopInfoByCustomerProfileIdAsync(customerProfileId);
-            ClaimViewModel claimViewModel = new ClaimViewModel { ClaimListDto = cwpasis };
+            ClaimViewModel claimViewModel = new ClaimViewModel { ClaimExtraInfoListDto = cwpasis };
 
             return View(claimViewModel);
         }
@@ -47,7 +47,10 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int claimId)
         {
-            return View(); //todo:Claim details
+            ClaimWithPromotionAndShopInfo cwpasi = await _claimService.RetrieveClaimWithPromotionAndShopInfoByClaimIdAsync(claimId);
+            ClaimViewModel claimViewModel = new ClaimViewModel { ClaimExtraInfo = cwpasi };
+
+            return View(claimViewModel);
         }
         #endregion
 
@@ -72,6 +75,19 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             }
 
             return new JsonResult(null);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Use(int claimId)
+        {
+            Claim claim = await _claimService.RetrieveAsync(claimId);
+
+            claim.Consumed = true;
+            claim.ConsumeDate = DateTime.Now;
+
+            await _claimService.UpdateAsync(claim);
+
+            return RedirectToAction("Details", "Claim", new { claimId });
         }
         #endregion
     }
