@@ -4,9 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PromotionsSG.Presentation.WebPortal.Models;
 using PromotionsSG.Presentation.WebPortal.Service;
+using QRCoder;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -39,6 +43,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             int customerProfileId = (await _customerProfileService.CustomerProfile(userName)).CustomerProfileId;
 
             IEnumerable<ClaimWithPromotionAndShopInfo> cwpasis = await _claimService.RetrieveClaimsWithPromotionAndShopInfoByCustomerProfileIdAsync(customerProfileId);
+
             ClaimViewModel claimViewModel = new ClaimViewModel { ClaimExtraInfoListDto = cwpasis };
 
             return View(claimViewModel);
@@ -47,8 +52,19 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int claimId)
         {
+            //Claim detaails
             ClaimWithPromotionAndShopInfo cwpasi = await _claimService.RetrieveClaimWithPromotionAndShopInfoByClaimIdAsync(claimId);
-            ClaimViewModel claimViewModel = new ClaimViewModel { ClaimExtraInfo = cwpasi };
+
+            //QRCode
+            string txtQrCode = $"ClaimId_{claimId}_ShopProfileId_{cwpasi.PromotionDto.ShopProfileId}_PromotionId_{cwpasi.PromotionDto.PromotionId}";
+            QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrCodeGenerator.CreateQrCode(txtQrCode, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+            byte[] qrBytes = await BitmapToBytes(qrCodeImage);
+
+            //Viewmodel
+            ClaimViewModel claimViewModel = new ClaimViewModel { ClaimExtraInfo = cwpasi, QrBtyes = qrBytes };
 
             return View(claimViewModel);
         }
@@ -88,6 +104,19 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             await _claimService.UpdateAsync(claim);
 
             return RedirectToAction("Details", "Claim", new { claimId });
+        }
+        #endregion
+
+
+        #region Non action
+        [NonAction]
+        private async static Task<byte[]> BitmapToBytes(Bitmap image)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                image.Save(stream, ImageFormat.Png);
+                return stream.ToArray();
+            }
         }
         #endregion
     }

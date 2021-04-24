@@ -8,6 +8,7 @@ namespace PromotionsSG.Presentation.WebPortal.Models
     {
         public ClaimWithPromotionAndShopInfo ClaimExtraInfo { get; set; }
         public IEnumerable<ClaimWithPromotionAndShopInfo> ClaimExtraInfoListDto { get; set; }
+        public byte[] QrBtyes { get; set; }
     }
 
     public class ClaimWithPromotionAndShopInfo
