@@ -1,4 +1,5 @@
 ﻿using Common.DBTableModels;
+using PromotionsSG.Presentation.WebPortal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace PromotionsSG.Presentation.WebPortal.Service
 
         #region Custom
         Task<Claim> ClaimAsync(Claim claim);
+        Task<IEnumerable<ClaimWithPromotionAndShopInfo>> RetrieveClaimsWithPromotionAndShopInfoByCustomerProfileIdAsync(int customerProfileId);
         #endregion
     }
 }

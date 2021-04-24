@@ -35,7 +35,13 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(); //todo:Claim history
+            string userName = HttpContext.Session.GetString("username");
+            int customerProfileId = (await _customerProfileService.CustomerProfile(userName)).CustomerProfileId;
+
+            IEnumerable<ClaimWithPromotionAndShopInfo> cwpasis = await _claimService.RetrieveClaimsWithPromotionAndShopInfoByCustomerProfileIdAsync(customerProfileId);
+            ClaimViewModel claimViewModel = new ClaimViewModel { ClaimListDto = cwpasis };
+
+            return View(claimViewModel);
         }
 
         [HttpGet]
@@ -51,8 +57,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         public async Task<IActionResult> Claim(int promotionId)
         {
             string userName = HttpContext.Session.GetString("username");
-            CustomerProfiles customerProfile = await _customerProfileService.CustomerProfile(userName);
-            int customerProfileId = customerProfile.CustomerProfileId;
+            int customerProfileId = (await _customerProfileService.CustomerProfile(userName)).CustomerProfileId;
 
             Claim claim = new Claim
             {

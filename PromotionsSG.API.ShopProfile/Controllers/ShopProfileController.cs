@@ -64,10 +64,17 @@ namespace PromotionsSG.API.ShopProfileAPI.Controllers
 
         #region Custom
         [HttpGet]
-        [Route("shopProfile/retrieveShopProfileByUserId")]
         public async Task<ShopProfile> RetrieveShopProfileByUserId([FromQuery] int userId)
         {
             var result = await _repository.RetrieveShopProfileByUserIdAsync(userId);
+
+            return result;
+        }
+
+        [HttpPost]
+        public async Task<IEnumerable<ShopProfile>> RetrieveShopProfilesByShopProfileIds([FromBody] IEnumerable<int> shopProfileIds)
+        {
+            var result = await _repository.RetrieveShopProfilesByShopProfileIdsAsync(shopProfileIds);
 
             return result;
         }

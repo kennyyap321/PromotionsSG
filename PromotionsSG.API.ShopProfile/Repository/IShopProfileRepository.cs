@@ -17,6 +17,7 @@ namespace PromotionsSG.API.ShopProfileAPI.Repository
 
         #region Custom
         Task<ShopProfile> RetrieveShopProfileByUserIdAsync(int userId);
+        Task<IEnumerable<ShopProfile>> RetrieveShopProfilesByShopProfileIdsAsync(IEnumerable<int> shopProfileIds);
         #endregion
     }
 }

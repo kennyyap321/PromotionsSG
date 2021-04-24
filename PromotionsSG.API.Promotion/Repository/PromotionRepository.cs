@@ -78,6 +78,13 @@ namespace PromotionsSG.API.PromotionAPI.Repository
            
             return await query.ToListAsync();
         }
+
+        public async Task<IEnumerable<CommonDB.Promotion>> RetrievePromotionsByPromotionIdsAsync(IEnumerable<int> promotionIds)
+        {
+            var result = _context.Promotions.Where(p => promotionIds.Contains(p.PromotionId));
+
+            return result;
+        }
         #endregion
     }
 }

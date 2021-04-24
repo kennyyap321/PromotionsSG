@@ -13,6 +13,7 @@ namespace PromotionsSG.API.PromotionAPI.Repository
         Task<int> UpdatePromotionAsync(CommonDB.Promotion promotion);
         Task<IEnumerable<CommonDB.Promotion>> GetAllPromotions();
         Task<IEnumerable<CommonDB.Promotion>> Search(string searchTerm);
+        Task<IEnumerable<CommonDB.Promotion>> RetrievePromotionsByPromotionIdsAsync(IEnumerable<int> promotionIds);
         #endregion
     }
 }

@@ -79,6 +79,11 @@ namespace PromotionsSG.API.ClaimAPI.Repository
 
             return claim;
         }
+
+        public async Task<IEnumerable<Claim>> RetrieveByCustomerProfileIdAsync(int customerProfileId)
+        {
+            return _context.Claims.Where(c => c.CustomerProfileId == customerProfileId);
+        }
         #endregion
 
 

@@ -78,6 +78,14 @@ namespace PromotionsSG.API.ClaimAPI.Controllers
 
             return result;
         }
+
+        [HttpGet]
+        public async Task<IEnumerable<Claim>> RetrieveByCustomerProfileId(int customerProfileId)
+        {
+            var result = await _repository.RetrieveByCustomerProfileIdAsync(customerProfileId);
+
+            return result;
+        }
         #endregion
     }
 }

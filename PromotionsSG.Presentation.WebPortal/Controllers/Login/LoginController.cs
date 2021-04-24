@@ -52,6 +52,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         }
         #endregion
 
+
         #region Post
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
@@ -71,7 +72,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
                 }
             }
 
-            ModelState.AddModelError("Invalid Credentials", "Invalid Credentials");
+            ModelState.AddModelError("Login failed", "Login failed");
 
             return View();
         }
