@@ -59,6 +59,11 @@ namespace PromotionsSG.API.ShopProfileAPI.Repository
         {
             return await _context.ShopProfiles.FirstOrDefaultAsync(p => p.UserId == userId);
         }
+
+        public async Task<IEnumerable<ShopProfile>> RetrieveShopProfilesByShopProfileIdsAsync(IEnumerable<int> shopProfileIds)
+        {
+            return _context.ShopProfiles.Where(s => shopProfileIds.Contains(s.ShopProfileId));
+        }
         #endregion
     }
 }

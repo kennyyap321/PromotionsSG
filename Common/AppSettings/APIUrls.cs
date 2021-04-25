@@ -30,6 +30,7 @@ namespace Common.AppSettings
         public string ShopProfileAPI_Insert { get; set; }
         public string ShopProfileAPI_Update { get; set; }
         public string ShopProfileAPI_RetrieveShopProfileByUserId { get; set; }
+        public string ShopProfileAPI_RetrieveShopProfilesByShopProfileIds { get; set; }
         #endregion
 
 
@@ -41,6 +42,7 @@ namespace Common.AppSettings
         public string PromotionAPI_Insert { get; set; }
         public string PromotionAPI_Update { get; set; }
         public string PromotionAPI_Search { get; set; }
+        public string PromotionAPI_RetrievePromotionsByPromotionIds { get; set; }
         #endregion
 
 
@@ -51,6 +53,7 @@ namespace Common.AppSettings
         public string ClaimAPI_Insert { get; set; }
         public string ClaimAPI_Update { get; set; }
         public string ClaimAPI_Claim { get; set; }
+        public string ClaimAPI_RetrieveByCustomerProfileId { get; set; }
         #endregion
 
 

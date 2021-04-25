@@ -65,5 +65,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\PromotionsSG.DB.Promotion_20210418_22-02-03.dacpac" />
+    <None Include="Snapshots\PromotionsSG.DB.Promotion_20210423_16-57-09.dacpac" />
   </ItemGroup>
 </Project>

@@ -18,6 +18,7 @@ namespace PromotionsSG.API.ClaimAPI.Repository
 
         #region Custom
         Task<Claim> ClaimAsync(Claim claim);
+        Task<IEnumerable<Claim>> RetrieveByCustomerProfileIdAsync(int customerProfileId);
         #endregion
     }
 }

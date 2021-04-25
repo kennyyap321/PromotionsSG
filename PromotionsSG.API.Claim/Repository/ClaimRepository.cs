@@ -67,21 +67,27 @@ namespace PromotionsSG.API.ClaimAPI.Repository
         #region Custom
         public async Task<Claim> ClaimAsync(Claim claim)
         {
-            var promotionId = claim.PromotionId;
-            var promotion = await RetrievePromotionForClaimAsync(promotionId);
-            
+            var promotion = await RetrievePromotionForClaimAsync(claim.PromotionId);
+
             promotion.Qty -= 1;
             await UpdatePromotionForClaimAsync(promotion);
+
+            claim.ClaimDate = DateTime.Now;
 
             _context.Claims.Add(claim);
             await _context.SaveChangesAsync();
 
             return claim;
         }
+
+        public async Task<IEnumerable<Claim>> RetrieveByCustomerProfileIdAsync(int customerProfileId)
+        {
+            return _context.Claims.Where(c => c.CustomerProfileId == customerProfileId);
+        }
         #endregion
 
 
-        #region Other api call
+        #region Other api calls
         private async Task<Promotion> RetrievePromotionForClaimAsync(int promotionId)
         {
             string apiURL = URLConfig.Promotion.RetrievePromotionAPI(_apiUrls.PromotionAPI_Retrieve);

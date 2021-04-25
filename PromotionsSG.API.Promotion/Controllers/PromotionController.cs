@@ -102,6 +102,14 @@ namespace PromotionsSG.API.PromotionAPI.Controllers
                     "Error retrieving data from the database");
             }
         }
+
+        [HttpPost]
+        public async Task<IEnumerable<CommonDB.Promotion>> RetrievePromotionsByPromotionIds([FromBody] IEnumerable<int> promotionIds)
+        {
+            var result = await _repository.RetrievePromotionsByPromotionIdsAsync(promotionIds);
+
+            return result;
+        }
         #endregion
     }
 }
