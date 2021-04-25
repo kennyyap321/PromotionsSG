@@ -35,6 +35,7 @@ namespace PromotionsSG.Presentation.WebPortal
             services.AddHttpClient<IPromotionService, PromotionService>();
             services.AddHttpClient<IClaimService, ClaimService>();
             services.AddHttpClient<IFeedbackService, FeedbackService>();
+            services.AddHttpClient<IRecommendationService, RecommendationService>();
             services.AddMvc().AddRazorRuntimeCompilation();
         }
 

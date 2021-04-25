@@ -17,15 +17,19 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         #region Fields
         private readonly ILogger<LoginController> _logger;
         private readonly ILoginService _loginService;
+        private readonly ICustomerProfileService _customerProfileService;
         #endregion
 
 
         #region Dependency injection
-        public LoginController(ILogger<LoginController> logger, ILoginService loginService, IShopProfileService shopProfileService, IPromotionService promotionService)
+        public LoginController(ILogger<LoginController> logger, ILoginService loginService, IShopProfileService shopProfileService, IPromotionService promotionService, ICustomerProfileService customerProfileService)
         {
             _logger = logger;
             _loginService = loginService;
+            _customerProfileService = customerProfileService;
         }
+
+
         #endregion
 
 
@@ -90,9 +94,30 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        public async Task<IActionResult> Register(RegisterViewModel registerViewModel, CustomerProfiles customer)
         {
             var user = registerViewModel.UserDto;
+
+            if (registerViewModel.UserDto.UserType == 2 && registerViewModel.UserDto.UserName != null && registerViewModel.UserDto.Password != null)
+            {
+                customer.CustomerEmail = user.UserName;
+                customer.CustomerFullName = "not set";
+                customer.CustomerPhone = "not set";
+                customer.CustomerGender = "Not set";
+                customer.CustomerAddress = "not set";
+                customer.CustomerDOB = DateTime.Today;
+                customer.CustomerType = "Normal";
+                customer.CustomerActive = true;
+                customer.CreatedBy = "System";
+                customer.CreatedTime = DateTime.Now;
+                customer.LastUpdatedBy = "System";
+                customer.LastUpdatedTime = DateTime.Now;
+                customer.VersionNo = 1;
+                customer.IsDeleted = false;
+                customer.PostalCode = "not set";
+                customer.Region = "not set";
+                string insertCustomerData = await _customerProfileService.CreateCustomer(customer);
+            }
 
             User result = await _loginService.RegisterAsync(user);
             if (result != null)

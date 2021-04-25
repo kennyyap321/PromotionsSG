@@ -19,6 +19,7 @@ namespace Common.DBTableModels
         public DateTime EndDate { get; set; }
 
         public int Qty { get; set; }
+        public string Region { get; set; }
         public bool IsActive { get; set; }
     }
 }

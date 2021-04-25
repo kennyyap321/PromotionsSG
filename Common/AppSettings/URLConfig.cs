@@ -46,6 +46,7 @@ namespace Common.AppSettings
             public static string UpdatePromotionAPI(string api) => $"{BaseURI}/{api}";
             public static string SearchPromotionsAPI(string api) => $"{BaseURI}/{api}";
             public static string RetrievePromotionsByPromotionIdsAPI(string api) => $"{BaseURI}/{api}";
+            public static string RetrievePromotionByRegionAPI(string api) => $"{BaseURI}/{api}";
         }
 
         public static class Claim
@@ -62,6 +63,22 @@ namespace Common.AppSettings
             public static string RetrieveAllFeedbackAPI(string api) => $"{BaseURI}/{api}";
             public static string InsertFeedbackAPI(string api) => $"{BaseURI}/{api}";
             public static string UpdateFeedbackAPI(string api) => $"{BaseURI}/{api}";
+        }
+
+        public static class Recommendation
+        {
+            public static string BaseURI { get; set; }
+
+            public static string RetrieveRecommendationAPI(string api) => $"{BaseURI}/{api}";
+            public static string RetrieveAllRecommendationsAPI(string api) => $"{BaseURI}/{api}";
+            public static string InsertRecommendationAPI(string api) => $"{BaseURI}/{api}";
+            public static string UpdateRecommendationAPI(string api) => $"{BaseURI}/{api}";
+            public static string RetrieveAllCentralRegionByPostalCodeAPI(string api) => $"{BaseURI}/{api}";
+            public static string RetrieveAllEastRegionByPostalCodeAPI(string api) => $"{BaseURI}/{api}";
+            public static string RetrieveAllNorthRegionByPostalCodeAPI(string api) => $"{BaseURI}/{api}";
+            public static string RetrieveAllNERegionByPostalCodeAPI(string api) => $"{BaseURI}/{api}";
+            public static string RetrieveAllWestRegionByPostalCodeAPI(string api) => $"{BaseURI}/{api}";
+
         }
     }
 }

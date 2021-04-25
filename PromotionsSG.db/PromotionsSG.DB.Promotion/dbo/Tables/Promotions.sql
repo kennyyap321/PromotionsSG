@@ -8,4 +8,5 @@
 	[StartDate] DateTime,
 	[EndDate] DateTime,
 	[Qty] int not null,
+	[Region] varchar(255) not null,
 	[IsActive] bit)

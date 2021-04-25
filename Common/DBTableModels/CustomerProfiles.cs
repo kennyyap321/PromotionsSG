@@ -23,6 +23,7 @@ namespace Common.DBTableModels
         [Required]
         [Display(Name = "CustomerDOB", Prompt = "e.g. 2000-01-22")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [DataType(DataType.Date)]
         public DateTime? CustomerDOB { get; set; }
         public string CreatedBy { get; set; }  //    [CreatedBy] VARCHAR(50) NULL,
         public DateTime? CreatedTime { get; set; }
@@ -30,6 +31,8 @@ namespace Common.DBTableModels
         public DateTime? LastUpdatedTime { get; set; }
         public int VersionNo { get; set; }
         public bool IsDeleted { get; set; }
+        public string PostalCode { get; set; }
+        public string Region { get; set; }
     }
 }
 

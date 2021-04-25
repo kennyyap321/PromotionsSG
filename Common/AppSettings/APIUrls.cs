@@ -43,6 +43,7 @@ namespace Common.AppSettings
         public string PromotionAPI_Update { get; set; }
         public string PromotionAPI_Search { get; set; }
         public string PromotionAPI_RetrievePromotionsByPromotionIds { get; set; }
+        public string PromotionAPI_RetrieveByRegion { get; set; }
         #endregion
 
 
@@ -63,6 +64,19 @@ namespace Common.AppSettings
         public string FeedbackAPI_Retrieve { get; set; }
         public string FeedbackAPI_Insert { get; set; }
         public string FeedbackAPI_Update { get; set; }
+        #endregion
+
+        #region RecommendationAPI
+        public string RecommendationAPI_Base { get; set; }
+        public string RecommendationAPI_Retrieve { get; set; }
+        public string RecommendationAPI_RetrieveAll { get; set; }
+        public string RecommendationAPI_Insert { get; set; }
+        public string RecommendationAPI_Update { get; set; }
+        public string RecommendationAPI_RetrieveCentralPostalCode { get; set; }
+        public string RecommendationAPI_RetrieveEastPostalCode { get; set; }
+        public string RecommendationAPI_RetrieveNorthPostalCode { get; set; }
+        public string RecommendationAPI_RetrieveNEPostalCode { get; set; }
+        public string RecommendationAPI_RetrieveWestPostalCode { get; set; }
         #endregion
     }
 }

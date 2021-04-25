@@ -31,5 +31,10 @@ namespace Common.DBTableModels
         #region Feedback module
         public DbSet<Feedbacks> Feedback { get; set; }
         #endregion
+
+        #region Recommendation module
+        public DbSet<Recommendations> Recommendation { get; set; }
+        public DbSet<CodeTable> CodeTable { get; set; }
+        #endregion
     }
 }

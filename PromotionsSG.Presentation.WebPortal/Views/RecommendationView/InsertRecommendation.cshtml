@@ -1,0 +1,46 @@
+﻿@model PromotionsSG.Presentation.WebPortal.Models.CustomerProfileViewModel
+
+@{
+    ViewData["Title"] = "Add New Customer";
+}
+
+@using (Html.BeginForm("InsertCustomerProfile", "CustomerProfileView", FormMethod.Post, new { @id = "customerAddForm", @class = "_page-wrapper stepping" }))
+{
+    <div>
+        @Html.Label("Full Name: ")
+        @Html.TextBoxFor(model => model.customerDto.CustomerFullName)
+
+        <br />
+        @Html.Label("Date of Birth: ")
+        @Html.TextBoxFor(model => model.customerDto.CustomerDOB)
+
+        <br />
+        @Html.Label("Email: ")
+        @Html.TextBoxFor(model => model.customerDto.CustomerEmail)
+
+        <br />
+        @Html.Label("Phone: ")
+        @Html.TextBoxFor(model => model.customerDto.CustomerPhone)
+
+        <br />
+        @Html.Label("Address: ")
+        @Html.TextBoxFor(model => model.customerDto.CustomerAddress)
+
+        <br />
+        <div class="form-group">
+            <label class="control-label">Gender: </label>
+            <input asp-for="customerDto.CustomerGender" value="Male" type="radio" id="myFirstId" />Male
+            <input asp-for="customerDto.CustomerGender" value="Female" type="radio" id="mySecondId" />Female
+            <span asp-validation-for="customerDto.CustomerGender" class="text-danger"></span>
+        </div>
+
+        <button type="submit" id="addCustomerButton">Create Customer</button>
+    </div>
+}
+
+<script>
+    var today = new Date();
+    var date = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+    //document.getElementById("CreatedTime").value = date;
+    //document.getElementById("LastUpdatedTime").value = date;
+</script>

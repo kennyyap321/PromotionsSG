@@ -31,6 +31,12 @@ namespace PromotionsSG.API.PromotionAPI.Repository
             return result;
         }
 
+        public async Task<IEnumerable<CommonDB.Promotion>> RetrievePromotionByRegionAsync(string region)
+        {
+            var promotionsData = await _context.Promotions.Where(x => x.Region == region).ToListAsync();
+            return promotionsData;
+        }
+
         public async Task<int> CreatePromotionAsync(CommonDB.Promotion promotion)
         {
             _context.Promotions.Add(promotion);

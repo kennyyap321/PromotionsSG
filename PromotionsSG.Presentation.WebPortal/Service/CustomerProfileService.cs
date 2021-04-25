@@ -36,6 +36,17 @@ namespace PromotionsSG.Presentation.WebPortal.Service
             return data;
         }
 
+        public async Task<CustomerProfiles> CustomerProfileEmailRegion(string customerEmail, string region)
+        {
+            string apiURL = URLConfig.CustomerProfile.RetrieveCustomerProfileAPI(_apiUrls.CustomerProfileAPI_Retrieve);
+            apiURL += "?&customerEmail=" + customerEmail + "&Region=" + region;
+
+            var response = await _apiClient.GetStringAsync(apiURL);
+            var data = !string.IsNullOrEmpty(response) ? JsonConvert.DeserializeObject<CustomerProfiles>(response) : null;
+
+            return data;
+        }
+
         async Task<List<CustomerProfiles>> ICustomerProfileService.GetCustomerProfiles()
         {
             string apiURL = URLConfig.CustomerProfile.RetrieveCustomerProfileAPI(_apiUrls.CustomerProfileAPI_RetrieveAll);

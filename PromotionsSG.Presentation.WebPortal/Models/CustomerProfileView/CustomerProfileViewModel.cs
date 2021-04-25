@@ -23,6 +23,8 @@ namespace PromotionsSG.Presentation.WebPortal.Models
             public DateTime? LastUpdatedTime { get; set; }
             public int VersionNo { get; set; }
             public bool IsDeleted { get; set; }
+            public string PostalCode { get; set; }
+            public string Region { get; set; }
         }
 
         public CustomerProfiles customerDto { get; set; }
@@ -41,6 +43,8 @@ namespace PromotionsSG.Presentation.WebPortal.Models
         public DateTime? LastUpdatedTime { get; set; }
         public int VersionNo { get; set; }
         public bool IsDeleted { get; set; }
+        public string PostalCode { get; set; }
+        public string Region { get; set; }
 
         public List<Customer> allCustomers { get; set; }
 

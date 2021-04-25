@@ -48,6 +48,28 @@ namespace PromotionsSG.API.PromotionAPI.Controllers
             return result;
         }
 
+        [HttpGet]
+        [Route("promotion/retrievebyregion")]
+        public async Task<ActionResult<IEnumerable<CommonDB.Promotion>>> RetrievePromotionByRegion([FromQuery] string region)
+        {
+            try
+            {
+                var result = await _repository.RetrievePromotionByRegionAsync(region);
+
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
+
         [HttpPost]
         [Route("promotion/CreatePromotion")]
         public async Task<int> CreatePromotion([FromBody] CommonDB.Promotion promotion)

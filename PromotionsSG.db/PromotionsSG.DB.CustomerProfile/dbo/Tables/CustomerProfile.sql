@@ -14,6 +14,8 @@
 	[LastUpdatedTime] [datetime] NULL,
 	[VersionNo] [int] NULL,
 	[IsDeleted] [bit] NULL,
+	[PostalCode] [varchar](500) NULL,
+	[Region] [varchar](500) NULL,
  CONSTRAINT [PK_CustomerProfile] PRIMARY KEY CLUSTERED 
 (
 	[CustomerProfileId] ASC

@@ -48,6 +48,18 @@ namespace PromotionsSG.Presentation.WebPortal.Service
             return data;
         }
 
+        public async Task<List<Promotion>> RetrievePromotionByRegionAsync(string region)
+        {
+            string apiURL = URLConfig.Promotion.RetrievePromotionByRegionAPI(_apiUrls.PromotionAPI_RetrieveByRegion);
+            apiURL += "?Region=" + region;
+
+            var response = await _httpClient.GetAsync(apiURL);
+            var data = await response.Content.ReadAsStringAsync();
+            var jsonString = !string.IsNullOrEmpty(data) ? JsonConvert.DeserializeObject<List<Promotion>>(data) : null;
+
+            return jsonString;
+        }
+
         public async Task<int> CreatePromotionAsync(Promotion promotion)
         {
             string apiURL = URLConfig.Promotion.InsertPromotionAPI(_apiUrls.PromotionAPI_Insert);

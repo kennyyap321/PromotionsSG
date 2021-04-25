@@ -1,98 +1,54 @@
-﻿@*@model Tuple<List<Common.DBTableModels.CustomerProfiles>, PromotionsSG.Presentation.WebPortal.Models.LoginViewModel>*@
-
-@*@model List<Common.DBTableModels.CustomerProfiles>*@
-@model Common.DBTableModels.CustomerProfiles
+﻿@model Common.DBTableModels.CustomerProfiles
 @{
     ViewData["Title"] = "View Customer Profile";
 }
 @using Microsoft.AspNetCore.Http;
-<h1>View Customer Profile</h1>
+    <div id="brand" class="brand-bg">
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="ViewCustomerProfile">
+                    <h1>View Customer Profile</h1>
+                    <hr />
+                    <div>
+                        <label class="control-label"><b>Full Name:</b> </label>
+                        @Html.DisplayFor(model => Model.CustomerFullName)
+                    </div>
+                    <div>
+                        <label class="control-label"><b>Gender: </b></label>
+                        @Html.DisplayFor(model => Model.CustomerGender)
+                    </div>
+                    <div>
+                        <label class="control-label"><b>Date of Birth: </b></label>
+                        @Html.DisplayFor(model => Model.CustomerDOB)
+                    </div>
+                    <div>
+                        <label class="control-label"><b>Phone: </b></label>
+                        @Html.DisplayFor(model => Model.CustomerPhone)
+                    </div>
+                    <div>
+                        <label class="control-label"><b>Address: </b></label>
+                        @Html.DisplayFor(model => Model.CustomerAddress)
+                    </div>
+                    <div>
+                        <label class="control-label"><b>Postal Code: </b></label>
+                        @Html.DisplayFor(model => Model.PostalCode)
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div>
+            <a class="buynow" asp-action="UpdateCustomerProfile">Update Profile</a>
+            <br />
+        </div>
 
-<p>
-    Welcome @Context.Session.GetString("username")
-</p>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="ViewCustomerProfile">
-            <div class="form-group">
-                <label class="control-label">Full Name: </label>
-                @Html.DisplayFor(model => Model.CustomerFullName)
-            </div>
-            <div>
-                <label class="control-label">Gender: </label>
-                @Html.DisplayFor(model => Model.CustomerGender)
-            </div>
-            <div>
-                <label class="control-label">Date of Birth: </label>
-                @Html.DisplayFor(model => Model.CustomerDOB)
-            </div>
-            <div>
-                <label class="control-label">Phone: </label>
-                @Html.DisplayFor(model => Model.CustomerPhone)
-            </div>
-            <div>
-                <label class="control-label">Address: </label>
-                @Html.DisplayFor(model => Model.CustomerAddress)
-            </div>
-        </form>
+        <div>
+            <a asp-controller="Claim" asp-action="Index">Claim History</a>
+        </div>
     </div>
-</div>
-<div>
-    <a asp-action="UpdateCustomerProfile">Update Profile</a>
-</div>
-<div>
-    <a asp-controller="Claim" asp-action="Index">Claim History</a>
-</div>
-@*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Full Name
-            </th>
-            <th>
-                Gender
-            </th>
-            <th>
-                Date of Birth
-            </th>
-            <th>
-                Phone
-            </th>
-            <th>
-                Address
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>*@
-@*@foreach (var item in Model)@*Model.Item1*@
-@*{*@
-@*<tr>
-        <td>
-            <label class="control-label">Full Name: </label>
-            @Html.DisplayFor(model => Model.CustomerFullName)
-        </td>
-        <td>
-            <label class="control-label">Gender: </label>
-            @Html.DisplayFor(model => Model.CustomerGender)
-        </td>
-        <td>
-            <label class="control-label">Date of Birth: </label>
-            @Html.DisplayFor(model => Model.CustomerDOB)
-        </td>
-        <td>
-            <label class="control-label">Phone: </label>
-            @Html.DisplayFor(model => Model.CustomerPhone)
-        </td>
-        <td>
-            <label class="control-label">Address: </label>
-            @Html.DisplayFor(model => Model.CustomerAddress)
-        </td>
-        <td>
-            <a asp-action="EditCustomerProfile" asp-route-id="@Model.CustomerEmail">Update Profile</a>
-        </td>
-    </tr>*@
-@*}*@
-@*</tbody>
-    </table>*@
 
+<style>
+    .buynow {
+        margin-left: 0px;
+    }
+
+</style>

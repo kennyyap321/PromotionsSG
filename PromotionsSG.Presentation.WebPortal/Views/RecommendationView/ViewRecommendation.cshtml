@@ -1,0 +1,93 @@
+﻿@model RecommendationViewModel
+
+@{
+    ViewData["Title"] = "CustomerViewRecommendedPromotions";
+}
+
+@if (Model != null)
+{
+    @if (Model.AllPromotionsByRegion.Count != 0)
+    {
+        <!-- By Region -->
+        <div id="brand" class="brand-bg">
+            <h1>Just for you</h1>
+            <h3>Popular in your area!</h3>
+            <div class="row">
+                @foreach (var item in Model.AllPromotionsByRegion)
+                {
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 margintop">
+                        <div class="brand-box">
+                            <h5>@Html.DisplayFor(modelItem => item.Region)</h5>
+                            <i>
+                                <img src="~/icon/p1.png" />
+                            </i>
+                            <h4>@Html.DisplayFor(modelItem => item.Header)</h4>
+                            <h2>@Html.DisplayFor(modelItem => item.Description)</h2>
+                        </div>
+                        <a class="buynow" href="#">Claim now</a>
+                        <br />
+                        <br />
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    @*<a class="seemore" href="#">See more</a>*@
+    <!-- By Region  -->
+    <!-- By Popularity -->
+    <div id="brand" class="brand-bg">
+        <h3>Popular Promotions!</h3>
+        <div class="row">
+            @foreach (var item in Model.AllNewPromotions)
+            {
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 margintop">
+                    <div class="brand-box">
+                        <h5>Top</h5>
+                        <i>
+                            <img src="~/icon/p1.png" />
+                        </i>
+                        <h4>@Html.DisplayFor(modelItem => item.Header)</h4>
+                        <h2>@Html.DisplayFor(modelItem => item.Description)</h2>
+                    </div>
+                    <a class="buynow" href="#">Claim now</a>
+                    <br />
+                    <br />
+                </div>
+            }
+        </div>
+    </div>
+    @*<a class="seemore" href="#">See more</a>*@
+    <!-- By Popularity -->
+    <!-- By New -->
+    <div id="brand" class="brand-bg">
+        <h3>New! Just in!</h3>
+        <div class="row">
+            @foreach (var item in Model.AllNewPromotions)
+            {
+                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 margintop">
+                    <div class="brand-box">
+                        <h5>New</h5>
+                        <i>
+                            <img src="~/icon/p1.png" />
+                        </i>
+                        <h4>@Html.DisplayFor(modelItem => item.Header)</h4>
+                        <h2>@Html.DisplayFor(modelItem => item.Description)</h2>
+                    </div>
+                    <a class="buynow" href="#">Claim now</a>
+                    <br />
+                    <br />
+                </div>
+            }
+        </div>
+    </div>
+    @*<a class="seemore" href="#">See more</a>*@
+    <!-- By New -->
+
+}
+else
+{
+    <div id="brand" class="brand-bg">
+        <h3>No promotions at the moment.</h3>
+    </div>
+}
