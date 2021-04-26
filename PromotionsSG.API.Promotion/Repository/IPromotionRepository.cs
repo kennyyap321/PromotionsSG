@@ -8,9 +8,9 @@ namespace PromotionsSG.API.PromotionAPI.Repository
     {
         #region Promotion
         Task<CommonDB.Promotion> RetrievePromotionByIdAsync(int promotionId);
-        Task<CommonDB.Promotion> RetrievePromotionByShopIdAsync(int shopId); 
+        Task<List<CommonDB.Promotion>> RetrievePromotionByShopIdAsync(int shopId); 
         Task<int> CreatePromotionAsync(CommonDB.Promotion promotion);
-        Task<int> UpdatePromotionAsync(CommonDB.Promotion promotion);
+        Task<CommonDB.Promotion> UpdatePromotionAsync(CommonDB.Promotion promotion);
         Task<IEnumerable<CommonDB.Promotion>> GetAllPromotions();
         Task<IEnumerable<CommonDB.Promotion>> Search(string searchTerm);
         Task<IEnumerable<CommonDB.Promotion>> RetrievePromotionByRegionAsync(string region);

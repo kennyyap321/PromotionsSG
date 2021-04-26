@@ -10,9 +10,9 @@ namespace PromotionsSG.Presentation.WebPortal.Service
     {
         #region Promotion
         Task<Promotion> RetrievePromotionAsync(int promotionId);
-        Task<Promotion> RetrievePromotionByShopIdAsync(int shopId);
+        Task<List<Promotion>> RetrievePromotionByShopIdAsync(int shopId);
         Task<int> CreatePromotionAsync(Promotion promotion);
-        Task<int> UpdatePromotionAsync(Promotion promotion);
+        Task<Promotion> UpdatePromotionAsync(Promotion promotion);
         Task<List<Promotion>> GetAllPromotions();
         Task<List<Promotion>> Search(string searchTerm);
         Task<List<Promotion>> RetrievePromotionByRegionAsync(string region);

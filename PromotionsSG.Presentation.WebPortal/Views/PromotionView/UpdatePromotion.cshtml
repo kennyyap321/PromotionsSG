@@ -1,0 +1,62 @@
+﻿@model PromotionViewModel
+
+@{
+    ViewData["Title"] = "Update Promotion";
+}
+<div style="background-color:lightgreen">@Model.Message</div>
+<h1>@ViewData["Title"]</h1>
+@using (Html.BeginForm("updatePromotion", "PromotionView", FormMethod.Post, new { @id = "updatePromotionForm", @class = "_page-wrapper stepping" }))
+{
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="updateShopProfileButton" autocomplete="off">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @Html.HiddenFor(model => model.PromotionDto.PromotionId)
+                @Html.HiddenFor(model => model.PromotionDto.StartDate)
+                @Html.HiddenFor(model => model.PromotionDto.EndDate)
+                @Html.HiddenFor(model => model.PromotionDto.Type)
+                @Html.HiddenFor(model => model.PromotionDto.ShopProfileId)
+                @Html.HiddenFor(model => model.PromotionDto.IsActive)
+                <div class="form-group">
+                    <label class="control-label">Full Name: </label>
+                    <input asp-for="PromotionDto.Header" class="form-control" />
+                    <span asp-validation-for="PromotionDto.Header" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Date of Birth: </label>
+                    <input asp-for="PromotionDto.Description" class="form-control" />
+                    <span asp-validation-for="PromotionDto.Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Qty: </label>
+                    <input asp-for="PromotionDto.Qty" class="form-control" />
+                    <span asp-validation-for="PromotionDto.Qty" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Gender: </label><br />
+                    <input asp-for="PromotionDto.Region" value="North" type="radio" id="north" />North <br />
+                    <input asp-for="PromotionDto.Region" value="South" type="radio" id="south" />South <br />
+                    <input asp-for="PromotionDto.Region" value="East" type="radio" id="east" />East<br />
+                    <input asp-for="PromotionDto.Region" value="West" type="radio" id="west" />West
+                    <span asp-validation-for="PromotionDto.Region" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-controller="PromotionView" asp-action="PromotionByShopId">Back to List</a>
+    </div>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

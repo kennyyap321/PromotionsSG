@@ -32,7 +32,7 @@ namespace PromotionsSG.API.PromotionAPI.Controllers
         #region Promotion
         [HttpGet]
         [Route("promotion/PromotionByShopId")]
-        public async Task<CommonDB.Promotion> RetrievePromotionByShopId([FromQuery] int shopId)
+        public async Task<List<CommonDB.Promotion>> RetrievePromotionByShopId([FromQuery] int shopId)
         {
             var result = await _repository.RetrievePromotionByShopIdAsync(shopId);
 
@@ -81,7 +81,7 @@ namespace PromotionsSG.API.PromotionAPI.Controllers
 
         [HttpPost]
         [Route("promotion/UpdatePromotion")]
-        public async Task<int> UpdatePromotionLogin([FromBody] CommonDB.Promotion promotion)
+        public async Task<CommonDB.Promotion> UpdatePromotionLogin([FromBody] CommonDB.Promotion promotion)
         {
             var result = await _repository.UpdatePromotionAsync(promotion);
 

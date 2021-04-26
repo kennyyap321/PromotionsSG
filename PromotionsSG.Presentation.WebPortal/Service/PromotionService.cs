@@ -24,15 +24,13 @@ namespace PromotionsSG.Presentation.WebPortal.Service
         }
 
         #region Promotion
-        public async Task<Promotion> RetrievePromotionByShopIdAsync(int shopId)
+        public async Task<List<Promotion>> RetrievePromotionByShopIdAsync(int shopId)
         {
-            //dev testing
-            shopId = 1;
             string apiURL = URLConfig.Promotion.RetrievePromotionByShopIdAPI(_apiUrls.PromotionAPI_RetrieveByShopId);
             apiURL += "?shopId=" + shopId;
 
             var response = await _httpClient.GetStringAsync(apiURL);
-            var data = !string.IsNullOrEmpty(response) ? JsonConvert.DeserializeObject<Promotion>(response) : null;
+            var data = !string.IsNullOrEmpty(response) ? JsonConvert.DeserializeObject<List<Promotion>>(response) : null;
 
             return data;
         }
@@ -75,19 +73,13 @@ namespace PromotionsSG.Presentation.WebPortal.Service
             return createdPromotionId;
         }
 
-        public async Task<int> UpdatePromotionAsync(Promotion promotion)
+        public async Task<Promotion> UpdatePromotionAsync(Promotion promotion)
         {
             string apiURL = URLConfig.Promotion.UpdatePromotionAPI(_apiUrls.PromotionAPI_Update);
-
             var payLoad = new StringContent(JsonConvert.SerializeObject(promotion), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(apiURL, payLoad);
-
-            if (!response.IsSuccessStatusCode)
-                return -1;
-
-            var updatedPromotionId = promotion.PromotionId;
-
-            return updatedPromotionId;
+            var data = await response.Content.ReadAsAsync<Promotion>();
+            return data;
         }
 
         public async Task<List<Promotion>> GetAllPromotions()

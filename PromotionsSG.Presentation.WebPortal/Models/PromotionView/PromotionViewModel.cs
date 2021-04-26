@@ -13,5 +13,7 @@ namespace PromotionsSG.Presentation.WebPortal.Models
         public string SearchTerm { get; set; }
 
         public List<Promotion> Promotions { get; set; }
+        public string Message { get; set; }
+
     }
 }

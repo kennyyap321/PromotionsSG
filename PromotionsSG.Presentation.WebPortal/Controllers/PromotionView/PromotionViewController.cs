@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.AspNetCore.Http;
 
 namespace PromotionsSG.Presentation.WebPortal.Controllers
 {
@@ -15,21 +15,24 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
     {
         private readonly ILogger<PromotionViewController> _logger;
         private readonly IPromotionService _promotionService;
+        private readonly IShopProfileService _shopProfileService;
 
-        public PromotionViewController(ILogger<PromotionViewController> logger, IPromotionService promotionService)
+        public PromotionViewController(ILogger<PromotionViewController> logger, IPromotionService promotionService, IShopProfileService shopProfileService)
         {
             _logger = logger;
             _promotionService = promotionService;
+            _shopProfileService = shopProfileService;
         }
 
         #region Promotion
         [HttpGet]
         [Route("/PromotionByShopId")]
-        public async Task<IActionResult> PromotionByShopId([FromQuery] int shopId)
+        public async Task<IActionResult> PromotionByShopId()
         {
-            Promotion promotion = await _promotionService.RetrievePromotionByShopIdAsync(shopId);
-            PromotionViewModel promotionViewModel = new PromotionViewModel { PromotionDto = promotion };
-
+            var userId = HttpContext.Session.GetInt32("userid").Value;
+            var shopProfileId = (await _shopProfileService.RetrieveShopProfileByUserIdAsync(userId))?.ShopProfileId;
+            var promotion = await _promotionService.RetrievePromotionByShopIdAsync((int)shopProfileId);
+            var promotionViewModel = new PromotionViewModel { Promotions = promotion };
             return View("Index", promotionViewModel);
         }
 
@@ -46,10 +49,11 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         [Route("/promotion")]
         public async Task<IActionResult> Promotion([FromQuery] int promotionId)
         {
+            var message = TempData["message"];
             Promotion promotion = await _promotionService.RetrievePromotionAsync(promotionId);
-            PromotionViewModel promotionViewModel = new PromotionViewModel { PromotionDto = promotion };
+            PromotionViewModel promotionViewModel = new PromotionViewModel { PromotionDto = promotion, Message = message?.ToString() ?? string.Empty };
 
-            return View("Index", promotionViewModel);
+            return View("UpdatePromotion", promotionViewModel);
         }
 
         [HttpPost]
@@ -61,7 +65,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             promotion.Type = 1;
             promotion.IsActive = true;
             promotion.StartDate = DateTime.Now;
-            promotion.EndDate = DateTime.Now;
+            promotion.EndDate = DateTime.Now.AddYears(1);
             int result = await _promotionService.CreatePromotionAsync(promotion);
 
             return View("Index", promotionViewModel);
@@ -72,9 +76,9 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         public async Task<IActionResult> UpdatePromotion(PromotionViewModel promotionViewModel)
         {
             Promotion promotion = promotionViewModel.PromotionDto;
-            int result = await _promotionService.UpdatePromotionAsync(promotion);
-
-            return View("Index", promotionViewModel);
+            var result = await _promotionService.UpdatePromotionAsync(promotion);
+            TempData["message"] = "Update Successfully";
+            return RedirectToAction("Promotion", new { promotionId = result.PromotionId });
         }
 
         [HttpGet]

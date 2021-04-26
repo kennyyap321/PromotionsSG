@@ -17,9 +17,9 @@ namespace PromotionsSG.API.PromotionAPI.Repository
         }
 
         #region Promotion
-        public async Task<CommonDB.Promotion> RetrievePromotionByShopIdAsync(int shopId)
+        public async Task<List<CommonDB.Promotion>> RetrievePromotionByShopIdAsync(int shopId)
         {
-            var result = await _context.Promotions.FirstOrDefaultAsync(s => s.ShopProfileId == shopId);
+            var result = await _context.Promotions.Where(s => s.ShopProfileId == shopId).ToListAsync();
 
             return result;
         }
@@ -47,14 +47,12 @@ namespace PromotionsSG.API.PromotionAPI.Repository
             return createdPromotionId;
         }
 
-        public async Task<int> UpdatePromotionAsync(CommonDB.Promotion promotion)
+        public async Task<CommonDB.Promotion> UpdatePromotionAsync(CommonDB.Promotion promotion)
         {
-            _context.Promotions.Update(promotion);
-            var result = await _context.SaveChangesAsync();
-
-            var updatedPromotionId = promotion.PromotionId;
-
-            return updatedPromotionId;
+            var promotionToBeUpdated = _context.Promotions.Attach(promotion);
+            promotionToBeUpdated.State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return promotion;
         }
 
         public async Task<IEnumerable<CommonDB.Promotion>> GetAllPromotions()
