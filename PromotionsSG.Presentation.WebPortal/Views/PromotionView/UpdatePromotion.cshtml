@@ -5,6 +5,9 @@
 }
 <div style="background-color:lightgreen">@Model.Message</div>
 <h1>@ViewData["Title"]</h1>
+<div>
+    <a asp-controller="PromotionView" asp-action="PromotionByShopId">Back to List</a>
+</div>
 @using (Html.BeginForm("updatePromotion", "PromotionView", FormMethod.Post, new { @id = "updatePromotionForm", @class = "_page-wrapper stepping" }))
 {
     <hr />

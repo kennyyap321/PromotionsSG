@@ -29,10 +29,11 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         [Route("/PromotionByShopId")]
         public async Task<IActionResult> PromotionByShopId()
         {
+            var message = TempData["message"];
             var userId = HttpContext.Session.GetInt32("userid").Value;
             var shopProfileId = (await _shopProfileService.RetrieveShopProfileByUserIdAsync(userId))?.ShopProfileId;
             var promotion = await _promotionService.RetrievePromotionByShopIdAsync((int)shopProfileId);
-            var promotionViewModel = new PromotionViewModel { Promotions = promotion };
+            var promotionViewModel = new PromotionViewModel { Promotions = promotion, Message = message?.ToString() ?? string.Empty };
             return View("Index", promotionViewModel);
         }
 
@@ -86,6 +87,21 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             var result = await _promotionService.UpdatePromotionAsync(promotion);
             TempData["message"] = "Update Successfully";
             return RedirectToAction("Promotion", new { promotionId = result.PromotionId });
+        }
+
+        [HttpGet]
+        [Route("/DeletePromotion")]
+        public async Task<IActionResult> DeletePromotion([FromQuery] int promotionId)
+        {
+            var promotion = await _promotionService.RetrievePromotionAsync(promotionId);
+            if (promotion != null)
+            {
+                promotion.IsActive = false;
+            }
+
+            await _promotionService.DeletePromotionAsync(promotion);
+            TempData["message"] = "Delete Successfully";
+            return RedirectToAction("PromotionByShopId");
         }
 
         [HttpGet]

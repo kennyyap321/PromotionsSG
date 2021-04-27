@@ -41,6 +41,7 @@ namespace Common.AppSettings
         public string PromotionAPI_RetrieveByShopId { get; set; }
         public string PromotionAPI_Insert { get; set; }
         public string PromotionAPI_Update { get; set; }
+        public string PromotionAPI_Delete { get; set; }
         public string PromotionAPI_Search { get; set; }
         public string PromotionAPI_RetrievePromotionsByPromotionIds { get; set; }
         public string PromotionAPI_RetrieveByRegion { get; set; }

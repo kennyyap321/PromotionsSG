@@ -82,6 +82,15 @@ namespace PromotionsSG.Presentation.WebPortal.Service
             return data;
         }
 
+        public async Task<Promotion> DeletePromotionAsync(Promotion promotion)
+        {
+            string apiURL = URLConfig.Promotion.DeletePromotionAPI(_apiUrls.PromotionAPI_Delete);
+            var payLoad = new StringContent(JsonConvert.SerializeObject(promotion), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(apiURL, payLoad);
+            var data = await response.Content.ReadAsAsync<Promotion>();
+            return data;
+        }
+
         public async Task<List<Promotion>> GetAllPromotions()
         {
             string apiURL = URLConfig.Promotion.RetrieveAllPromotionsAPI(_apiUrls.PromotionAPI_RetrieveAll);

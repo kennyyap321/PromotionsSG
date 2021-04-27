@@ -81,9 +81,18 @@ namespace PromotionsSG.API.PromotionAPI.Controllers
 
         [HttpPost]
         [Route("promotion/UpdatePromotion")]
-        public async Task<CommonDB.Promotion> UpdatePromotionLogin([FromBody] CommonDB.Promotion promotion)
+        public async Task<CommonDB.Promotion> UpdatePromotion([FromBody] CommonDB.Promotion promotion)
         {
             var result = await _repository.UpdatePromotionAsync(promotion);
+
+            return result;
+        }
+
+        [HttpPost]
+        [Route("promotion/DeletePromotion")]
+        public async Task<CommonDB.Promotion> DeletePromotion([FromBody] CommonDB.Promotion promotion)
+        {
+            var result = await _repository.DeletePromotionAsync(promotion);
 
             return result;
         }

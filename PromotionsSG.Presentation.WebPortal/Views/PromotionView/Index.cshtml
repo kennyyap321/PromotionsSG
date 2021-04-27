@@ -3,54 +3,56 @@
 @{
     ViewData["Title"] = "Update Promotion";
 }
+<div style="background-color:lightgreen">@Model.Message</div>
 
-@using (Html.BeginForm("updatePromotion", "PromotionView", FormMethod.Post, new { @id = "promotionForm", @class = "_page-wrapper stepping" }))
+<div>
+    <a asp-controller="PromotionView" asp-action="Register">Add Promotions</a>
+</div>
+<br />
+
+@if (Model != null)
 {
-    <div>
-        <a asp-controller="PromotionView" asp-action="Register">Add Promotions</a>
-    </div>
-    <br />
-
-    @if (Model != null)
+    @if (Model.Promotions != null)
     {
-        @if (Model.Promotions != null)
-        {
-            <!-- All Promotions By Shop -->
-            <div class="brand-bg">
-                <h1>Promotions</h1>
-                <div class="row">
-                    @foreach (var item in Model.Promotions)
-                    {
-                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 margintop">
-                            <div class="brand-box">
-                                <h5>@Html.DisplayFor(modelItem => item.Region)</h5>
-                                <i>
-                                    <img src="~/icon/p1.png" />
-                                </i>
-                                @Html.HiddenFor(modelItem => item.PromotionId)
-                                <h4>@Html.DisplayFor(modelItem => item.Header)</h4>
-                                <h7>@Html.DisplayFor(modelItem => item.Description)</h7>
-                                <h2>@Html.DisplayFor(modelItem => item.Qty) Qty</h2>
-                                <table width="100%">
-                                    <tr>
-                                        <td>
-                                            <button class="buynow" style="background: lightblue">@Html.ActionLink("Update", "Promotion", new { promotionId = item.PromotionId })</button>
-                                        </td>
-                                        <td>
-                                            <button class="buynow" style="background:lightcoral" type="submit" id="updateShopProfileButton">Delete</button>
-                                        </td>
-                                    </tr>
-                                </table>
+        <!-- All Promotions By Shop -->
+        <div class="brand-bg">
+            <h1>Manage Promotions</h1>
+            <div class="row">
+                @foreach (var item in Model.Promotions)
+                {
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 margintop">
+                        <div class="brand-box">
+                            <h5>@Html.DisplayFor(modelItem => item.Region)</h5>
+                            <i>
+                                <img src="~/icon/p1.png" />
+                            </i>
+                            @Html.HiddenFor(modelItem => item.PromotionId)
+                            <h4>@Html.DisplayFor(modelItem => item.Header)</h4>
+                            <h7>@Html.DisplayFor(modelItem => item.Description)</h7>
+                            <h2>@Html.DisplayFor(modelItem => item.Qty) Qty</h2>
+                            <table width="100%">
+                                <tr>
+                                    <td>
+                                        <button class="buynow" style="background: lightblue">@Html.ActionLink("Update", "Promotion", new { promotionId = item.PromotionId })</button>
+                                    </td>
+                                    <td>
+                                        <button class="buynow" style="background:lightcoral">
+                                            @Html.ActionLink("Delete", "DeletePromotion",
+                                       new { promotionId = item.PromotionId, @class = "postLink" },
+                                       new { onclick = "return confirm('Are you sure you wish to delete this promotion?');" })
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
 
-                            </div>
-
-                            <br />
-                            <br />
                         </div>
-                    }
-                </div>
-            </div>
-        }
-    }
 
+                        <br />
+                        <br />
+                    </div>
+                }
+            </div>
+        </div>
+    }
 }
+

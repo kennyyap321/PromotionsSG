@@ -19,7 +19,7 @@ namespace PromotionsSG.API.PromotionAPI.Repository
         #region Promotion
         public async Task<List<CommonDB.Promotion>> RetrievePromotionByShopIdAsync(int shopId)
         {
-            var result = await _context.Promotions.Where(s => s.ShopProfileId == shopId).ToListAsync();
+            var result = await _context.Promotions.Where(s => s.ShopProfileId == shopId && s.IsActive).ToListAsync();
 
             return result;
         }
@@ -48,6 +48,14 @@ namespace PromotionsSG.API.PromotionAPI.Repository
         }
 
         public async Task<CommonDB.Promotion> UpdatePromotionAsync(CommonDB.Promotion promotion)
+        {
+            var promotionToBeUpdated = _context.Promotions.Attach(promotion);
+            promotionToBeUpdated.State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return promotion;
+        }
+
+        public async Task<CommonDB.Promotion> DeletePromotionAsync(CommonDB.Promotion promotion)
         {
             var promotionToBeUpdated = _context.Promotions.Attach(promotion);
             promotionToBeUpdated.State = EntityState.Modified;

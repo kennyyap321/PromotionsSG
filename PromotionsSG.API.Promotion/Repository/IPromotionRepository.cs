@@ -11,6 +11,7 @@ namespace PromotionsSG.API.PromotionAPI.Repository
         Task<List<CommonDB.Promotion>> RetrievePromotionByShopIdAsync(int shopId); 
         Task<int> CreatePromotionAsync(CommonDB.Promotion promotion);
         Task<CommonDB.Promotion> UpdatePromotionAsync(CommonDB.Promotion promotion);
+        Task<CommonDB.Promotion> DeletePromotionAsync(CommonDB.Promotion promotion);
         Task<IEnumerable<CommonDB.Promotion>> GetAllPromotions();
         Task<IEnumerable<CommonDB.Promotion>> Search(string searchTerm);
         Task<IEnumerable<CommonDB.Promotion>> RetrievePromotionByRegionAsync(string region);

@@ -13,6 +13,7 @@ namespace PromotionsSG.Presentation.WebPortal.Service
         Task<List<Promotion>> RetrievePromotionByShopIdAsync(int shopId);
         Task<int> CreatePromotionAsync(Promotion promotion);
         Task<Promotion> UpdatePromotionAsync(Promotion promotion);
+        Task<Promotion> DeletePromotionAsync(Promotion promotion);
         Task<List<Promotion>> GetAllPromotions();
         Task<List<Promotion>> Search(string searchTerm);
         Task<List<Promotion>> RetrievePromotionByRegionAsync(string region);
