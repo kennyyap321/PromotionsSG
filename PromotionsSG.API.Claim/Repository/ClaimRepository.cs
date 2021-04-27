@@ -84,6 +84,12 @@ namespace PromotionsSG.API.ClaimAPI.Repository
         {
             return _context.Claims.Where(c => c.CustomerProfileId == customerProfileId);
         }
+
+        public async Task<IEnumerable<Claim>> RetrieveClaimByPromotionAsync()
+        {
+            return _context.Claims.GroupBy(c => c.PromotionId).Select(tl => new Claim { PromotionId = tl.Key, TotalClaim = tl.Count() }).AsEnumerable();
+        }
+
         #endregion
 
 

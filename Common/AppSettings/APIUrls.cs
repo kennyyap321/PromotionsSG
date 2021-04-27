@@ -55,6 +55,7 @@ namespace Common.AppSettings
         public string ClaimAPI_Update { get; set; }
         public string ClaimAPI_Claim { get; set; }
         public string ClaimAPI_RetrieveByCustomerProfileId { get; set; }
+        public string ClaimAPI_RetrieveByPromotion { get; set; }
         #endregion
 
 

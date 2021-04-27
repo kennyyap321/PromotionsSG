@@ -10,5 +10,6 @@ namespace Common.DBTableModels
         public int UserId { get; set; }
         public string ShopName { get; set; }
         public string ShopAddress { get; set; }
+        public string PostalCode { get; set; }
     }
 }

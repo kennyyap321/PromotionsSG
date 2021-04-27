@@ -59,17 +59,11 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
     <Folder Include="Snapshots" />
-    <Folder Include="Scripts" />
-    <Folder Include="Scripts\Post-Deployment" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Promotions.sql" />
-    <None Include="Scripts\Post-Deployment\dbo.Promotions.Table.sql" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="Scripts\Post-Deployment\Script.PostDeployment1.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Snapshots\PromotionsSG.DB.Promotion_20210425_22-59-30.dacpac" />
+    <None Include="Snapshots\PromotionsSG.DB.Promotion_20210427_17-05-39.dacpac" />
   </ItemGroup>
 </Project>

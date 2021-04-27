@@ -86,6 +86,21 @@ namespace PromotionsSG.API.ClaimAPI.Controllers
 
             return result;
         }
+
+        [HttpGet]
+        [Route("claim/retrievepromotion")]
+        public async Task<ActionResult> RetrieveByPromotion()
+        {
+            try
+            {
+                return Ok(await _repository.RetrieveClaimByPromotionAsync());
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
         #endregion
     }
 }

@@ -53,6 +53,7 @@ namespace Common.AppSettings
         {
             public static string BaseURI { get; set; }
             public static string ClaimAPI(string api) => $"{BaseURI}/{api}";
+            public static string RetrieveAllClaimsByPromotionAPI(string api) => $"{BaseURI}/{api}";
         }
 
         public static class Feedback
