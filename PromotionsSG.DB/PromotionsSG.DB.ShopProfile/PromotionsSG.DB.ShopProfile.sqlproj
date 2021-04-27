@@ -64,6 +64,6 @@
     <Build Include="dbo\Tables\ShopProfiles.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Snapshots\PromotionsSG.DB.ShopProfile_20210418_01-52-36.dacpac" />
+    <None Include="Snapshots\PromotionsSG.DB.ShopProfile_20210427_16-55-39.dacpac" />
   </ItemGroup>
 </Project>
