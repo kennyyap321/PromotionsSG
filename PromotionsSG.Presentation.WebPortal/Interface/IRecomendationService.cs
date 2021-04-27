@@ -16,5 +16,6 @@ namespace PromotionsSG.Presentation.WebPortal
         Task<List<CodeTable>> GetNorthRegionByPostalCode();
         Task<List<CodeTable>> GetNERegionByPostalCode();
         Task<List<CodeTable>> GetWestRegionByPostalCode();
+        Task<List<Claim>> GetClaimCountByPromotion();
     }
 }

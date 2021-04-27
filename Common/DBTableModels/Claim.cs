@@ -19,5 +19,8 @@ namespace Common.DBTableModels
         public bool Consumed { get; set; }
 
         public DateTime? ConsumeDate { get; set; }
+
+        //custom field
+        public int TotalClaim { get; set; }
     }
 }

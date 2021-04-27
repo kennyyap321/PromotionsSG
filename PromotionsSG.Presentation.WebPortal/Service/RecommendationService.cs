@@ -23,6 +23,7 @@ namespace PromotionsSG.Presentation.WebPortal.Service
             _apiClient = serviceClient;
             _apiUrls = apiUrls.Value;
             URLConfig.Recommendation.BaseURI = _apiUrls.RecommendationAPI_Base;
+            URLConfig.Claim.BaseURI = _apiUrls.ClaimAPI_Base;
         }
 
         //public async Task<CustomerProfiles> CustomerProfile(string customerEmail)
@@ -123,6 +124,19 @@ namespace PromotionsSG.Presentation.WebPortal.Service
             return jsonString;
         }
 
+        #endregion
+
+        #region Get Count of Claims for Top Promotions
+        public async Task<List<Claim>> GetClaimCountByPromotion()
+        {
+            string apiURL = URLConfig.Claim.RetrieveAllClaimsByPromotionAPI(_apiUrls.ClaimAPI_RetrieveByPromotion);
+
+            var response = await _apiClient.GetAsync(apiURL);
+            var data = await response.Content.ReadAsStringAsync();
+            var jsonString = !string.IsNullOrEmpty(data) ? JsonConvert.DeserializeObject<List<Claim>>(data) : null;
+
+            return jsonString;
+        }
         #endregion
     }
 }

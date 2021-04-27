@@ -20,6 +20,9 @@ namespace PromotionsSG.Presentation.WebPortal.Models
         public CustomerProfiles customerDto { get; set; }
         public List<Promotion> AllPromotionsByRegion { get; set; }
         public List<Promotion> AllNewPromotions { get; set; }
+        public List<Promotion> AllPopularPromotions { get; set; }
+        public List<Claim> AllClaimsByPromotions { get; set; }
+        public Promotion TopPromotion { get; set; }
 
 
     }

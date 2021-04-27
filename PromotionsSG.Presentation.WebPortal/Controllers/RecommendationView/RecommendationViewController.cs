@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace PromotionsSG.Presentation.WebPortal.Controllers
 {
@@ -36,7 +37,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         }
 
         [HttpGet]
-        [Route("/PromotionByRegion")]
+        [Route("/PromotionByRecommendation")]
         public async Task<IActionResult> ViewRecommendation(RecommendationViewModel recommendationViewModels)
         {
             var username = HttpContext.Session.GetString("username");
@@ -45,25 +46,38 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
 
             List<Promotion> promotionsbyregion = await _promotionService.RetrievePromotionByRegionAsync(customerData.Region);
 
-            //new promotions
+            //to add recommendation based on new promotions
             List<Promotion> allnewpromotions = await _promotionService.GetAllPromotions();
 
-            if (promotionsbyregion == null || promotionsbyregion.Count < 1 || customerData.Region == null || allnewpromotions == null)
-            {
-                //to return empty if no results returned
-                ViewBag.PromotionStatus = "No promotions available";
-                return View();
-            }
+            //popular promotions
+            List<Claim> allpopularpromotions = await _recommendationService.GetClaimCountByPromotion();
 
             var promotionViewModel = new RecommendationViewModel();
+
+            int mostClaimed = allpopularpromotions.Max(s => s.TotalClaim);
+
+            var ItemsList = new List<Promotion>();
+
+            foreach (var claimedpromo in allpopularpromotions)
+            {
+                if (claimedpromo.TotalClaim == mostClaimed)
+                {
+                    var toppromo = await _promotionService.RetrievePromotionAsync(claimedpromo.PromotionId);
+                    
+                    ItemsList.Add(new Promotion { PromotionId = toppromo.PromotionId, ShopProfileId = toppromo.ShopProfileId, Description = toppromo.Description, EndDate = toppromo.EndDate, Header = toppromo.Header, IsActive = toppromo.IsActive, Qty = toppromo.Qty, Region = toppromo.Region, StartDate = toppromo.StartDate, Type = toppromo.Type });
+                  
+                }
+            }
+
+            promotionViewModel.AllPopularPromotions = ItemsList;
             promotionViewModel.AllPromotionsByRegion = promotionsbyregion;
+
+            //to add recommendation based on new promotions
             promotionViewModel.AllNewPromotions = allnewpromotions;
-
-
-            //RecommendationViewModel promotionViewModel = new RecommendationViewModel { AllPromotionsByRegion = promotionsbyregion };
 
             return View(promotionViewModel);
         }
+
         #endregion
 
 
