@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Common.DBTableModels
@@ -9,9 +10,11 @@ namespace Common.DBTableModels
         public int UserId{ get; set; }
 
         [Required]
+        [DisplayName("Shop / Customer")]
         public int UserType { get; set; }
 
         [Required]
+        [DisplayName("Email")]
         public string UserName { get; set; }
 
         [Required]
