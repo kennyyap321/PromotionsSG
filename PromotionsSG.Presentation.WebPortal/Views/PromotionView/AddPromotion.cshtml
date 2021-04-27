@@ -3,20 +3,77 @@
 @{
     ViewData["Title"] = "Add Promotion";
 }
-
+<div style="background-color:lightgreen">@Model.Message</div>
+<h1>@ViewData["Title"]</h1>
 @using (Html.BeginForm("CreatePromotion", "PromotionView", FormMethod.Post, new { @id = "promotionForm", @class = "_page-wrapper stepping" }))
 {
+    <hr />
+    <div class="row" style="margin-left:20px">
+        <div class="col-md-4">
+            @Html.HiddenFor(model => model.PromotionDto.ShopProfileId)
+            @Html.HiddenFor(model => model.PromotionDto.IsActive)
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <div class="form-group">
+                            <label class="control-label">Promotion Header: </label><br />
+                            @Html.TextBoxFor(model => model.PromotionDto.Header, new { @class = "form-control", style = "width:400px" })
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="form-group">
+                            <label class="control-label">Description: </label><br />
+                            @Html.EditorFor(model => model.PromotionDto.Description, new { htmlAttributes = new { @class = "form-control", style = "width: 400px" } })
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <label class="control-label">Start Date: </label><br />
+                            @Html.EditorFor(model => model.PromotionDto.StartDate, new { @type = "date", htmlAttributes = new { @class = "form-control", style = "width: 200px" } })
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label class="control-label">End Date: </label><br />
+                            @Html.EditorFor(model => model.PromotionDto.EndDate, new { @type = "date", htmlAttributes = new { @class = "form-control", style = "width: 200px" } })
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="form-group">
+                            <label class="control-label">Qty: </label><br />
+                            @Html.EditorFor(model => model.PromotionDto.Qty, new { @type = "number", htmlAttributes = new { @class = "form-control", style = "width: 400px" } })
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="form-group">
+                            <label class="control-label">Region: </label><br />
+                            <input asp-for="PromotionDto.Region" value="North" type="radio" id="north" />North <br />
+                            <input asp-for="PromotionDto.Region" value="South" type="radio" id="south" />South <br />
+                            <input asp-for="PromotionDto.Region" value="East" type="radio" id="east" />East<br />
+                            <input asp-for="PromotionDto.Region" value="West" type="radio" id="west" />West
+                            <span asp-validation-for="PromotionDto.Region" class="text-danger"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr />
+                <tr>
+                    <td>
+                        <button type="submit" id="addPromotionButton" class="btn btn-primary">Add</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br />
     <div>
-        @Html.Label("Promotion Name: ")
-        @Html.TextBoxFor(model => model.PromotionDto.Header)
-
-        <br />
-        @Html.Label("Description") @Html.TextBoxFor(model => model.PromotionDto.Description)
-
-        <button type="submit" id="addPromotionButton">Add</button>
+        <a asp-controller="PromotionView" asp-action="PromotionByShopId">Back to List</a>
     </div>
 }
-
-<script>
-
-</script>

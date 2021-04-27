@@ -40,8 +40,8 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         [Route("/AddPromotion")]
         public async Task<IActionResult> Register()
         {
-            PromotionViewModel promotionViewModel = new PromotionViewModel();
-
+            var message = TempData["message"];
+            PromotionViewModel promotionViewModel = new PromotionViewModel { Message = message?.ToString() ?? string.Empty };
             return View("AddPromotion", promotionViewModel);
         }
 
@@ -61,14 +61,21 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         public async Task<IActionResult> CreatePromotion(PromotionViewModel promotionViewModel)
         {
             Promotion promotion = promotionViewModel.PromotionDto;
-            promotion.ShopProfileId = 1;
-            promotion.Type = 1;
+            var userId = HttpContext.Session.GetInt32("userid").Value;
+            promotion.ShopProfileId = (int)((await _shopProfileService.RetrieveShopProfileByUserIdAsync(userId))?.ShopProfileId);
+            promotion.Type = 2;
             promotion.IsActive = true;
-            promotion.StartDate = DateTime.Now;
-            promotion.EndDate = DateTime.Now.AddYears(1);
-            int result = await _promotionService.CreatePromotionAsync(promotion);
-
-            return View("Index", promotionViewModel);
+            if (promotion.StartDate == DateTime.MinValue)
+            {
+                promotion.StartDate = DateTime.Now;
+            }
+            if (promotion.EndDate == DateTime.MinValue)
+            {
+                promotion.EndDate = DateTime.Now.AddYears(1);
+            }
+            await _promotionService.CreatePromotionAsync(promotion);
+            TempData["message"] = "Create Successfully";
+            return RedirectToAction("Register");
         }
 
         [HttpPost]

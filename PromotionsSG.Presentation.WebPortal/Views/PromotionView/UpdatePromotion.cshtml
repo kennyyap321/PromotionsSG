@@ -8,7 +8,7 @@
 @using (Html.BeginForm("updatePromotion", "PromotionView", FormMethod.Post, new { @id = "updatePromotionForm", @class = "_page-wrapper stepping" }))
 {
     <hr />
-    <div class="row">
+    <div class="row" style="margin-left:20px">
         <div class="col-md-4">
             <form asp-action="updateShopProfileButton" autocomplete="off">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label">Gender: </label><br />
+                    <label class="control-label">Region: </label><br />
                     <input asp-for="PromotionDto.Region" value="North" type="radio" id="north" />North <br />
                     <input asp-for="PromotionDto.Region" value="South" type="radio" id="south" />South <br />
                     <input asp-for="PromotionDto.Region" value="East" type="radio" id="east" />East<br />
@@ -51,7 +51,6 @@
             </form>
         </div>
     </div>
-
     <div>
         <a asp-controller="PromotionView" asp-action="PromotionByShopId">Back to List</a>
     </div>
