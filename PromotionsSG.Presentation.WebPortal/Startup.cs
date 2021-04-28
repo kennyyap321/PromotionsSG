@@ -37,6 +37,8 @@ namespace PromotionsSG.Presentation.WebPortal
             services.AddHttpClient<IFeedbackService, FeedbackService>();
             services.AddHttpClient<IRecommendationService, RecommendationService>();
             services.AddMvc().AddRazorRuntimeCompilation();
+            services.AddSingleton<EmailService.IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailService.EmailConfiguration>());
+            services.AddTransient<IEmailService, EmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

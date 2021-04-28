@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Amazon.SimpleNotificationService;
 using Amazon.SimpleNotificationService.Model;
+using Microsoft.Extensions.Configuration;
 
 namespace PromotionsSG.Presentation.WebPortal.Controllers
 {
@@ -24,15 +25,17 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         private readonly ILogger<ClaimController> _logger;
         private readonly IClaimService _claimService;
         private readonly ICustomerProfileService _customerProfileService;
+        private IConfiguration _configuration;
         #endregion
 
 
         #region Dependency injection
-        public ClaimController(ILogger<ClaimController> logger, IClaimService claimService, ICustomerProfileService customerProfileService)
+        public ClaimController(ILogger<ClaimController> logger, IClaimService claimService, ICustomerProfileService customerProfileService, IConfiguration configuration)
         {
             _logger = logger;
             _claimService = claimService;
             _customerProfileService = customerProfileService;
+            _configuration = configuration;
         }
         #endregion
 
@@ -78,7 +81,9 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         public async Task<IActionResult> Claim(int promotionId)
         {
             string userName = HttpContext.Session.GetString("username");
-            int customerProfileId = (await _customerProfileService.CustomerProfile(userName)).CustomerProfileId;
+            var customerProfile = (await _customerProfileService.CustomerProfile(userName));
+            var customerProfileId = customerProfile.CustomerProfileId;
+            var customerEmailAddr = customerProfile.CustomerEmail;
 
             Claim claim = new Claim
             {
@@ -90,17 +95,42 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             if (result != null)
             {
                 //send email
-                var sns = new AmazonSimpleNotificationServiceClient();
-                var listTopicsRequest = new ListTopicsRequest();
-                ListTopicsResponse listTopicsResponse;
 
-                listTopicsResponse = await sns.ListTopicsAsync(listTopicsRequest);
-                var selectedTopic = listTopicsResponse.Topics.FirstOrDefault();
-                await sns.PublishAsync(new PublishRequest
+                /*aws sns */
+                //var sns = new AmazonSimpleNotificationServiceClient();
+                //var listTopicsRequest = new ListTopicsRequest();
+                //ListTopicsResponse listTopicsResponse;
+
+                //listTopicsResponse = await sns.ListTopicsAsync(listTopicsRequest);
+                //var selectedTopic = listTopicsResponse.Topics.FirstOrDefault();
+                //await sns.PublishAsync(new PublishRequest
+                //{
+                //    Subject = "PromotionsSG Claim Voucher",
+                //    Message = "Your Code is : v" + "p" + promotionId + "c" + customerProfileId,
+                //    TopicArn = selectedTopic.TopicArn
+                //});
+
+                /*mailkit*/
+                var emailConfig = new EmailService.EmailConfiguration
                 {
-                    Subject = "PromotionsSG Claim Voucher",
-                    Message = "Your Code is : v" + "p" + promotionId + "c" + customerProfileId,
-                    TopicArn = selectedTopic.TopicArn
+                    SmtpServer = _configuration.GetValue<string>("EmailConfiguration:SmtpServer"),
+                    SmtpPort = Convert.ToInt32(_configuration.GetValue<string>("EmailConfiguration:SmtpPort")),
+                    SmtpUsername = _configuration.GetValue<string>("EmailConfiguration:SmtpUsername"),
+                    SmtpPassword = _configuration.GetValue<string>("EmailConfiguration:SmtpPassword")
+                };
+                EmailService emailService = new EmailService(emailConfig);
+                var message = $"Your Code is : vp{promotionId}c{customerProfileId}";
+                var emailAddr = new EmailService.EmailAddress
+                {
+                    Address = customerEmailAddr,
+                    Name = userName
+                };
+                emailService.Send(new EmailService.EmailMessage
+                {
+                    FromAddresses = new List<EmailService.EmailAddress> { emailAddr },
+                    ToAddresses = new List<EmailService.EmailAddress> { emailAddr },
+                    Content = "Your Code is : v" + "p" + promotionId + "c" + customerProfileId,
+                    Subject = "PromotionsSG Claim Voucher"
                 });
 
                 return new JsonResult(result);
