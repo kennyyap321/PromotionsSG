@@ -54,7 +54,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
 
             var promotionViewModel = new RecommendationViewModel();
 
-            int mostClaimed = allpopularpromotions.Max(s => s.TotalClaim);
+            int mostClaimed = allpopularpromotions.Count > 0 ? allpopularpromotions.Max(s => s.TotalClaim) : 0;
 
             var ItemsList = new List<Promotion>();
 
@@ -63,9 +63,9 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
                 if (claimedpromo.TotalClaim == mostClaimed)
                 {
                     var toppromo = await _promotionService.RetrievePromotionAsync(claimedpromo.PromotionId);
-                    
+
                     ItemsList.Add(new Promotion { PromotionId = toppromo.PromotionId, ShopProfileId = toppromo.ShopProfileId, Description = toppromo.Description, EndDate = toppromo.EndDate, Header = toppromo.Header, IsActive = toppromo.IsActive, Qty = toppromo.Qty, Region = toppromo.Region, StartDate = toppromo.StartDate, Type = toppromo.Type });
-                  
+
                 }
             }
 

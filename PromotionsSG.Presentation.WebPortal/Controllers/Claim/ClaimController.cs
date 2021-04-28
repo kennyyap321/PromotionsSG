@@ -13,6 +13,8 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Amazon.SimpleNotificationService;
+using Amazon.SimpleNotificationService.Model;
 
 namespace PromotionsSG.Presentation.WebPortal.Controllers
 {
@@ -83,10 +85,24 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
                 PromotionId = promotionId,
                 CustomerProfileId = customerProfileId
             };
-                
+
             var result = await _claimService.ClaimAsync(claim);
             if (result != null)
             {
+                //send email
+                var sns = new AmazonSimpleNotificationServiceClient();
+                var listTopicsRequest = new ListTopicsRequest();
+                ListTopicsResponse listTopicsResponse;
+
+                listTopicsResponse = await sns.ListTopicsAsync(listTopicsRequest);
+                var selectedTopic = listTopicsResponse.Topics.FirstOrDefault();
+                await sns.PublishAsync(new PublishRequest
+                {
+                    Subject = "PromotionsSG Claim Voucher",
+                    Message = "Your Code is : v" + "p" + promotionId + "c" + customerProfileId,
+                    TopicArn = selectedTopic.TopicArn
+                });
+
                 return new JsonResult(result);
             }
 
