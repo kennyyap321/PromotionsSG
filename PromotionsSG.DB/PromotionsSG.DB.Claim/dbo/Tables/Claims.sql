@@ -5,5 +5,6 @@
 	[PromotionId] int not null,
 	[ClaimDate] datetime,
 	[Consumed] bit,
-	[ConsumeDate] datetime
+	[ConsumeDate] datetime,
+	[TotalClaim] int null
 )

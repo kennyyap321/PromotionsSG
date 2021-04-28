@@ -63,4 +63,7 @@
   <ItemGroup>
     <Build Include="dbo\Tables\Claims.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Snapshots\PromotionsSG.DB.Claim_20210428_20-39-23.dacpac" />
+  </ItemGroup>
 </Project>
