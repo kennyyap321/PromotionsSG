@@ -83,7 +83,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
                 PromotionId = promotionId,
                 CustomerProfileId = customerProfileId
             };
-
+                
             var result = await _claimService.ClaimAsync(claim);
             if (result != null)
             {

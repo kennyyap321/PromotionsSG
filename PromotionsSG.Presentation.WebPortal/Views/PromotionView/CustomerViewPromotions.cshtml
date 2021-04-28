@@ -4,74 +4,74 @@
     ViewData["Title"] = "CustomerViewPromotions";
 }
 
-    <div id="brand" class="brand-bg">
-        <h1>Search Promotions</h1>
+<div id="brand" class="brand-bg">
+    <h1>Search Promotions</h1>
 
-        <form asp-controller="PromotionView" asp-action="CustomerViewPromotions" method="get">
-            <p>
-                Search Promotions: <input type="text" asp-for="SearchTerm" />
-                <input type="submit" value="Search" />
-            </p>
-            <br/>
-        </form>
+    <form asp-controller="PromotionView" asp-action="CustomerViewPromotions" method="get">
+        <p>
+            Search Promotions: <input type="text" asp-for="SearchTerm" />
+            <input type="submit" value="Search" />
+        </p>
+        <br />
+    </form>
 
-        @if (Model == null || Model.Promotions == null)
-        {
-            <br />
-            <p>@ViewBag.SearchResult</p>
-            <br />
-        }
-        else
-        {
-            <table class="table">
-                <thead>
+    @if (Model == null || Model.Promotions == null)
+    {
+        <br />
+        <p>@ViewBag.SearchResult</p>
+        <br />
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Header
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Start Date
+                    </th>
+                    <th>
+                        End Date
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Promotions)
+                {
                     <tr>
-                        <th>
-                            Header
-                        </th>
-                        <th>
-                            Description
-                        </th>
-                        <th>
-                            Start Date
-                        </th>
-                        <th>
-                            End Date
-                        </th>
-                        <th></th>
-                        <th></th>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Header)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndDate)
+                        </td>
+                        <td>
+                            @*<a asp-action="GetPromotion" asp-route-id="@item.PromotionId">View Promotion Details</a>s|*@
+                            @*<a class="buynow" href="#" onclick="AjaxFormSubmit(@item.PromotionId)">Claim</a>*@
+                            @await Component.InvokeAsync("ClaimButton", item.PromotionId)
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Promotions)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Header)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Description)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.StartDate)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EndDate)
-                            </td>
-                            <td>
-                                @*<a asp-action="GetPromotion" asp-route-id="@item.PromotionId">View Promotion Details</a>
-                                |*@
-                                <a class="buynow" href="#" onclick="AjaxFormSubmit(@item.PromotionId)">Claim</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
+                }
+            </tbody>
+        </table>
+    }
 
-    </div>
+</div>
 
-<script>
+@*<script>
     function AjaxFormSubmit(promotionId) {
         var url = '/claim/claim';
 
@@ -94,4 +94,4 @@
             }
         });
     }
-</script>
+</script>*@

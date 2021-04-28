@@ -1,0 +1,52 @@
+﻿@model ClaimButtonViewModel
+
+@* View  *@
+@if (Model.UserId != null)
+{
+    <div>
+        <a class="buynow" href="#" onclick="ClaimButtonAjax(event, @Model.PromotionId)">Claim</a>
+    </div>
+}
+else
+{
+    <div>
+        <a class="buynow isDisabled">Claim</a>
+    </div>
+}
+
+@* Script *@
+@if (Model.InitializeSection)
+{
+    <style>
+        .isDisabled {
+            opacity: 0.5;
+            background: grey;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+    </style>
+
+    <script>
+        function ClaimButtonAjax(e, promotionId) {
+            e.preventDefault();
+
+            var url = '/claim/claim';
+            var formData = new FormData();
+            formData.append("promotionId", promotionId);
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                processData: false,
+                contentType: false
+            }).done(function (response) {
+                if (response == null) {
+                    alert('Claim error');
+                } else {
+                    alert('Claim success');
+                    window.location.href = "/claim/details?claimId=" + response.claimId;
+                }
+            });
+        }
+    </script>
+}

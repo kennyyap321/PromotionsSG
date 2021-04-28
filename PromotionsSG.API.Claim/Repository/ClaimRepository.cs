@@ -30,6 +30,7 @@ namespace PromotionsSG.API.ClaimAPI.Repository
             _httpClient = httpClient;
             _apiUrls = apiUrls.Value;
             URLConfig.Login.BaseURI = _apiUrls.LoginAPI_Base;
+            URLConfig.Promotion.BaseURI = _apiUrls.PromotionAPI_Base;
         }
         #endregion
 
@@ -111,7 +112,7 @@ namespace PromotionsSG.API.ClaimAPI.Repository
             var payLoad = new StringContent(JsonConvert.SerializeObject(promotion), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync(apiURL, payLoad);
-            var data = JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
+            var data = JsonConvert.DeserializeObject<Promotion>(await response.Content.ReadAsStringAsync());
 
             return promotion;
         }
