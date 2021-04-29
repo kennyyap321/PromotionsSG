@@ -101,7 +101,6 @@ namespace PromotionsSG.Presentation.WebPortal.Service
             return jsonString;
         }
 
-
         public async Task<List<CodeTable>> GetNERegionByPostalCode()
         {
             string apiURL = URLConfig.Recommendation.RetrieveAllNERegionByPostalCodeAPI(_apiUrls.RecommendationAPI_RetrieveNEPostalCode);

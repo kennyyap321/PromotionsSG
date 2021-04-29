@@ -141,6 +141,14 @@ namespace PromotionsSG.API.PromotionAPI.Controllers
 
             return result;
         }
+
+        [HttpGet]
+        public async Task<IEnumerable<CommonDB.Promotion>> RetrieveNewestPromotions()
+        {
+            var result = await _repository.RetrieveNewestPromotionsAsync();
+
+            return result;
+        }
         #endregion
     }
 }

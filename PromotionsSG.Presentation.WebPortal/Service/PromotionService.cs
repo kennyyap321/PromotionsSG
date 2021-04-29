@@ -117,5 +117,18 @@ namespace PromotionsSG.Presentation.WebPortal.Service
             return jsonString;
         }
         #endregion
+
+
+        #region For Recommendation
+        public async Task<IEnumerable<Promotion>> RetrieveNewestPromotionsAsync()
+        {
+            string apiUrl = URLConfig.Promotion.RetrieveNewestPromotionsAPI(_apiUrls.PromotionAPI_RetrieveNewestPromotions);
+
+            var response = await _httpClient.GetStringAsync(apiUrl);
+            var data = !string.IsNullOrEmpty(response) ? JsonConvert.DeserializeObject<IEnumerable<Promotion>>(response) : null;
+
+            return data;
+        }
+        #endregion
     }
 }

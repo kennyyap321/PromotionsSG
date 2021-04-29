@@ -45,6 +45,7 @@ namespace Common.AppSettings
         public string PromotionAPI_Search { get; set; }
         public string PromotionAPI_RetrievePromotionsByPromotionIds { get; set; }
         public string PromotionAPI_RetrieveByRegion { get; set; }
+        public string PromotionAPI_RetrieveNewestPromotions { get; set; }
         #endregion
 
 
@@ -67,6 +68,7 @@ namespace Common.AppSettings
         public string FeedbackAPI_Insert { get; set; }
         public string FeedbackAPI_Update { get; set; }
         #endregion
+
 
         #region RecommendationAPI
         public string RecommendationAPI_Base { get; set; }

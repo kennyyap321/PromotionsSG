@@ -47,7 +47,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             List<Promotion> promotionsbyregion = await _promotionService.RetrievePromotionByRegionAsync(customerData.Region);
 
             //to add recommendation based on new promotions
-            List<Promotion> allnewpromotions = await _promotionService.GetAllPromotions();
+            IEnumerable<Promotion> allnewpromotions = await _promotionService.RetrieveNewestPromotionsAsync();
 
             //popular promotions
             List<Claim> allpopularpromotions = await _recommendationService.GetClaimCountByPromotion();
@@ -73,7 +73,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             promotionViewModel.AllPromotionsByRegion = promotionsbyregion;
 
             //to add recommendation based on new promotions
-            promotionViewModel.AllNewPromotions = allnewpromotions;
+            promotionViewModel.AllNewPromotions = allnewpromotions.ToList();
 
             return View(promotionViewModel);
         }

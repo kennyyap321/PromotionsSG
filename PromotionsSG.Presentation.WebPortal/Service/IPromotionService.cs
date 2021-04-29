@@ -17,6 +17,7 @@ namespace PromotionsSG.Presentation.WebPortal.Service
         Task<List<Promotion>> GetAllPromotions();
         Task<List<Promotion>> Search(string searchTerm);
         Task<List<Promotion>> RetrievePromotionByRegionAsync(string region);
+        Task<IEnumerable<Promotion>> RetrieveNewestPromotionsAsync();
         #endregion
     }
 }

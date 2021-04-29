@@ -87,13 +87,20 @@ namespace PromotionsSG.API.PromotionAPI.Repository
             {
                 query = query.Where(s => s.Description.Contains(searchTerm) || s.Header.Contains(searchTerm));
             }
-           
+
             return await query.ToListAsync();
         }
 
         public async Task<IEnumerable<CommonDB.Promotion>> RetrievePromotionsByPromotionIdsAsync(IEnumerable<int> promotionIds)
         {
             var result = _context.Promotions.Where(p => promotionIds.Contains(p.PromotionId));
+
+            return result;
+        }
+
+        public async Task<IEnumerable<CommonDB.Promotion>> RetrieveNewestPromotionsAsync()
+        {
+            var result = _context.Promotions.Where(p => p.StartDate >= DateTime.Today.AddDays(-1));
 
             return result;
         }

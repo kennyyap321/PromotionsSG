@@ -48,6 +48,7 @@ namespace Common.AppSettings
             public static string SearchPromotionsAPI(string api) => $"{BaseURI}/{api}";
             public static string RetrievePromotionsByPromotionIdsAPI(string api) => $"{BaseURI}/{api}";
             public static string RetrievePromotionByRegionAPI(string api) => $"{BaseURI}/{api}";
+            public static string RetrieveNewestPromotionsAPI(string api) => $"{BaseURI}/{api}";
         }
 
         public static class Claim
