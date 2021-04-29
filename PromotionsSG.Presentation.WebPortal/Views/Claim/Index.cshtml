@@ -4,37 +4,45 @@
     ViewData["Title"] = "Claim History";
 }
 
-<h4>@ViewData["Title"]</h4>
+<div id="brand" class="brand-bg">
+    <h1>@ViewData["Title"]</h1>
 
-<div>
-    <table>
-        <thead>
-            <tr>
-
-                <th>Shop Name</th>
-                <th>Promotion Title</th>
-                <th>Promotion Description</th>
-                <th>Promotion Start Date</th>
-                <th>Promotion End Date</th>
-                <th>Claim Date</th>
-                <th>Consumed Date</th>
-                <th>Details</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var claim in Model.ClaimExtraInfoListDto)
-            {
+    @if (Model.ClaimExtraInfoListDto == null || Model.ClaimExtraInfoListDto.Count() == 0)
+    {
+        <br />
+        <p>No Claims Found</p>
+        <br />
+    }
+    else
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@claim.ShopProfileDto.ShopName</td>
-                    <td>@claim.PromotionDto.Header</td>
-                    <td>@claim.PromotionDto.Description</td>
-                    <td>@claim.PromotionDto.StartDate.ToString("yyyy-MM-dd")</td>
-                    <td>@claim.PromotionDto.EndDate.ToString("yyyy-MM-dd")</td>
-                    <td>@claim.ClaimDto.ClaimDate.ToString("yyyy-MM-dd")</td>
-                    <td>@(claim.ClaimDto.ConsumeDate != null ? claim.ClaimDto.ConsumeDate.Value.ToString("yyyy-MM-dd") : null)</td>
-                    <td><a asp-controller="Claim" asp-action="Details" asp-route-claimId="@claim.ClaimDto.ClaimId">Details</a></td>
+                    <th>Shop Name</th>
+                    <th>Promotion Title</th>
+                    <th>Promotion Description</th>
+                    <th>Promotion Start Date</th>
+                    <th>Promotion End Date</th>
+                    <th>Claim Date</th>
+                    <th>Consumed Date</th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var claim in Model.ClaimExtraInfoListDto)
+                {
+                    <tr>
+                        <td>@claim.ShopProfileDto.ShopName</td>
+                        <td>@claim.PromotionDto.Header</td>
+                        <td>@claim.PromotionDto.Description</td>
+                        <td>@claim.PromotionDto.StartDate.ToString("yyyy-MM-dd")</td>
+                        <td>@claim.PromotionDto.EndDate.ToString("yyyy-MM-dd")</td>
+                        <td>@claim.ClaimDto.ClaimDate.ToString("yyyy-MM-dd")</td>
+                        <td>@(claim.ClaimDto.ConsumeDate != null ? claim.ClaimDto.ConsumeDate.Value.ToString("yyyy-MM-dd") : null)</td>
+                        <td><a asp-controller="Claim" asp-action="Details" asp-route-claimId="@claim.ClaimDto.ClaimId">Details</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 </div>

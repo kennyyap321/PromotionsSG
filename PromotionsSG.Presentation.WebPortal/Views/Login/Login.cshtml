@@ -4,39 +4,43 @@
     ViewData["Title"] = "Login";
 }
 
-<h4>@ViewData["Title"]</h4>
+<div id="brand" class="brand-bg">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+    <form asp-controller="Login" asp-action="Login" method="post" class="_page-wrapper stepping">
+        <div class="row">
+            <div class="col-md-4">
 
-<form asp-controller="Login" asp-action="Login" method="post" class="mt-3">
-    <div class="form-group row">
-        <label asp-for="UserDto.UserType" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <select asp-for="UserDto.UserType" class="custom-select mr-sm-2">
-                <option value="1">Shop</option>
-                <option value="2" selected>Customer</option>
-            </select>
-            <span asp-validation-for="UserDto.UserType"></span>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label asp-for="UserDto.UserName" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="UserDto.UserName" class="form-control" />
-            <span asp-validation-for="UserDto.UserName" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label asp-for="UserDto.Password" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="UserDto.Password" class="form-control" />
-            <span asp-validation-for="UserDto.Password" class="text-danger"></span>
-        </div>
-    </div>
+                <div class="form-group">
+                    <label asp-for="UserDto.UserType" class="control-label"></label>
+                    <select asp-for="UserDto.UserType" class="custom-select mr-sm-2">
+                        <option value="1">Shop</option>
+                        <option value="2" selected>Customer</option>
+                    </select>
+                    <span asp-validation-for="UserDto.UserType" class="text-danger"></span>
+                </div>
 
-    <div class="form-group row text-danger">
-        <label class="col-sm-12 col-form-label">@Html.ValidationMessage("Login failed")</label>
-    </div>
+                <div class="form-group">
+                    <label asp-for="UserDto.UserName" class="control-label"></label>
+                    <input asp-for="UserDto.UserName" class="form-control" />
+                    <span asp-validation-for="UserDto.UserName" class="text-danger"></span>
+                </div>
 
-    <div>
-        <button type="submit">Login</button>
-    </div>
-</form>
+                <div class="form-group">
+                    <label asp-for="UserDto.Password" class="control-label"></label>
+                    <input asp-for="UserDto.Password" class="form-control" />
+                    <span asp-validation-for="UserDto.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group text-danger">
+                    <label class="">@Html.ValidationMessage("Login failed")</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>

@@ -129,7 +129,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            ModelState.AddModelError("Invalid Credentials", "Invalid Credentials");
+            ModelState.AddModelError("Register Failed", "Register Failed");
 
             return View();
         }
