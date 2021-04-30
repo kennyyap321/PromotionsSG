@@ -100,7 +100,7 @@ namespace PromotionsSG.API.PromotionAPI.Repository
 
         public async Task<IEnumerable<CommonDB.Promotion>> RetrieveNewestPromotionsAsync()
         {
-            var result = _context.Promotions.Where(p => p.StartDate >= DateTime.Today.AddDays(-1));
+            var result = _context.Promotions.Where(p => p.StartDate >= DateTime.Today.AddDays(-1)).OrderByDescending(p => p.StartDate);
 
             return result;
         }
