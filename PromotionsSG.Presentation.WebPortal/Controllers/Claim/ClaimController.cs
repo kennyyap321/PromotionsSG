@@ -57,7 +57,17 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int claimId)
         {
-            //Claim detaails
+            string previousPage = Request.Headers["Referer"].ToString();
+            if (previousPage.Contains("Claim"))
+            {
+                previousPage = "Claim";
+            }
+            else
+            {
+                previousPage = "Recommendation";
+            }
+
+            //Claim details
             ClaimWithPromotionAndShopInfo cwpasi = await _claimService.RetrieveClaimWithPromotionAndShopInfoByClaimIdAsync(claimId);
 
             //QRCode
@@ -69,7 +79,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             byte[] qrBytes = await BitmapToBytes(qrCodeImage);
 
             //Viewmodel
-            ClaimViewModel claimViewModel = new ClaimViewModel { ClaimExtraInfo = cwpasi, QrBtyes = qrBytes };
+            ClaimViewModel claimViewModel = new ClaimViewModel { ClaimExtraInfo = cwpasi, QrBtyes = qrBytes, PreviousPage = previousPage };
 
             return View(claimViewModel);
         }

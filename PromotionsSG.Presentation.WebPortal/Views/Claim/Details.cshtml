@@ -39,6 +39,19 @@
                     <br />Used Date: @Model.ClaimExtraInfo.ClaimDto.ConsumeDate.Value.ToString("yyyy-MM-dd")
                 </div>
             }
+
+        <div>
+            @if (Model.PreviousPage == "Claim")
+            {
+                <br />
+                <a asp-controller="Claim" asp-action="Index">Back</a>
+            }
+            else
+            {
+                <br />
+                <a href="/PromotionByRecommendation">Back</a>
+            }
+        </div>
         </div>
     </div>
 </div>
