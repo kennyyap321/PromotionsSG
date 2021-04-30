@@ -26,7 +26,7 @@ namespace PromotionsSG.Presentation.WebPortal.Models
             public string PostalCode { get; set; }
             public string Region { get; set; }
         }
-
+        public string Message { get; set; }
         public CustomerProfiles customerDto { get; set; }
         public int customerProfileID { get; set; }
         public string customerFullName { get; set; }

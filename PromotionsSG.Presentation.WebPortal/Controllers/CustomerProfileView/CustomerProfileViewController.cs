@@ -34,6 +34,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             _customerProfileService = customerProfileService;
             _recommendationService = recommendationService;
         }
+
         [Route("InsertCustomerProfile")]
         public IActionResult InsertCustomerProfile()
         {
@@ -75,9 +76,11 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         [Route("UpdateCustomer")]
         public async Task<IActionResult> UpdateCustomerProfile([FromQuery] string email)
         {
+            var message = TempData["message"];
+
             email = HttpContext.Session.GetString("username");
             CustomerProfiles customerProfiles = await _customerProfileService.CustomerProfile(email);
-            CustomerProfileViewModel customerProfileViewModel = new CustomerProfileViewModel { customerDto = customerProfiles };
+            CustomerProfileViewModel customerProfileViewModel = new CustomerProfileViewModel { customerDto = customerProfiles, Message = message?.ToString() ?? string.Empty };
 
             return View("UpdateCustomerProfile", customerProfileViewModel);
         }
@@ -138,7 +141,11 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
 
             await _customerProfileService.UpdateCustomer(customer);
 
-            return View("SuccessCustomerClick", customerProfileViewModel);
+            var username = HttpContext.Session.GetString("username");
+            TempData["message"] = "Updated Successfully";
+            var result = await _customerProfileService.CustomerProfile(username);
+
+            return RedirectToAction("UpdateCustomerProfile", new { customerEmail = result.CustomerEmail });
         }
 
         public IActionResult Privacy()
