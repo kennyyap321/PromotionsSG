@@ -64,7 +64,10 @@
                         }
                     }
 
-                    <li><a asp-controller="PromotionView" asp-action="CustomerViewPromotions">Search</a></li>
+                    @if (Context.Session.GetInt32("usertype") != 1)
+                    {
+                        <li><a asp-controller="PromotionView" asp-action="CustomerViewPromotions">Search</a></li>
+                    }
                 </ul>
             </nav>
         </div>
