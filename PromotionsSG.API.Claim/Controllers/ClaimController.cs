@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using PromotionsSG.API.ClaimAPI.Repository;
 using System;
 using System.Collections.Generic;
@@ -74,6 +75,7 @@ namespace PromotionsSG.API.ClaimAPI.Controllers
         [HttpPost]
         public async Task<Claim> Claim([FromBody] Claim claim)
         {
+            _logger.LogInformation("Claim API Object: " + JsonConvert.SerializeObject(claim));
             var result = await _repository.ClaimAsync(claim);
 
             return result;

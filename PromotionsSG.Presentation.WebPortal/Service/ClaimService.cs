@@ -1,5 +1,6 @@
 ﻿using Common.AppSettings;
 using Common.DBTableModels;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using PromotionsSG.Presentation.WebPortal.Models;
@@ -17,14 +18,16 @@ namespace PromotionsSG.Presentation.WebPortal.Service
         #region Fields
         private readonly HttpClient _httpClient;
         private readonly APIUrls _apiUrls;
+        private readonly ILogger<ClaimService> _logger;
         #endregion
 
 
         #region Dependency injection
-        public ClaimService(HttpClient httpClient, IOptions<APIUrls> apiUrls)
+        public ClaimService(HttpClient httpClient, IOptions<APIUrls> apiUrls, ILogger<ClaimService> logger)
         {
             _httpClient = httpClient;
             _apiUrls = apiUrls.Value;
+            _logger = logger;
             URLConfig.Claim.BaseURI = _apiUrls.ClaimAPI_Base;
             URLConfig.Promotion.BaseURI = _apiUrls.PromotionAPI_Base;
             URLConfig.ShopProfile.BaseURI = _apiUrls.ShopProfileAPI_Base;
@@ -73,8 +76,10 @@ namespace PromotionsSG.Presentation.WebPortal.Service
         {
             var apiURL = URLConfig.Claim.ClaimAPI(_apiUrls.ClaimAPI_Claim);
             var payLoad = new StringContent(JsonConvert.SerializeObject(claim), Encoding.UTF8, "application/json");
-
+            _logger.LogInformation("Claim Web URL: " + apiURL);
+            _logger.LogInformation("Claim Web Payload: " + JsonConvert.SerializeObject(claim));
             var response = await _httpClient.PostAsync(apiURL, payLoad);
+            _logger.LogInformation("Claim Web Response: " + response.Content.ToString());
             var data = await response.Content.ReadAsAsync<Claim>();
 
             return data;

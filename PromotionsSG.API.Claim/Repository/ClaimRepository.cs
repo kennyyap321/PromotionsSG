@@ -11,6 +11,7 @@ using Common.AppSettings;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
+using Microsoft.Extensions.Logging;
 
 namespace PromotionsSG.API.ClaimAPI.Repository
 {
@@ -20,17 +21,19 @@ namespace PromotionsSG.API.ClaimAPI.Repository
         private readonly MyDBContext _context;
         private readonly HttpClient _httpClient;
         private readonly APIUrls _apiUrls;
+        private readonly ILogger<ClaimRepository> _logger;
         #endregion
 
 
         #region Dependency injection
-        public ClaimRepository(MyDBContext context, HttpClient httpClient, IOptions<APIUrls> apiUrls)
+        public ClaimRepository(MyDBContext context, HttpClient httpClient, IOptions<APIUrls> apiUrls, ILogger<ClaimRepository> logger)
         {
             _context = context;
             _httpClient = httpClient;
             _apiUrls = apiUrls.Value;
             URLConfig.Login.BaseURI = _apiUrls.LoginAPI_Base;
             URLConfig.Promotion.BaseURI = _apiUrls.PromotionAPI_Base;
+            _logger = logger;
         }
         #endregion
 
@@ -68,11 +71,14 @@ namespace PromotionsSG.API.ClaimAPI.Repository
         #region Custom
         public async Task<Claim> ClaimAsync(Claim claim)
         {
+            _logger.LogInformation("Claim Repo before retrieve promo");
             var promotion = await RetrievePromotionForClaimAsync(claim.PromotionId);
-
+            _logger.LogInformation("Claim Repo after retrieve promo");
             promotion.Qty -= 1;
-            await UpdatePromotionForClaimAsync(promotion);
 
+            _logger.LogInformation("Claim Repo before update promo");
+            await UpdatePromotionForClaimAsync(promotion);
+            _logger.LogInformation("Claim Repo after update promo");
             claim.ClaimDate = DateTime.Now;
 
             _context.Claims.Add(claim);
@@ -99,8 +105,9 @@ namespace PromotionsSG.API.ClaimAPI.Repository
         {
             string apiURL = URLConfig.Promotion.RetrievePromotionAPI(_apiUrls.PromotionAPI_Retrieve);
             apiURL += "?&promotionId=" + promotionId;
-
+            _logger.LogInformation("Claim call promo api url: " + apiURL);
             var response = await _httpClient.GetStringAsync(apiURL);
+            _logger.LogInformation("Claim call promo api response: " + response);
             var data = !string.IsNullOrEmpty(response) ? JsonConvert.DeserializeObject<Promotion>(response) : null;
 
             return data;
@@ -110,8 +117,9 @@ namespace PromotionsSG.API.ClaimAPI.Repository
         {
             string apiURL = URLConfig.Promotion.UpdatePromotionAPI(_apiUrls.PromotionAPI_Update);
             var payLoad = new StringContent(JsonConvert.SerializeObject(promotion), Encoding.UTF8, "application/json");
-
+            _logger.LogInformation("Claim call promo api to update url: " + apiURL);
             var response = await _httpClient.PostAsync(apiURL, payLoad);
+            _logger.LogInformation("Claim call promo api to update response: " + response);
             var data = JsonConvert.DeserializeObject<Promotion>(await response.Content.ReadAsStringAsync());
 
             return promotion;

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace PromotionsSG.API.PromotionAPI.Controllers
 {
@@ -43,8 +44,9 @@ namespace PromotionsSG.API.PromotionAPI.Controllers
         [Route("promotion/retrieve")]
         public async Task<CommonDB.Promotion> RetrievePromotionById([FromQuery] int promotionId)
         {
+            _logger.LogInformation("Promo api before retrieve promotionId: " + promotionId.ToString());
             var result = await _repository.RetrievePromotionByIdAsync(promotionId);
-
+            _logger.LogInformation("Promo api after retrieve promotionId: " + promotionId.ToString());
             return result;
         }
 
@@ -83,8 +85,9 @@ namespace PromotionsSG.API.PromotionAPI.Controllers
         [Route("promotion/UpdatePromotion")]
         public async Task<CommonDB.Promotion> UpdatePromotion([FromBody] CommonDB.Promotion promotion)
         {
+            _logger.LogInformation("Promo api before udpate promotion: " + JsonConvert.SerializeObject(promotion));
             var result = await _repository.UpdatePromotionAsync(promotion);
-
+            _logger.LogInformation("Promo api after udpate promotion: ");
             return result;
         }
 
