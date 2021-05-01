@@ -72,7 +72,14 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
                     HttpContext.Session.SetInt32("userid", result.UserId);
                     HttpContext.Session.SetString("username", result.UserName);
 
-                    return RedirectToAction("Index", "Home");
+                    if (result.UserType == 1)
+                    {
+                        return Redirect("/PromotionByShopId");
+                    }
+                    else
+                    {
+                        return Redirect("/PromotionByRecommendation");
+                    }
                 }
             }
 
@@ -126,7 +133,14 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
                 HttpContext.Session.SetInt32("userid", result.UserId);
                 HttpContext.Session.SetString("username", result.UserName);
 
-                return RedirectToAction("Index", "Home");
+                if (result.UserType == 1)
+                {
+                    return Redirect("/PromotionByShopId");
+                }
+                else
+                {
+                    return Redirect("/PromotionByRecommendation");
+                }
             }
 
             ModelState.AddModelError("Register Failed", "Register Failed");

@@ -3,79 +3,80 @@
 @{
     ViewData["Title"] = "Update Profile";
 }
-<div id="brand" class="brand-bg">
-    <h1>@ViewData["Title"]</h1>
-    @using (Html.BeginForm("UpdateCustomerProfile", "CustomerProfileView", FormMethod.Post, new { @id = "updateCustomerProfileForm", @class = "_page-wrapper stepping" }))
-    {
-        <hr />
-        <div class="row">
-            <div class="col-md-4">
-                <form asp-action="EditCustomerProfileSub" autocomplete="off">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="customerDto.CustomerProfileId" />
-                    <input type="hidden" asp-for="customerDto.CustomerType" />
-                    <input type="hidden" asp-for="customerDto.CustomerActive" />
-                    <input type="hidden" asp-for="customerDto.CreatedBy" />
-                    <input type="hidden" asp-for="customerDto.CreatedTime" />
-                    <input type="hidden" asp-for="customerDto.LastUpdatedBy" />
-                    <input type="hidden" asp-for="customerDto.LastUpdatedTime" />
-                    <input type="hidden" asp-for="customerDto.VersionNo" />
-                    <input type="hidden" asp-for="customerDto.IsDeleted" />
-                    <input type="hidden" asp-for="customerDto.CustomerEmail" />
+<div style="background-color:lightgreen">@Model.Message</div>
+    <div id="brand" class="brand-bg">
+        <h1>@ViewData["Title"]</h1>
+        @using (Html.BeginForm("UpdateCustomerProfile", "CustomerProfileView", FormMethod.Post, new { @id = "updateCustomerProfileForm", @class = "_page-wrapper stepping" }))
+        {
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="EditCustomerProfileSub" autocomplete="off">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="customerDto.CustomerProfileId" />
+                        <input type="hidden" asp-for="customerDto.CustomerType" />
+                        <input type="hidden" asp-for="customerDto.CustomerActive" />
+                        <input type="hidden" asp-for="customerDto.CreatedBy" />
+                        <input type="hidden" asp-for="customerDto.CreatedTime" />
+                        <input type="hidden" asp-for="customerDto.LastUpdatedBy" />
+                        <input type="hidden" asp-for="customerDto.LastUpdatedTime" />
+                        <input type="hidden" asp-for="customerDto.VersionNo" />
+                        <input type="hidden" asp-for="customerDto.IsDeleted" />
+                        <input type="hidden" asp-for="customerDto.CustomerEmail" />
 
-                    <div class="form-group">
-                        <label class="control-label">Full Name: </label>
-                        <input asp-for="customerDto.CustomerFullName" class="form-control" />
-                        <span asp-validation-for="customerDto.CustomerFullName" class="text-danger"></span>
-                    </div>
+                        <div class="form-group">
+                            <label class="control-label">Full Name: </label>
+                            <input asp-for="customerDto.CustomerFullName" class="form-control" />
+                            <span asp-validation-for="customerDto.CustomerFullName" class="text-danger"></span>
+                        </div>
 
-                    <div class="form-group">
-                        <label class="control-label">Date of Birth: </label>
-                        <input asp-for="customerDto.CustomerDOB" class="form-control" />
-                        <span asp-validation-for="customerDto.CustomerDOB" class="text-danger"></span>
-                    </div>
+                        <div class="form-group">
+                            <label class="control-label">Date of Birth: </label>
+                            <input asp-for="customerDto.CustomerDOB" class="form-control" />
+                            <span asp-validation-for="customerDto.CustomerDOB" class="text-danger"></span>
+                        </div>
 
-                    <div class="form-group">
-                        <label class="control-label">Gender: </label><br />
-                        <input asp-for="customerDto.CustomerGender" value="Male" type="radio" id="myFirstId" />Male <br />
-                        <input asp-for="customerDto.CustomerGender" value="Female" type="radio" id="mySecondId" />Female <br />
-                        <input asp-for="customerDto.CustomerGender" value="Not set" type="radio" id="myThirdId" />Not set
-                        <span asp-validation-for="customerDto.CustomerGender" class="text-danger"></span>
-                    </div>
+                        <div class="form-group">
+                            <label class="control-label">Gender: </label><br />
+                            <input asp-for="customerDto.CustomerGender" value="Male" type="radio" id="myFirstId" />Male <br />
+                            <input asp-for="customerDto.CustomerGender" value="Female" type="radio" id="mySecondId" />Female <br />
+                            <input asp-for="customerDto.CustomerGender" value="Not set" type="radio" id="myThirdId" />Not set
+                            <span asp-validation-for="customerDto.CustomerGender" class="text-danger"></span>
+                        </div>
 
-                    <div class="form-group">
-                        <label class="control-label">Email: </label>
-                        <input asp-for="customerDto.CustomerEmail" disabled class="form-control" />
-                        <span asp-validation-for="customerDto.CustomerEmail" class="text-danger"></span>
-                    </div>
+                        <div class="form-group">
+                            <label class="control-label">Email: </label>
+                            <input asp-for="customerDto.CustomerEmail" disabled class="form-control" />
+                            <span asp-validation-for="customerDto.CustomerEmail" class="text-danger"></span>
+                        </div>
 
-                    <div class="form-group">
-                        <label class="control-label">Postal Code: </label>
-                        <input asp-for="customerDto.PostalCode" class="form-control" />
-                        <span asp-validation-for="customerDto.PostalCode" class="text-danger"></span>
-                    </div>
+                        <div class="form-group">
+                            <label class="control-label">Postal Code: </label>
+                            <input asp-for="customerDto.PostalCode" class="form-control" />
+                            <span asp-validation-for="customerDto.PostalCode" class="text-danger"></span>
+                        </div>
 
-                    <div class="form-group">
-                        <label class="control-label">Address: </label>
-                        <input asp-for="customerDto.CustomerAddress" class="form-control" />
-                        <span asp-validation-for="customerDto.CustomerAddress" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Phone: </label>
-                        <input asp-for="customerDto.CustomerPhone" class="form-control" />
-                        <span asp-validation-for="customerDto.CustomerPhone" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Update" class="btn btn-primary" />
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <label class="control-label">Address: </label>
+                            <input asp-for="customerDto.CustomerAddress" class="form-control" />
+                            <span asp-validation-for="customerDto.CustomerAddress" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Phone: </label>
+                            <input asp-for="customerDto.CustomerPhone" class="form-control" />
+                            <span asp-validation-for="customerDto.CustomerPhone" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Update" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
 
-        <div>
-            <a asp-controller="CustomerProfileView" asp-action="ViewCustomerProfile">Back to List</a>
-        </div>
-    }
+            <div>
+                <a asp-controller="CustomerProfileView" asp-action="ViewCustomerProfile">Back to List</a>
+            </div>
+        }
     </div>
 
     @section Scripts {

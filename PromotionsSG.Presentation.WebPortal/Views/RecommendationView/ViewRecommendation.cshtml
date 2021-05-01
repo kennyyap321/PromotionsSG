@@ -97,6 +97,7 @@
                             </i>
                             <h4>@Html.DisplayFor(modelItem => item.Header)</h4>
                             <h2>@Html.DisplayFor(modelItem => item.Description)</h2>
+                            <h2>Stocks: @Html.DisplayFor(modelItem => item.Qty)</h2>
                         </div>
                         @*<a class="buynow" href="#">Claim now</a>*@
                         @await Component.InvokeAsync("ClaimButton", item.PromotionId)
