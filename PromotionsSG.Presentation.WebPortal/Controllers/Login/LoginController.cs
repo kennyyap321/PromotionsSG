@@ -18,6 +18,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         private readonly ILogger<LoginController> _logger;
         private readonly ILoginService _loginService;
         private readonly ICustomerProfileService _customerProfileService;
+        private readonly IShopProfileService _shopProfileService;
         #endregion
 
 
@@ -27,6 +28,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             _logger = logger;
             _loginService = loginService;
             _customerProfileService = customerProfileService;
+            _shopProfileService = shopProfileService;
         }
 
 
@@ -135,6 +137,8 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
 
                 if (result.UserType == 1)
                 {
+                    await _shopProfileService.InsertAsync(new ShopProfile { UserId = result.UserId });
+
                     return Redirect("/PromotionByShopId");
                 }
                 else
