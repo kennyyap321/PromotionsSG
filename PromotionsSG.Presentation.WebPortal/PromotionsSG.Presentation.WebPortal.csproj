@@ -17,6 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Service\EmailService.cs" />
+    <Compile Remove="Service\IEmailService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.0.1" />
     <PackageReference Include="AWSSDK.SimpleNotificationService" Version="3.7.0.14" />
     <PackageReference Include="MailKit" Version="2.11.1" />

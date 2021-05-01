@@ -83,5 +83,13 @@ namespace Common.AppSettings
             public static string RetrieveAllWestRegionByPostalCodeAPI(string api) => $"{BaseURI}/{api}";
 
         }
+
+        public static class Notification
+        {
+            public static string BaseURI { get; set; }
+
+            public static string SendNotificationAPI(string api) => $"{BaseURI}/{api}";
+
+        }
     }
 }

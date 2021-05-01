@@ -25,16 +25,18 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
         private readonly ILogger<ClaimController> _logger;
         private readonly IClaimService _claimService;
         private readonly ICustomerProfileService _customerProfileService;
+        private readonly INotificationService _notificationService;
         private IConfiguration _configuration;
         #endregion
 
 
         #region Dependency injection
-        public ClaimController(ILogger<ClaimController> logger, IClaimService claimService, ICustomerProfileService customerProfileService, IConfiguration configuration)
+        public ClaimController(ILogger<ClaimController> logger, IClaimService claimService, ICustomerProfileService customerProfileService, INotificationService notificationService, IConfiguration configuration)
         {
             _logger = logger;
             _claimService = claimService;
             _customerProfileService = customerProfileService;
+            _notificationService = notificationService;
             _configuration = configuration;
         }
         #endregion
@@ -134,26 +136,16 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
                 string qrCodeString = Convert.ToBase64String(qrBytes);
 
                 /*mailkit*/
-                var emailConfig = new EmailService.EmailConfiguration
-                {
-                    SmtpServer = _configuration.GetValue<string>("EmailConfiguration:SmtpServer"),
-                    SmtpPort = Convert.ToInt32(_configuration.GetValue<string>("EmailConfiguration:SmtpPort")),
-                    SmtpUsername = _configuration.GetValue<string>("EmailConfiguration:SmtpUsername"),
-                    SmtpPassword = _configuration.GetValue<string>("EmailConfiguration:SmtpPassword")
-                };
-                EmailService emailService = new EmailService(emailConfig);
-                var message = $"Your Code is : vp{promotionId}c{customerProfileId}";
-                var emailAddr = new EmailService.EmailAddress
+                var emailAddr = new Common.DBTableModelsService.EmailService.EmailAddress
                 {
                     Address = customerEmailAddr,
                     Name = userName
                 };
-                emailService.Send(new EmailService.EmailMessage
+                var emailMessage = new Common.DBTableModelsService.EmailService.EmailMessage
                 {
-                    FromAddresses = new List<EmailService.EmailAddress> { emailAddr },
-                    ToAddresses = new List<EmailService.EmailAddress> { emailAddr },
-                    //Content = "Your Code is : v" + "p" + promotionId + "c" + customerProfileId,
-                    Content= $@"
+                    FromAddresses = new List<Common.DBTableModelsService.EmailService.EmailAddress> { emailAddr },
+                    ToAddresses = new List<Common.DBTableModelsService.EmailService.EmailAddress> { emailAddr },
+                    Content = $@"
 
                         <div style=""margin - left:0; "">
                            <img src=""data:image/png;base64,{qrCodeString}"" height=""300"" width=""300"" />
@@ -168,9 +160,9 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
 
                     ",
                     Subject = "PromotionsSG Claim Voucher"
-                });
-
-                return new JsonResult(result);
+                };
+                var emailResult = await _notificationService.SendEmailAsync(emailMessage);
+                return emailResult ? new JsonResult(result) : new JsonResult(null);
             }
 
             return new JsonResult(null);

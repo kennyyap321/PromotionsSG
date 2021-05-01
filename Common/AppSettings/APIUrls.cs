@@ -82,5 +82,10 @@ namespace Common.AppSettings
         public string RecommendationAPI_RetrieveNEPostalCode { get; set; }
         public string RecommendationAPI_RetrieveWestPostalCode { get; set; }
         #endregion
+
+        #region NotificationAPI
+        public string NotificationAPI_Base { get; set; }
+        public string NotificationAPI_SendEmail { get; set; }
+        #endregion
     }
 }
