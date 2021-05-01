@@ -120,6 +120,19 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
                 //    TopicArn = selectedTopic.TopicArn
                 //});
 
+                //Claim details
+                int claimId = result.ClaimId;
+                ClaimWithPromotionAndShopInfo cwpasi = await _claimService.RetrieveClaimWithPromotionAndShopInfoByClaimIdAsync(claimId);
+
+                //QRCode
+                string txtQrCode = $"ClaimId_{claimId}_ShopProfileId_{cwpasi.PromotionDto.ShopProfileId}_PromotionId_{cwpasi.PromotionDto.PromotionId}";
+                QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
+                QRCodeData qrCodeData = qrCodeGenerator.CreateQrCode(txtQrCode, QRCodeGenerator.ECCLevel.Q);
+                QRCode qrCode = new QRCode(qrCodeData);
+                Bitmap qrCodeImage = qrCode.GetGraphic(20);
+                byte[] qrBytes = await BitmapToBytes(qrCodeImage);
+                string qrCodeString = Convert.ToBase64String(qrBytes);
+
                 /*mailkit*/
                 var emailConfig = new EmailService.EmailConfiguration
                 {
@@ -139,7 +152,21 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
                 {
                     FromAddresses = new List<EmailService.EmailAddress> { emailAddr },
                     ToAddresses = new List<EmailService.EmailAddress> { emailAddr },
-                    Content = "Your Code is : v" + "p" + promotionId + "c" + customerProfileId,
+                    //Content = "Your Code is : v" + "p" + promotionId + "c" + customerProfileId,
+                    Content= $@"
+
+                        <div style=""margin - left:0; "">
+                           <img src=""@String.Format(""data:image/png;base64,{{0}}"",{qrCodeString})"" height=""300"" width=""300"" />
+                        </div>
+                        <div>
+                            <br /><b>Shop:</b>{cwpasi.ShopProfileDto.ShopName}
+                            <br /><b>Promotion Title:</b>{cwpasi.PromotionDto.Header}
+                            <br /><b>Promotion Description:</b>{cwpasi.PromotionDto.Description}
+                            <br /><b>Promotion Start Date:</b>{cwpasi.PromotionDto.StartDate.ToString("yyyy-MM-dd")}
+                            <br /><b>Promotion End Date:</b>{cwpasi.PromotionDto.EndDate.ToString("yyyy-MM-dd")}
+                        </div>
+
+                    ",
                     Subject = "PromotionsSG Claim Voucher"
                 });
 
