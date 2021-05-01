@@ -156,7 +156,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
                     Content= $@"
 
                         <div style=""margin - left:0; "">
-                           <img src=""@String.Format(""data:image/png;base64,{{0}}"",{qrCodeString})"" height=""300"" width=""300"" />
+                           <img src=""data:image/png;base64,{qrCodeString}"" height=""300"" width=""300"" />
                         </div>
                         <div>
                             <br /><b>Shop:</b>{cwpasi.ShopProfileDto.ShopName}
