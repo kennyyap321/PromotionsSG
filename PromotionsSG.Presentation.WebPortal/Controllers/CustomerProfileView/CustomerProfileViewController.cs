@@ -101,7 +101,8 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
 
             foreach (var x in centralRegion)
             {
-                if(stringToCheck.Contains(x.Code))
+                if (stringToCheck.Substring(0,2) == x.Code)
+                //if(stringToCheck.Contains(x.Code))
                 {
                     customer.Region = "Central";
                 }
@@ -109,7 +110,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
 
             foreach (var x in eastRegion)
             {
-                if (stringToCheck.Contains(x.Code))
+                if (stringToCheck.Substring(0, 2) == x.Code)
                 {
                     customer.Region = "East";
                 }
@@ -117,7 +118,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
 
             foreach (var x in northRegion)
             {
-                if (stringToCheck.Contains(x.Code))
+                if (stringToCheck.Substring(0, 2) == x.Code)
                 {
                     customer.Region = "North";
                 }
@@ -125,7 +126,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
 
             foreach (var x in NERegion)
             {
-                if (stringToCheck.Contains(x.Code))
+                if (stringToCheck.Substring(0, 2) == x.Code)
                 {
                     customer.Region = "North-East";
                 }
@@ -133,7 +134,7 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
 
             foreach (var x in westRegion)
             {
-                if (stringToCheck.Contains(x.Code))
+                if (stringToCheck.Substring(0, 2) == x.Code)
                 {
                     customer.Region = "West";
                 }
