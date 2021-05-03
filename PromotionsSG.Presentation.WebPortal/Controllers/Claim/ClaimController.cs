@@ -89,6 +89,17 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
 
 
         #region Post
+        [HttpGet]
+        public async Task TestFixDLL()
+        {
+            //QRCode
+            string txtQrCode = Guid.NewGuid().ToString();
+            QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrCodeGenerator.CreateQrCode(txtQrCode, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Claim(int promotionId)
         {

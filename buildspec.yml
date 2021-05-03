@@ -17,6 +17,7 @@ phases:
       - docker build -f PromotionsSG.API.Claim.Dockerfile -t claimapi .
       - docker build -f PromotionsSG.API.Feedback.Dockerfile -t feedbackapi .
       - docker build -f PromotionsSG.API.Recommendation/Dockerfile -t recommendationapi .
+      - docker build -f PromotionsSG.API.Notification/Dockerfile -t notificationapi .
       - docker build -f PromotionsSG.Presentation.WebPortal.Dockerfile -t webportalapi .
       
       - docker tag loginapi:latest 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/loginapi:latest
@@ -26,6 +27,7 @@ phases:
       - docker tag claimapi:latest 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/claimapi:latest
       - docker tag feedbackapi:latest 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/feedbackapi:latest
       - docker tag recommendationapi:latest 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/recommendationapi:latest
+      - docker tag notificationapi:latest 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/notificationapi:latest
       - docker tag webportalapi:latest 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/webportalapi:latest
   post_build:
     commands:
@@ -39,6 +41,7 @@ phases:
       - docker push 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/claimapi:latest
       - docker push 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/feedbackapi:latest
       - docker push 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/recommendationapi:latest
+      - docker push 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/notificationapi:latest
       - docker push 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/webportalapi:latest
       
       - printf '[{"name":"promotionsg-container--webportal-2","imageUri":"%s"}]' 702668669288.dkr.ecr.ap-southeast-1.amazonaws.com/webportalapi:latest > imagedefinitions.json
