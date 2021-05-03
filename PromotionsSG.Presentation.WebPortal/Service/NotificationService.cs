@@ -33,6 +33,11 @@ namespace PromotionsSG.Presentation.WebPortal.Service
             var response = await _httpClient.PostAsync(apiUrl, payLoad);
             var data = await response.Content.ReadAsAsync<bool>();
             return data;
+            //string apiUrl1 = URLConfig.Notification.SendNotificationAPI(_apiUrls.NotificationAPI_PublishEmail);
+            //var response1 = await _httpClient.GetStringAsync(apiUrl1);
+            //var data1 = !string.IsNullOrEmpty(response1) && JsonConvert.DeserializeObject<bool>(response1);
+
+            //return data || data1;
         }
         #endregion
     }

@@ -1,3 +1,4 @@
+using Common.AppSettings;
 using Common.DBTableModels;
 using Common.DBTableModelsService;
 using Microsoft.AspNetCore.Builder;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PromotionsSG.API.NotificationAPI.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +30,10 @@ namespace PromotionsSG.API.Notification
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<APIUrls>(Configuration.GetSection("APIUrls"));
             services.AddControllersWithViews();
             services.AddSingleton<EmailService.IEmailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<EmailService.EmailConfiguration>());
+            services.AddHttpClient<INotificationRepository, NotificationRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

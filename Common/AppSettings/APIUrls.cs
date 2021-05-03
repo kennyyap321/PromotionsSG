@@ -86,6 +86,7 @@ namespace Common.AppSettings
         #region NotificationAPI
         public string NotificationAPI_Base { get; set; }
         public string NotificationAPI_SendEmail { get; set; }
+        public string NotificationAPI_PublishEmail { get; set; }
         #endregion
     }
 }

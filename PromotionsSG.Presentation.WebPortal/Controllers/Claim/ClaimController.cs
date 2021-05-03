@@ -106,22 +106,6 @@ namespace PromotionsSG.Presentation.WebPortal.Controllers
             var result = await _claimService.ClaimAsync(claim);
             if (result != null)
             {
-                //send email
-
-                /*aws sns */
-                //var sns = new AmazonSimpleNotificationServiceClient();
-                //var listTopicsRequest = new ListTopicsRequest();
-                //ListTopicsResponse listTopicsResponse;
-
-                //listTopicsResponse = await sns.ListTopicsAsync(listTopicsRequest);
-                //var selectedTopic = listTopicsResponse.Topics.FirstOrDefault();
-                //await sns.PublishAsync(new PublishRequest
-                //{
-                //    Subject = "PromotionsSG Claim Voucher",
-                //    Message = "Your Code is : v" + "p" + promotionId + "c" + customerProfileId,
-                //    TopicArn = selectedTopic.TopicArn
-                //});
-
                 //Claim details
                 int claimId = result.ClaimId;
                 ClaimWithPromotionAndShopInfo cwpasi = await _claimService.RetrieveClaimWithPromotionAndShopInfoByClaimIdAsync(claimId);
